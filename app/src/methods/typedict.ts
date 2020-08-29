@@ -2,7 +2,7 @@
  * @Author: Antoine YANG 
  * @Date: 2020-08-28 20:55:09 
  * @Last Modified by: Antoine YANG
- * @Last Modified time: 2020-08-29 15:27:17
+ * @Last Modified time: 2020-08-29 18:00:52
  */
 
 import { Component } from "react";
@@ -53,11 +53,11 @@ export interface Theme<T=any> {
     /**
      * 开始绘制.
      */
-    start: (ctx: CanvasRenderingContext2D) => void;
+    start: (ctx: CanvasRenderingContext2D, ctx2: CanvasRenderingContext2D) => void;
     /**
      * 绘制一帧.
      */
-    paint: (ctx: CanvasRenderingContext2D) => void;
+    paint: (ctx: CanvasRenderingContext2D, ctx2: CanvasRenderingContext2D) => void;
     /**
      * 结束绘制.
      */
@@ -65,11 +65,11 @@ export interface Theme<T=any> {
     /**
      * 鼠标交互.
      */
-    mouseListener?: (e: React.MouseEvent) => void;
+    mouseListener: (e: JQuery.MouseEventBase) => void;
     /**
      * 触屏交互.
      */
-    touchListener?: (e: React.TouchEvent) => void;
+    touchListener: (e: JQuery.TouchEventBase) => void;
 };
 
 
@@ -84,7 +84,7 @@ export interface Partical {
         r: number;
         g: number;
         b: number;
-    };
+    } | string;
     animation: {
         x: (ms: number) => number;
         y: (ms: number) => number;

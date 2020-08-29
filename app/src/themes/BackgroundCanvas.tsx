@@ -2,7 +2,7 @@
  * @Author: Antoine YANG 
  * @Date: 2020-08-28 21:15:16 
  * @Last Modified by: Antoine YANG
- * @Last Modified time: 2020-08-29 13:59:48
+ * @Last Modified time: 2020-08-29 18:02:58
  */
 
 import React, { Component } from "react";
@@ -29,8 +29,13 @@ export interface BackgroundCanvasState {
  */
 export class BackgroundCanvas extends Component<BackgroundCanvasProps, BackgroundCanvasState> {
 
+    // 背景
     protected canvas: React.RefObject<HTMLCanvasElement>;
     protected ctx?: CanvasRenderingContext2D;
+
+    // 鼠标
+    protected canvas2: React.RefObject<HTMLCanvasElement>;
+    protected ctx2?: CanvasRenderingContext2D;
 
     public constructor(props: BackgroundCanvasProps) {
         super(props);
@@ -39,88 +44,80 @@ export class BackgroundCanvas extends Component<BackgroundCanvasProps, Backgroun
         };
 
         this.canvas = React.createRef<HTMLCanvasElement>();
+        this.canvas2 = React.createRef<HTMLCanvasElement>();
     }
 
     public render(): JSX.Element {
         return (
             <>
-                <canvas ref={ this.canvas }
+                <canvas key="animation" ref={ this.canvas }
                 width="100%" height="100%" style={{
                     position: "fixed",
                     top: 0,
                     left: 0,
-                    zIndex: -9999,
-                    cursor: "none"
-                }}
-                onMouseOver={
-                    e => {
-                        if (this.state.curTheme.mouseListener) {
-                            this.state.curTheme.mouseListener(e);
-                        }
-                    }
-                }
-                onMouseOut={
-                    e => {
-                        if (this.state.curTheme.mouseListener) {
-                            this.state.curTheme.mouseListener(e);
-                        }
-                    }
-                }
-                onClick={
-                    e => {
-                        if (this.state.curTheme.mouseListener) {
-                            this.state.curTheme.mouseListener(e);
-                        }
-                    }
-                }
-                onMouseMove={
-                    e => {
-                        if (this.state.curTheme.mouseListener) {
-                            this.state.curTheme.mouseListener(e);
-                        }
-                    }
-                }
-                onTouchStart={
-                    e => {
-                        if (this.state.curTheme.touchListener) {
-                            this.state.curTheme.touchListener(e);
-                        }
-                    }
-                }
-                onTouchMove={
-                    e => {
-                        if (this.state.curTheme.touchListener) {
-                            this.state.curTheme.touchListener(e);
-                        }
-                    }
-                }
-                onTouchEnd={
-                    e => {
-                        if (this.state.curTheme.touchListener) {
-                            this.state.curTheme.touchListener(e);
-                        }
-                    }
-                } />
+                    zIndex: -9999
+                }} />
                 <>
                     { this.props.children }
                 </>
+                <canvas key="cursor" ref={ this.canvas2 }
+                width="100%" height="100%" style={{
+                    position: "fixed",
+                    top: 0,
+                    left: 0,
+                    zIndex: 9999,
+                    pointerEvents: "none"
+                }} />
             </>
         );
     }
 
     public componentDidMount(): void {
+        // 隐藏默认指针
+        $("body").css("cursor", "none");
         // 设定大小
         this.canvas.current!.width = $(window).width()!;
         this.canvas.current!.height = $(window).height()!;
+        this.canvas2.current!.width = $(window).width()!;
+        this.canvas2.current!.height = $(window).height()!;
         // 获取 canvas 上下文
         this.ctx = this.canvas.current!.getContext("2d")!;
+        this.ctx2 = this.canvas2.current!.getContext("2d")!;
         // 绑定监听
         $(window).on("resize", () => {
             this.canvas.current!.width = $(window).width()!;
             this.canvas.current!.height = $(window).height()!;
+            this.canvas2.current!.width = $(window).width()!;
+            this.canvas2.current!.height = $(window).height()!;
+        });
+        $("*").on("mouseover", e => {
+            this.state.curTheme.mouseListener(e);
+        }).on("mouseout", e => {
+            this.state.curTheme.mouseListener(e);
+        }).on("click", e => {
+            this.state.curTheme.mouseListener(e);
+        }).on("mousedown", e => {
+            this.state.curTheme.mouseListener(e);
+        }).on("mouseup", e => {
+            this.state.curTheme.mouseListener(e);
+        }).on("mousemove", e => {
+            this.state.curTheme.mouseListener(e);
+        }).on("touchstart", e => {
+            this.state.curTheme.touchListener(e);
+        }).on("touchmove", e => {
+            this.state.curTheme.touchListener(e);
+        }).on("touchend", e => {
+            this.state.curTheme.touchListener(e);
         });
         // 开始渲染
-        this.state.curTheme.start(this.ctx!);
+        this.state.curTheme.start(this.ctx!, this.ctx2!);
+    }
+
+    public componentWillUnmount(): void {
+        // 还原默认指针
+        $("body").css("cursor", "initial");
+        // 解除监听
+        $(window).unbind();
     }
 
     public getSnapshotBeforeUpdate(): void {
@@ -130,7 +127,7 @@ export class BackgroundCanvas extends Component<BackgroundCanvasProps, Backgroun
 
     public componentDidUpdate(): void {
         // 开始渲染
-        this.state.curTheme.start(this.ctx!);
+        this.state.curTheme.start(this.ctx!, this.ctx2!);
     }
 
 };
