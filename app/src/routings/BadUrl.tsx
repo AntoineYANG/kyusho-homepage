@@ -2,12 +2,13 @@
  * @Author: Antoine YANG 
  * @Date: 2020-08-28 20:50:07 
  * @Last Modified by: Antoine YANG
- * @Last Modified time: 2020-08-29 00:35:17
+ * @Last Modified time: 2020-08-29 20:43:20
  */
 
 import React from "react";
 import { PageBody } from "../methods/typedict";
 import { Shared } from "../methods/globals";
+import { SettingsButton } from "../compo/SettingsButton";
 
 
 /**
@@ -18,6 +19,11 @@ import { Shared } from "../methods/globals";
  * @extends {PageBody<{}>}
  */
 export class BadUrl extends PageBody<{}> {
+
+    public constructor(props: {}) {
+        super(props);
+        this.state = {};
+    }
     
     public render(): JSX.Element {
         return (
@@ -42,9 +48,17 @@ export class BadUrl extends PageBody<{}> {
                     }`
                 }} >
                     很抱歉，您访问的页面不存在。
+                    <br />
+                    <br />
+                    Bad Gateway
                 </div>
+                <SettingsButton />
             </>
         );
+    }
+
+    public componentDidMount(): void {
+        Shared.cursorState = "normal";
     }
 
 };

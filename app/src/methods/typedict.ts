@@ -2,7 +2,7 @@
  * @Author: Antoine YANG 
  * @Date: 2020-08-28 20:55:09 
  * @Last Modified by: Antoine YANG
- * @Last Modified time: 2020-08-29 18:00:52
+ * @Last Modified time: 2020-08-29 22:50:27
  */
 
 import { Component } from "react";
@@ -28,6 +28,8 @@ export class PageBody<S> extends Component<{}, S> {};
 export interface Colortab {
     color: string;
     border: string;
+    background: string;
+    frontground: string;
 };
 
 /**

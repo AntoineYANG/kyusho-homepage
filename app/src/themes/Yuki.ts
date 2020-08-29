@@ -2,14 +2,14 @@
  * @Author: Antoine YANG 
  * @Date: 2020-08-28 21:37:20 
  * @Last Modified by: Antoine YANG
- * @Last Modified time: 2020-08-29 18:36:25
+ * @Last Modified time: 2020-08-30 04:57:28
  */
 
 import { Theme, Partical } from "../methods/typedict";
 import $ from "jquery";
-import { BackgroundCanvasRenderingFPS } from "../methods/constants";
 import { getSelectedElement } from "../methods/selection";
 import Color from "../preference/Color";
+import { Shared } from "../methods/globals";
 
 
 interface SnowBall {
@@ -33,7 +33,9 @@ interface YukiState {
 export const Yuki: Theme<YukiState> = {
     colortab: {
         color: "rgb(208,213,215)",
-        border: "rgb(155,255,254)"
+        border: "rgb(155,255,254)",
+        background: "rgb(154,154,155)",
+        frontground: "rgb(245,2,6)"
     },
     data: {
         items: [],
@@ -62,7 +64,7 @@ export const Yuki: Theme<YukiState> = {
     },
     paint: (ctx: CanvasRenderingContext2D, ctx2: CanvasRenderingContext2D) => {
         /** 到下一帧的间隔毫秒数 */
-        const span: number = 1000 / BackgroundCanvasRenderingFPS;
+        const span: number = 1000 / Shared.animationFPS;
         const width: number = ctx.canvas.width;
         const height: number = ctx.canvas.height;
         const max: number = Math.sqrt(width * height) / 16;
@@ -117,24 +119,24 @@ export const Yuki: Theme<YukiState> = {
             // 移动
             let dx: number = (
                 (Math.random() - 0.5) * width / 36
-            ) / BackgroundCanvasRenderingFPS;
+            ) / Shared.animationFPS;
             let ri: number = Math.pow(dx, 2) / Math.pow(
                 Math.abs(dx) + Math.abs(
-                    item.prevDx * BackgroundCanvasRenderingFPS / 2
+                    item.prevDx * Shared.animationFPS / 2
                 ), 2
             );
             dx = ri * dx + (1 - ri) * item.prevDx;
             item.x += dx * (1 - item.dist);
             item.prevDx = dx;
             item.y += (
-                1 + 4 * r / BackgroundCanvasRenderingFPS
+                1 + 4 * r / Shared.animationFPS
             ) * height / 1600 * (1 + item.y / height * 0.4);
             if (item.y - r <= height) {
                 // 留下来
                 let dd: number = (Math.random() - 0.5) * 0.005;
                 let ri: number = Math.pow(dd, 2) / Math.pow(
                     Math.abs(dd) + Math.abs(
-                        item.prevDd * BackgroundCanvasRenderingFPS / 2
+                        item.prevDd * Shared.animationFPS / 2
                     ), 2
                 );
                 dd = ri * dd + (1 - ri) * item.prevDd;
@@ -142,47 +144,67 @@ export const Yuki: Theme<YukiState> = {
                 item.prevDd = dd;
                 const a: number = Math.min(1, 1 - 0.2 * item.dist);
                 if (item.a < a) {
-                    item.a += Math.random() * 0.16 / BackgroundCanvasRenderingFPS;
+                    item.a += Math.random() * 0.16 / Shared.animationFPS;
                 }
                 item.a = Math.min(item.a, a);
                 nextList.push(item);
             }
         });
 
-        Yuki.data.particals.forEach(p => {
-            if (typeof p.color === "string") {
-                ctx2.fillStyle = p.color;
-                ctx2.globalAlpha = p.animation.opacity(p.ms);
-            } else {
-                ctx2.globalAlpha = 1;
-                ctx2.fillStyle = `rgba(${ p.color.r },${ p.color.g },${ p.color.b },${
-                    p.animation.opacity(p.ms)
-                })`;
-            }
-            ctx2.fillRect(
-                p.animation.x(p.ms),
-                p.animation.y(p.ms),
-                p.animation.size(p.ms),
-                p.animation.size(p.ms)
-            );
-
-            p.ms += span;
-            if (p.animation.opacity(p.ms) > 0) {
-                // 还未结束
-                nextParticals.push(p);
-            }
-        });
+        if (Shared.particalEffects) {
+            Yuki.data.particals.forEach(p => {
+                if (typeof p.color === "string") {
+                    ctx2.fillStyle = p.color;
+                    ctx2.globalAlpha = p.animation.opacity(p.ms) * Shared.particalOpacity;
+                } else {
+                    ctx2.globalAlpha = Shared.particalOpacity;
+                    ctx2.fillStyle = `rgba(${ p.color.r },${ p.color.g },${ p.color.b },${
+                        p.animation.opacity(p.ms)
+                    })`;
+                }
+                ctx2.fillRect(
+                    p.animation.x(p.ms),
+                    p.animation.y(p.ms),
+                    p.animation.size(p.ms),
+                    p.animation.size(p.ms)
+                );
+    
+                p.ms += span;
+                if (p.animation.opacity(p.ms) > 0) {
+                    // 还未结束
+                    nextParticals.push(p);
+                }
+            });
+        }
 
         // 鼠标指针
         if (Yuki.data.cursor) {
-            ctx2.strokeStyle = "rgb(23,126,209)";
-            ctx2.lineWidth = 1;
-            ctx2.beginPath();
-            ctx2.moveTo(Yuki.data.cursor.x, Yuki.data.cursor.y);
-            ctx2.lineTo(Yuki.data.cursor.x + 16, Yuki.data.cursor.y + 16);
-            ctx2.lineTo(Yuki.data.cursor.x + 6, Yuki.data.cursor.y + 22);
-            ctx2.lineTo(Yuki.data.cursor.x, Yuki.data.cursor.y);
-            ctx2.stroke();
+            ctx2.globalAlpha = 1;
+            if (Shared.cursorState === "normal") {
+                ctx2.strokeStyle = "rgb(23,126,209)";
+                ctx2.lineWidth = 1;
+                ctx2.beginPath();
+                ctx2.moveTo(Yuki.data.cursor.x, Yuki.data.cursor.y);
+                ctx2.lineTo(Yuki.data.cursor.x + 16, Yuki.data.cursor.y + 16);
+                ctx2.lineTo(Yuki.data.cursor.x + 6, Yuki.data.cursor.y + 22);
+                ctx2.lineTo(Yuki.data.cursor.x, Yuki.data.cursor.y);
+                ctx2.stroke();
+            } else if (Shared.cursorState === "pointer") {
+                ctx2.strokeStyle = "rgb(23,126,209)";
+                ctx2.fillStyle = `rgba(136,220,254,${
+                    Math.abs(
+                        (new Date()).getTime() % 2000 - 1000
+                    ) % 1000 / 1000
+                })`;
+                ctx2.lineWidth = 1;
+                ctx2.beginPath();
+                ctx2.moveTo(Yuki.data.cursor.x, Yuki.data.cursor.y);
+                ctx2.lineTo(Yuki.data.cursor.x + 16, Yuki.data.cursor.y + 16);
+                ctx2.lineTo(Yuki.data.cursor.x + 6, Yuki.data.cursor.y + 22);
+                ctx2.lineTo(Yuki.data.cursor.x, Yuki.data.cursor.y);
+                ctx2.fill();
+                ctx2.stroke();
+            }
         }
 
         // 下一帧状态
@@ -191,7 +213,7 @@ export const Yuki: Theme<YukiState> = {
         /** 再生成一个光球的概率指数 */
         let possibility: number = (
             max - Yuki.data.items.length
-        ) / max * 3 / BackgroundCanvasRenderingFPS;
+        ) / max * 3 / Shared.animationFPS;
 
         while (possibility > 0) {
             possibility -= Math.random();
@@ -243,88 +265,98 @@ export const Yuki: Theme<YukiState> = {
         }
         if (Yuki.data.cursor?.pressed) {
             // 粒子效果
-            const x: number = e.clientX;
-            const y: number = e.clientY;
-            const color: string = Color.interpolate(
-                `rgb(63,192,252)`,
-                `rgb(193,62,69)`,
-                (Math.random() * 0.2 + 0.8) * Math.min(
-                    1, Yuki.data.particals.length / 2400
-                )
-            );
-            // 根据被选择的元素变更颜色
-            const selection: HTMLElement | null = getSelectedElement();
-            let color2: string = `rgb(63,192,252)`;
-            if (selection && selection.style.color) {
-                let colorSet: Array<string> | null = Color.toRgb(
-                    selection.style.color
-                ).match(/\d+/g);
-                if (colorSet?.length === 3) {
-                    color2 = `rgb(${ colorSet[0] },${ colorSet[1] },${ colorSet[2] })`;
+            if (Shared.particalEffects) {
+                const x: number = e.clientX;
+                const y: number = e.clientY;
+                const color: string = Color.interpolate(
+                    `rgb(63,192,252)`,
+                    `rgb(193,62,69)`,
+                    (Math.random() * 0.2 + 0.8) * Math.min(
+                        1, Yuki.data.particals.length / 2400
+                    )
+                );
+                // 根据被选择的元素变更颜色
+                const selection: HTMLElement | null = getSelectedElement();
+                let color2: string = `rgb(63,192,252)`;
+                if (selection && selection.style.color) {
+                    let colorSet: Array<string> | null = Color.toRgb(
+                        selection.style.color
+                    ).match(/\d+/g);
+                    if (colorSet?.length === 3) {
+                        color2 = `rgb(${ colorSet[0] },${ colorSet[1] },${ colorSet[2] })`;
+                    } else {
+                        color2 = selection.style.color;
+                    }
                 } else {
-                    color2 = selection.style.color;
+                    color2 = color;
                 }
-            } else {
-                color2 = color;
-            }
-            const lightness: number = Color.toHsl(color).l * 0.9;
-            const lightness2: number = Color.toHsl(color2).l * 0.9;
-
-            for (let i: number = 0; i < 6; i++) {
-                /** x 方向运动速度(每秒移动距离) */
-                let sx: number = (Math.random() * 2 - 1) * 120;
-                sx += (sx > 0 ? 1 : -1) * 24 * Math.random();
-                /** y 方向初始运动速度(每秒移动距离) */
-                const sy: number = 0 - Math.random() * Math.random() * 256 - 128;
-
-                /** 颜色 */
-                const c: string = Math.random() < 0.8 ? color : color2;
-                const l: number = c === color ? lightness : lightness2;
-
-                Yuki.data.particals.push({
-                    color: c === color ? Color.getRgba(
-                        Color.setLightness(
-                            c,
-                            l + (1 - l) * Math.random() * 0.6
-                        )
-                    ) : c,
-                    animation: {
-                        x: ms => x + sx * ms / 1000,
-                        y: ms => y + sy * ms / 1000 + ms * ms / 1200,
-                        opacity: ms => 1 - 0.6 * ms / 400,
-                        size: ms => 6 - 1.5 * ms / 400
-                    },
-                    life: 400,
-                    ms: 0
-                });
-            }
-            for (let i: number = 0; i < 9; i++) {
-                /** x 方向运动速度(每秒移动距离) */
-                let sx: number = (Math.random() * 2 - 1) * 140;
-                sx += (sx > 0 ? 1 : -1) * 28 * Math.random();
-                /** y 方向初始运动速度(每秒移动距离) */
-                const sy: number = 0 - Math.random() * Math.random() * 282 - 141;
-                
-                /** 颜色 */
-                const c: string = Math.random() < 0.8 ? color : color2;
-                const l: number = c === color ? lightness : lightness2;
-
-                Yuki.data.particals.push({
-                    color: c.startsWith("rgb") ? Color.getRgba(
-                        Color.setLightness(
-                            c,
-                            l * 0.6 + (1 - l * 0.6) * Math.random() * 0.5
-                        )
-                    ) : c,
-                    animation: {
-                        x: ms => x + sx * ms / 1000,
-                        y: ms => y + sy * ms / 1000 + ms * ms / 2000,
-                        opacity: ms => 1 - 0.6 * ms / 400,
-                        size: ms => 4 - 1 * ms / 400
-                    },
-                    life: 400,
-                    ms: 0
-                });
+                const lightness: number = Color.toHsl(color).l * 0.9;
+                const lightness2: number = Color.toHsl(color2).l * 0.9;
+    
+                for (let i: number = 0; i < (
+                    Shared.particalEffects === 1 ? 2
+                        : Shared.particalEffects === 2 ? 6
+                            : 10
+                ); i++) {
+                    /** x 方向运动速度(每秒移动距离) */
+                    let sx: number = (Math.random() * 2 - 1) * 120;
+                    sx += (sx > 0 ? 1 : -1) * 24 * Math.random();
+                    /** y 方向初始运动速度(每秒移动距离) */
+                    const sy: number = 0 - Math.random() * Math.random() * 256 - 128;
+    
+                    /** 颜色 */
+                    const c: string = Math.random() < 0.8 ? color : color2;
+                    const l: number = c === color ? lightness : lightness2;
+    
+                    Yuki.data.particals.push({
+                        color: c === color ? Color.getRgba(
+                            Color.setLightness(
+                                c,
+                                l + (1 - l) * Math.random() * 0.6
+                            )
+                        ) : c,
+                        animation: {
+                            x: ms => x + sx * ms / 1000,
+                            y: ms => y + sy * ms / 1000 + ms * ms / 1200,
+                            opacity: ms => 1 - 0.6 * ms / 400,
+                            size: ms => 6 - 1.5 * ms / 400
+                        },
+                        life: 400,
+                        ms: 0
+                    });
+                }
+                for (let i: number = 0; i < (
+                    Shared.particalEffects === 1 ? 3
+                        : Shared.particalEffects === 2 ? 9
+                            : 14
+                ); i++) {
+                    /** x 方向运动速度(每秒移动距离) */
+                    let sx: number = (Math.random() * 2 - 1) * 140;
+                    sx += (sx > 0 ? 1 : -1) * 28 * Math.random();
+                    /** y 方向初始运动速度(每秒移动距离) */
+                    const sy: number = 0 - Math.random() * Math.random() * 282 - 141;
+                    
+                    /** 颜色 */
+                    const c: string = Math.random() < 0.8 ? color : color2;
+                    const l: number = c === color ? lightness : lightness2;
+    
+                    Yuki.data.particals.push({
+                        color: c.startsWith("rgb") ? Color.getRgba(
+                            Color.setLightness(
+                                c,
+                                l * 0.6 + (1 - l * 0.6) * Math.random() * 0.5
+                            )
+                        ) : c,
+                        animation: {
+                            x: ms => x + sx * ms / 1000,
+                            y: ms => y + sy * ms / 1000 + ms * ms / 2000,
+                            opacity: ms => 1 - 0.6 * ms / 400,
+                            size: ms => 4 - 1 * ms / 400
+                        },
+                        life: 400,
+                        ms: 0
+                    });
+                }
             }
 
             // 元素交互
@@ -347,12 +379,12 @@ export const Yuki: Theme<YukiState> = {
                         }
                     }, 2000);
                     for (let t: number = 0; t < 2600; t += Math.floor(
-                        1000 / BackgroundCanvasRenderingFPS
+                        1000 / Shared.animationFPS
                     )) {
                         setTimeout(() => {
                             if (item) {
                                 item.y -= (
-                                    1 + 4 * item.r * item.dist / BackgroundCanvasRenderingFPS
+                                    1 + 4 * item.r * item.dist / Shared.animationFPS
                                 ) * Math.sqrt(2600 - t) * $(window).height()! / 40000;
                             }
                         }, t);
@@ -366,54 +398,65 @@ export const Yuki: Theme<YukiState> = {
         if (e.touches.length) {
             for (let j: number = 0; j < e.touches.length; j++) {
                 // 粒子效果
-                const x: number = e.touches[j].clientX;
-                const y: number = e.touches[j].clientY;
-                for (let i: number = 0; i < 6; i++) {
-                    /** x 方向运动速度(每秒移动距离) */
-                    let sx: number = (Math.random() * 2 - 1) * 100;
-                    sx += (sx > 0 ? 1 : -1) * 20 * Math.random();
-                    /** y 方向初始运动速度(每秒移动距离) */
-                    const sy: number = 0 - Math.random() * Math.random() * 256 - 128;
-    
-                    Yuki.data.particals.push({
-                        color: {
-                            r: 63,
-                            g: 192 + Math.floor(Math.random() * 30),
-                            b: 252
-                        },
-                        animation: {
-                            x: ms => x + sx * ms / 1000,
-                            y: ms => y + sy * ms / 1000 + ms * ms / 1600,
-                            opacity: ms => 1 - 0.4 * ms / 400,
-                            size: ms => 6 - 1.5 * ms / 400
-                        },
-                        life: 400,
-                        ms: 0
-                    });
+                if (Shared.particalEffects) {
+                    const x: number = e.touches[j].clientX;
+                    const y: number = e.touches[j].clientY;
+                    for (let i: number = 0; i < (
+                        Shared.particalEffects === 1 ? 2
+                            : Shared.particalEffects === 2 ? 5
+                                : 8
+                    ); i++) {
+                        /** x 方向运动速度(每秒移动距离) */
+                        let sx: number = (Math.random() * 2 - 1) * 100;
+                        sx += (sx > 0 ? 1 : -1) * 20 * Math.random();
+                        /** y 方向初始运动速度(每秒移动距离) */
+                        const sy: number = 0 - Math.random() * Math.random() * 256 - 128;
+        
+                        Yuki.data.particals.push({
+                            color: {
+                                r: 63,
+                                g: 192 + Math.floor(Math.random() * 30),
+                                b: 252
+                            },
+                            animation: {
+                                x: ms => x + sx * ms / 1000,
+                                y: ms => y + sy * ms / 1000 + ms * ms / 1600,
+                                opacity: ms => 1 - 0.4 * ms / 400,
+                                size: ms => 6 - 1.5 * ms / 400
+                            },
+                            life: 400,
+                            ms: 0
+                        });
+                    }
+                    for (let i: number = 0; i < (
+                        Shared.particalEffects === 1 ? 3
+                            : Shared.particalEffects === 2 ? 7
+                                : 10
+                    ); i++) {
+                        /** x 方向运动速度(每秒移动距离) */
+                        let sx: number = (Math.random() * 2 - 1) * 120;
+                        sx += (sx > 0 ? 1 : -1) * 24 * Math.random();
+                        /** y 方向初始运动速度(每秒移动距离) */
+                        const sy: number = 0 - Math.random() * Math.random() * 282 - 141;
+        
+                        Yuki.data.particals.push({
+                            color: {
+                                r: 63,
+                                g: 172 + Math.floor(Math.random() * 40),
+                                b: 252
+                            },
+                            animation: {
+                                x: ms => x + sx * ms / 1000,
+                                y: ms => y + sy * ms / 1000 + ms * ms / 1200,
+                                opacity: ms => 1 - 0.6 * ms / 400,
+                                size: ms => 4 - 1 * ms / 400
+                            },
+                            life: 400,
+                            ms: 0
+                        });
+                    }
                 }
-                for (let i: number = 0; i < 9; i++) {
-                    /** x 方向运动速度(每秒移动距离) */
-                    let sx: number = (Math.random() * 2 - 1) * 120;
-                    sx += (sx > 0 ? 1 : -1) * 24 * Math.random();
-                    /** y 方向初始运动速度(每秒移动距离) */
-                    const sy: number = 0 - Math.random() * Math.random() * 282 - 141;
-    
-                    Yuki.data.particals.push({
-                        color: {
-                            r: 63,
-                            g: 172 + Math.floor(Math.random() * 40),
-                            b: 252
-                        },
-                        animation: {
-                            x: ms => x + sx * ms / 1000,
-                            y: ms => y + sy * ms / 1000 + ms * ms / 1200,
-                            opacity: ms => 1 - 0.6 * ms / 400,
-                            size: ms => 4 - 1 * ms / 400
-                        },
-                        life: 400,
-                        ms: 0
-                    });
-                }
+                
                 // 元素交互
                 for (let i: number = 0; i < Yuki.data.items.length; i++) {
                     if (!Yuki.data.items[i].active) {
@@ -434,12 +477,12 @@ export const Yuki: Theme<YukiState> = {
                             }
                         }, 2000);
                         for (let t: number = 0; t < 2600; t += Math.floor(
-                            1000 / BackgroundCanvasRenderingFPS
+                            1000 / Shared.animationFPS
                         )) {
                             setTimeout(() => {
                                 if (item) {
                                     item.y -= (
-                                        1 + 4 * item.r * item.dist / BackgroundCanvasRenderingFPS
+                                        1 + 4 * item.r * item.dist / Shared.animationFPS
                                     ) * Math.sqrt(2600 - t) * $(window).height()! / 40000;
                                 }
                             }, t);

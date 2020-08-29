@@ -6,6 +6,7 @@ import { BadUrl } from './routings/BadUrl';
 import { BackgroundCanvas } from './themes/BackgroundCanvas';
 import { Theme } from './methods/typedict';
 import { Shared } from './methods/globals';
+import { Settings } from './routings/Settings';
 
 
 export interface AppState {
@@ -36,6 +37,7 @@ class App extends Component<{}, AppState> {
           <HashRouter>
             <Switch>
               <Route path="/" exact component={ Home } />
+              <Route path="/settings" exact component={ Settings } />
               <Route path="/**" component={ BadUrl } />
             </Switch>
           </HashRouter>
