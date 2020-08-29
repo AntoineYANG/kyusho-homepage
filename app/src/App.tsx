@@ -4,7 +4,6 @@ import { HashRouter, Switch, Route } from 'react-router-dom';
 import { Home } from './routings/Home';
 import { BadUrl } from './routings/BadUrl';
 import { BackgroundCanvas } from './themes/BackgroundCanvas';
-import { Yuki } from './themes/Yuki';
 import { Theme } from './methods/typedict';
 import { Shared } from './methods/globals';
 

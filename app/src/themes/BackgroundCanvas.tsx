@@ -2,7 +2,7 @@
  * @Author: Antoine YANG 
  * @Date: 2020-08-28 21:15:16 
  * @Last Modified by: Antoine YANG
- * @Last Modified time: 2020-08-29 00:24:06
+ * @Last Modified time: 2020-08-29 13:59:48
  */
 
 import React, { Component } from "react";
@@ -49,8 +49,58 @@ export class BackgroundCanvas extends Component<BackgroundCanvasProps, Backgroun
                     position: "fixed",
                     top: 0,
                     left: 0,
-                    zIndex: -9999
-                }} />
+                    zIndex: -9999,
+                    cursor: "none"
+                }}
+                onMouseOver={
+                    e => {
+                        if (this.state.curTheme.mouseListener) {
+                            this.state.curTheme.mouseListener(e);
+                        }
+                    }
+                }
+                onMouseOut={
+                    e => {
+                        if (this.state.curTheme.mouseListener) {
+                            this.state.curTheme.mouseListener(e);
+                        }
+                    }
+                }
+                onClick={
+                    e => {
+                        if (this.state.curTheme.mouseListener) {
+                            this.state.curTheme.mouseListener(e);
+                        }
+                    }
+                }
+                onMouseMove={
+                    e => {
+                        if (this.state.curTheme.mouseListener) {
+                            this.state.curTheme.mouseListener(e);
+                        }
+                    }
+                }
+                onTouchStart={
+                    e => {
+                        if (this.state.curTheme.touchListener) {
+                            this.state.curTheme.touchListener(e);
+                        }
+                    }
+                }
+                onTouchMove={
+                    e => {
+                        if (this.state.curTheme.touchListener) {
+                            this.state.curTheme.touchListener(e);
+                        }
+                    }
+                }
+                onTouchEnd={
+                    e => {
+                        if (this.state.curTheme.touchListener) {
+                            this.state.curTheme.touchListener(e);
+                        }
+                    }
+                } />
                 <>
                     { this.props.children }
                 </>

@@ -2,7 +2,7 @@
  * @Author: Antoine YANG 
  * @Date: 2020-08-28 20:55:09 
  * @Last Modified by: Antoine YANG
- * @Last Modified time: 2020-08-29 00:27:39
+ * @Last Modified time: 2020-08-29 15:27:17
  */
 
 import { Component } from "react";
@@ -62,4 +62,35 @@ export interface Theme<T=any> {
      * 结束绘制.
      */
     end: () => void;
+    /**
+     * 鼠标交互.
+     */
+    mouseListener?: (e: React.MouseEvent) => void;
+    /**
+     * 触屏交互.
+     */
+    touchListener?: (e: React.TouchEvent) => void;
+};
+
+
+/**
+ * 粒子特效.
+ *
+ * @export
+ * @interface Partical
+ */
+export interface Partical {
+    color: {
+        r: number;
+        g: number;
+        b: number;
+    };
+    animation: {
+        x: (ms: number) => number;
+        y: (ms: number) => number;
+        opacity: (ms: number) => number;
+        size: (ms: number) => number;
+    };
+    ms: number;
+    life: number;
 };

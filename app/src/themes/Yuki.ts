@@ -2,10 +2,11 @@
  * @Author: Antoine YANG 
  * @Date: 2020-08-28 21:37:20 
  * @Last Modified by: Antoine YANG
- * @Last Modified time: 2020-08-29 00:29:43
+ * @Last Modified time: 2020-08-29 16:07:12
  */
 
-import { Theme } from "../methods/typedict";
+import { Theme, Partical } from "../methods/typedict";
+import $ from "jquery";
 import { BackgroundCanvasRenderingFPS } from "../methods/constants";
 
 
@@ -21,6 +22,8 @@ interface SnowBall {
 
 interface YukiState {
     items: Array<SnowBall>;
+    particals: Array<Partical>;
+    cursor?: { x:number; y: number; };
 };
 
 /** 主题：雪 */
@@ -30,11 +33,15 @@ export const Yuki: Theme<YukiState> = {
         border: "rgb(155,255,254)"
     },
     data: {
-        items: []
+        items: [],
+        particals: []
     },
     start: (ctx: CanvasRenderingContext2D) => {
+        ctx.canvas.style.backgroundColor = "rgb(11,11,14)";
         Yuki.data = {
-            items: []
+            items: [],
+            particals: [],
+            cursor: void 0
         };
         Yuki.paint(ctx);
     },
@@ -45,7 +52,9 @@ export const Yuki: Theme<YukiState> = {
             Yuki.next = void 0;
         }
         Yuki.data = {
-            items: []
+            items: [],
+            particals: [],
+            cursor: void 0
         };
     },
     paint: (ctx: CanvasRenderingContext2D) => {
@@ -60,6 +69,7 @@ export const Yuki: Theme<YukiState> = {
         ctx.fillRect(0, 0, width, height);
 
         let nextList: Array<SnowBall> = [];
+        let nextParticals: Array<Partical> = [];
 
         Yuki.data.items.forEach(item => {
             const r: number = item.r * item.dist;
@@ -87,6 +97,7 @@ export const Yuki: Theme<YukiState> = {
                 ctx.closePath();
                 return;
             }
+
             const gradient: CanvasGradient = ctx.createRadialGradient(
                 item.x, item.y, r * 0.3, item.x, item.y, r
             );
@@ -134,8 +145,39 @@ export const Yuki: Theme<YukiState> = {
             }
         });
 
+        Yuki.data.particals.forEach(p => {
+            ctx.fillStyle = `rgba(${ p.color.r },${ p.color.g },${ p.color.b },${
+                p.animation.opacity(p.ms)
+            })`;
+            ctx.fillRect(
+                p.animation.x(p.ms),
+                p.animation.y(p.ms),
+                p.animation.size(p.ms),
+                p.animation.size(p.ms)
+            );
+
+            p.ms += span;
+            if (p.ms < p.life) {
+                // 还未结束
+                nextParticals.push(p);
+            }
+        });
+
+        // 鼠标指针
+        if (Yuki.data.cursor) {
+            ctx.strokeStyle = "rgb(23,126,209)";
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(Yuki.data.cursor.x, Yuki.data.cursor.y);
+            ctx.lineTo(Yuki.data.cursor.x + 16, Yuki.data.cursor.y + 16);
+            ctx.lineTo(Yuki.data.cursor.x + 6, Yuki.data.cursor.y + 22);
+            ctx.lineTo(Yuki.data.cursor.x, Yuki.data.cursor.y);
+            ctx.stroke();
+        }
+
         // 下一帧状态
         Yuki.data.items = [...nextList];
+        Yuki.data.particals = [...nextParticals];
         /** 再生成一个光球的概率指数 */
         let possibility: number = (
             max - Yuki.data.items.length
@@ -161,5 +203,165 @@ export const Yuki: Theme<YukiState> = {
         Yuki.next = setTimeout(() => {
             Yuki.paint(ctx);
         }, span);
+    },
+    mouseListener: (e: React.MouseEvent) => {
+        if (e.type === "mouseout") {
+            Yuki.data.cursor = void 0;
+        } else if (e.type === "mouseover" || e.type === "mousemove") {
+            Yuki.data.cursor = {
+                x: e.clientX,
+                y: e.clientY
+            };
+        } else if (e.type === "click") {
+            // 粒子效果
+            const x: number = e.clientX;
+            const y: number = e.clientY;
+            for (let i: number = 0; i < 6; i++) {
+                /** x 方向运动速度(每秒移动距离) */
+                let sx: number = (Math.random() * 2 - 1) * 100;
+                sx += (sx > 0 ? 1 : -1) * 20 * Math.random();
+                /** y 方向初始运动速度(每秒移动距离) */
+                const sy: number = 0 - Math.random() * Math.random() * 256 - 128;
+
+                Yuki.data.particals.push({
+                    color: {
+                        r: 63,
+                        g: 192 + Math.floor(Math.random() * 30),
+                        b: 252
+                    },
+                    animation: {
+                        x: ms => x + sx * ms / 1000,
+                        y: ms => y + sy * ms / 1000 + ms * ms / 2000,
+                        opacity: ms => 1 - 0.4 * ms / 400,
+                        size: ms => 6 - 1.5 * ms / 400
+                    },
+                    life: 400,
+                    ms: 0
+                });
+            }
+            for (let i: number = 0; i < 9; i++) {
+                /** x 方向运动速度(每秒移动距离) */
+                let sx: number = (Math.random() * 2 - 1) * 120;
+                sx += (sx > 0 ? 1 : -1) * 24 * Math.random();
+                /** y 方向初始运动速度(每秒移动距离) */
+                const sy: number = 0 - Math.random() * Math.random() * 282 - 141;
+
+                Yuki.data.particals.push({
+                    color: {
+                        r: 63,
+                        g: 172 + Math.floor(Math.random() * 40),
+                        b: 252
+                    },
+                    animation: {
+                        x: ms => x + sx * ms / 1000,
+                        y: ms => y + sy * ms / 1000 + ms * ms / 2000,
+                        opacity: ms => 1 - 0.6 * ms / 400,
+                        size: ms => 4 - 1 * ms / 400
+                    },
+                    life: 400,
+                    ms: 0
+                });
+            }
+
+            // 元素交互
+            for (let i: number = 0; i < Yuki.data.items.length; i++) {
+                const d2: number = Math.pow(
+                    Yuki.data.items[i].x - e.clientX, 2
+                ) + Math.pow(
+                    Yuki.data.items[i].y - e.clientY, 2
+                );
+                if (d2 <= Math.pow(Yuki.data.items[i].r, 2)) {
+                    const item: SnowBall = Yuki.data.items[i];
+                    for (let t: number = 0; t < 2600; t += Math.floor(
+                        1000 / BackgroundCanvasRenderingFPS
+                    )) {
+                        setTimeout(() => {
+                            if (item) {
+                                item.y -= (
+                                    1 + 4 * item.r * item.dist / BackgroundCanvasRenderingFPS
+                                ) * Math.sqrt(2600 - t) * $(window).height()! / 40000;
+                            }
+                        }, t);
+                    }
+                }
+            }
+        }
+    },
+    touchListener: (e: React.TouchEvent) => {
+        if (e.touches.length) {
+            for (let j: number = 0; j < e.touches.length; j++) {
+                // 粒子效果
+                const x: number = e.touches[j].clientX;
+                const y: number = e.touches[j].clientY;
+                for (let i: number = 0; i < 6; i++) {
+                    /** x 方向运动速度(每秒移动距离) */
+                    let sx: number = (Math.random() * 2 - 1) * 100;
+                    sx += (sx > 0 ? 1 : -1) * 20 * Math.random();
+                    /** y 方向初始运动速度(每秒移动距离) */
+                    const sy: number = 0 - Math.random() * Math.random() * 256 - 128;
+    
+                    Yuki.data.particals.push({
+                        color: {
+                            r: 63,
+                            g: 192 + Math.floor(Math.random() * 30),
+                            b: 252
+                        },
+                        animation: {
+                            x: ms => x + sx * ms / 1000,
+                            y: ms => y + sy * ms / 1000 + ms * ms / 2000,
+                            opacity: ms => 1 - 0.4 * ms / 400,
+                            size: ms => 6 - 1.5 * ms / 400
+                        },
+                        life: 400,
+                        ms: 0
+                    });
+                }
+                for (let i: number = 0; i < 9; i++) {
+                    /** x 方向运动速度(每秒移动距离) */
+                    let sx: number = (Math.random() * 2 - 1) * 120;
+                    sx += (sx > 0 ? 1 : -1) * 24 * Math.random();
+                    /** y 方向初始运动速度(每秒移动距离) */
+                    const sy: number = 0 - Math.random() * Math.random() * 282 - 141;
+    
+                    Yuki.data.particals.push({
+                        color: {
+                            r: 63,
+                            g: 172 + Math.floor(Math.random() * 40),
+                            b: 252
+                        },
+                        animation: {
+                            x: ms => x + sx * ms / 1000,
+                            y: ms => y + sy * ms / 1000 + ms * ms / 2000,
+                            opacity: ms => 1 - 0.6 * ms / 400,
+                            size: ms => 4 - 1 * ms / 400
+                        },
+                        life: 400,
+                        ms: 0
+                    });
+                }
+                // 元素交互
+                for (let i: number = 0; i < Yuki.data.items.length; i++) {
+                    const d2: number = Math.pow(
+                        Yuki.data.items[i].x - e.touches[j].clientX, 2
+                    ) + Math.pow(
+                        Yuki.data.items[i].y - e.touches[j].clientY, 2
+                    );
+                    if (d2 <= Math.pow(Yuki.data.items[i].r, 2)) {
+                        const item: SnowBall = Yuki.data.items[i];
+                        for (let t: number = 0; t < 2600; t += Math.floor(
+                            1000 / BackgroundCanvasRenderingFPS
+                        )) {
+                            setTimeout(() => {
+                                if (item) {
+                                    item.y -= (
+                                        1 + 4 * item.r * item.dist / BackgroundCanvasRenderingFPS
+                                    ) * Math.sqrt(2600 - t) * $(window).height()! / 40000;
+                                }
+                            }, t);
+                        }
+                    }
+                }
+            }
+        }
     }
 };
