@@ -7,7 +7,7 @@
 
 import { Theme, Partical } from "../methods/typedict";
 import $ from "jquery";
-import { getSelectedElement } from "../methods/selection";
+import { getSelectedElement, getStyle } from "../methods/selection";
 import Color from "../preference/Color";
 import { Shared } from "../methods/globals";
 
@@ -35,7 +35,9 @@ export const Yuki: Theme<YukiState> = {
         color: "rgb(208,213,215)",
         border: "rgb(155,255,254)",
         background: "rgb(154,154,155)",
-        frontground: "rgb(245,2,6)"
+        frontground: "rgb(254,231,111)",
+        frontground2: "rgb(251,133,154)",
+        frontground3: "rgb(198,49,43)"
     },
     data: {
         items: [],
@@ -278,15 +280,15 @@ export const Yuki: Theme<YukiState> = {
                 // 根据被选择的元素变更颜色
                 const selection: HTMLElement | null = getSelectedElement();
                 let color2: string = `rgb(63,192,252)`;
-                if (selection && selection.style.color) {
-                    let colorSet: Array<string> | null = Color.toRgb(
-                        selection.style.color
-                    ).match(/\d+/g);
-                    if (colorSet?.length === 3) {
-                        color2 = `rgb(${ colorSet[0] },${ colorSet[1] },${ colorSet[2] })`;
-                    } else {
-                        color2 = selection.style.color;
-                    }
+                if (selection && (
+                    // 这里直接赋值给 color2，判断是否为空串
+                    color2 = (
+                        selection.nodeName === "text"
+                        || selection.nodeName === "tspan"
+                    ) ? getStyle(selection, "fill")
+                    : getStyle(selection, "color")
+                )) {
+                    // 操作已在 if 条件中完成
                 } else {
                     color2 = color;
                 }

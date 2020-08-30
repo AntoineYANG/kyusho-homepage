@@ -14,6 +14,7 @@ import Color from "../preference/Color";
 export interface SettingItemProps {
     name: string;
     valueChanged: (value: any) => void;
+    previewChanging: (value: any) => void;
 };
 
 export interface SettingItemState {};
@@ -43,6 +44,7 @@ export interface SettingValueBarProps extends SettingItemProps {
     formatter: (val: number) => (string | number);
     default: number;
     valueChanged: (value: number) => void;
+    previewChanging: (value: number) => void;
 };
 
 export interface SettingValueBarState extends SettingItemState {
@@ -78,23 +80,23 @@ export class SettingValueBar extends SettingItem<SettingValueBarProps, SettingVa
                 fontSize: "110%",
                 alignItems: "center"
             }}
-            onTouchEnd={
-                e => {
-                    if (this.dragging) {
-                        this.dragging = false;
-                        $(e.target).children("text").css(
-                            "fill", Shared.theme.colortab.border
-                        );
-                        const val: number = this.props.setter(this.curVal);
-                        if (val !== this.state.value) {
-                            this.props.valueChanged(val);
-                            this.setState({
-                                value: val
-                            });
-                        }
-                    }
-                }
-            }
+            // onTouchEnd={
+            //     e => {
+            //         if (this.dragging) {
+            //             this.dragging = false;
+            //             $(e.target).children("text").css(
+            //                 "fill", Shared.theme.colortab.border
+            //             );
+            //             const val: number = this.props.setter(this.curVal);
+            //             if (val !== this.state.value) {
+            //                 this.props.valueChanged(val);
+            //                 this.setState({
+            //                     value: val
+            //                 });
+            //             }
+            //         }
+            //     }
+            // }
             onMouseUp={
                 e => {
                     if (this.dragging) {
@@ -127,28 +129,28 @@ export class SettingValueBar extends SettingItem<SettingValueBarProps, SettingVa
                     minWidth: "34vw",
                     marginRight: "auto"
                 }}
-                onTouchMove={
-                    e => {
-                        if (this.dragging && e.touches[0]) {
-                            const w: number = $(e.target).width()!;
-                            const x1: number = 4 + 0.05 * w;
-                            const x2: number = 0.7 * w - 16;
-                            const x: number = Math.max(
-                                x1, Math.min(
-                                    x2, e.touches[0].clientX - (
-                                        $(e.target).offset()?.left || 0
-                                    )
-                                )
-                            );
-                            this.curVal = this.props.min + (x - x1) / (x2 - x1) * (
-                                this.props.max - this.props.min
-                            );
-                            $(e.target).children("rect.target").attr(
-                                "x", x
-                            );
-                        }
-                    }
-                }
+                // onTouchMove={
+                //     e => {
+                //         if (this.dragging && e.touches[0]) {
+                //             const w: number = $(e.target).width()!;
+                //             const x1: number = 4 + 0.05 * w;
+                //             const x2: number = 0.7 * w - 16;
+                //             const x: number = Math.max(
+                //                 x1, Math.min(
+                //                     x2, e.touches[0].clientX - (
+                //                         $(e.target).offset()?.left || 0
+                //                     )
+                //                 )
+                //             );
+                //             this.curVal = this.props.min + (x - x1) / (x2 - x1) * (
+                //                 this.props.max - this.props.min
+                //             );
+                //             $(e.target).children("rect.target").attr(
+                //                 "x", x
+                //             );
+                //         }
+                //     }
+                // }
                 onMouseMove={
                     e => {
                         if (this.dragging) {
@@ -193,7 +195,7 @@ export class SettingValueBar extends SettingItem<SettingValueBarProps, SettingVa
                             0.88
                         ),
                         fillOpacity: 0.7,
-                        stroke: Shared.theme.colortab.frontground,
+                        stroke: Shared.theme.colortab.frontground2,
                         strokeWidth: 3,
                         transform: "translate(-11px,-11px)"
                     }}
@@ -214,11 +216,11 @@ export class SettingValueBar extends SettingItem<SettingValueBarProps, SettingVa
                             this.dragging = true;
                         }
                     }
-                    onTouchStart={
-                        () => {
-                            this.dragging = true;
-                        }
-                    }
+                    // onTouchStart={
+                    //     () => {
+                    //         this.dragging = true;
+                    //     }
+                    // }
                     onMouseMove={
                         e => {
                             e.stopPropagation();
@@ -245,6 +247,7 @@ export class SettingValueBar extends SettingItem<SettingValueBarProps, SettingVa
                                 ).text(
                                     this.props.formatter(val)
                                 );
+                                this.props.previewChanging(val);
                             }
                         }
                     }

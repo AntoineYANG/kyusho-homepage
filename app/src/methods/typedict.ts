@@ -30,6 +30,8 @@ export interface Colortab {
     border: string;
     background: string;
     frontground: string;
+    frontground2: string;
+    frontground3: string;
 };
 
 /**

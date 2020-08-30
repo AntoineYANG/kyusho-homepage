@@ -2,13 +2,14 @@
  * @Author: Antoine YANG 
  * @Date: 2020-08-28 20:50:07 
  * @Last Modified by: Antoine YANG
- * @Last Modified time: 2020-08-29 20:43:20
+ * @Last Modified time: 2020-08-30 22:43:52
  */
 
 import React from "react";
 import { PageBody } from "../methods/typedict";
 import { Shared } from "../methods/globals";
 import { SettingsButton } from "../compo/SettingsButton";
+import { HomeButton } from "../compo/HomeButton";
 
 
 /**
@@ -52,6 +53,7 @@ export class BadUrl extends PageBody<{}> {
                     <br />
                     Bad Gateway
                 </div>
+                <HomeButton />
                 <SettingsButton />
             </>
         );

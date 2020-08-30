@@ -2,13 +2,14 @@
  * @Author: Antoine YANG 
  * @Date: 2020-08-28 21:07:40 
  * @Last Modified by: Antoine YANG
- * @Last Modified time: 2020-08-29 21:43:28
+ * @Last Modified time: 2020-08-30 22:43:33
  */
 
 import React from "react";
 import { PageBody } from "../methods/typedict";
 import { Shared } from "../methods/globals";
 import { SettingsButton } from "../compo/SettingsButton";
+import { HomeButton } from "../compo/HomeButton";
 
 
 /**
@@ -55,6 +56,7 @@ export class Home extends PageBody<{}> {
                     <span style={{ color: "rgb(133,232,62)" }} >is under&nbsp;</span>
                     <span style={{ color: "rgb(63,119,134)" }} >rebuilding...</span>
                 </div>
+                <HomeButton />
                 <SettingsButton />
             </>
         );

@@ -21,5 +21,5 @@ export let Shared: SharedItem = {
     cursorState: "normal",
     animationFPS: 60,
     particalEffects: 2,
-    particalOpacity: 1
+    particalOpacity: 0.8
 };

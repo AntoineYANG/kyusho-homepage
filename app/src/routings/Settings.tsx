@@ -2,13 +2,14 @@
  * @Author: Antoine YANG 
  * @Date: 2020-08-29 21:41:10 
  * @Last Modified by: Antoine YANG
- * @Last Modified time: 2020-08-30 04:49:15
+ * @Last Modified time: 2020-08-30 22:43:34
  */
 
 import React from "react";
 import { PageBody } from "../methods/typedict";
 import { Shared } from "../methods/globals";
 import { SettingValueBar } from "../compo/SettingItem";
+import { HomeButton } from "../compo/HomeButton";
 
 
 /**
@@ -49,6 +50,11 @@ export class Settings extends PageBody<{}> {
                     setter={
                         (val: number) => Math.floor(val / 5) * 5
                     }
+                    previewChanging={
+                        (val: number) => {
+                            Shared.animationFPS = val;
+                        }
+                    }
                     valueChanged={
                         (val: number) => {
                             Shared.animationFPS = val;
@@ -67,6 +73,11 @@ export class Settings extends PageBody<{}> {
                     setter={
                         (val: number) => Math.round(val)
                     }
+                    previewChanging={
+                        (val: number) => {
+                            Shared.particalEffects = val as 0 | 1 | 2 | 3;
+                        }
+                    }
                     valueChanged={
                         (val: number) => {
                             Shared.particalEffects = val as 0 | 1 | 2 | 3;
@@ -80,12 +91,18 @@ export class Settings extends PageBody<{}> {
                     setter={
                         (val: number) => val
                     }
+                    previewChanging={
+                        (val: number) => {
+                            Shared.particalOpacity = val;
+                        }
+                    }
                     valueChanged={
                         (val: number) => {
                             Shared.particalOpacity = val;
                         }
                     } />
                 </div>
+                <HomeButton />
             </>
         );
     }
