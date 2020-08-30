@@ -2,13 +2,13 @@
  * @Author: Antoine YANG 
  * @Date: 2020-08-29 21:41:10 
  * @Last Modified by: Antoine YANG
- * @Last Modified time: 2020-08-30 22:43:34
+ * @Last Modified time: 2020-08-31 03:19:40
  */
 
 import React from "react";
 import { PageBody } from "../methods/typedict";
 import { Shared } from "../methods/globals";
-import { SettingValueBar } from "../compo/SettingItem";
+import { SettingValueBar, SettingRadio } from "../compo/SettingItem";
 import { HomeButton } from "../compo/HomeButton";
 
 
@@ -60,6 +60,13 @@ export class Settings extends PageBody<{}> {
                             Shared.animationFPS = val;
                         }
                     } />
+                    <SettingRadio name="Set Automatically" default={ false }
+                    formatter={
+                        (val: boolean) => val.toString()
+                    }
+                    valueChanged={
+                        (_val: boolean) => {}
+                    } />
                     <SettingValueBar name="Partical Effects"
                     formatter={
                         (val: number) => (
@@ -85,7 +92,7 @@ export class Settings extends PageBody<{}> {
                     } />
                     <SettingValueBar name="Partical Opacity"
                     formatter={
-                        (val: number) => val.toPrecision(2)
+                        (val: number) => val.toFixed(2)
                     }
                     min={ 0.1 } max={ 1 } default={ Shared.particalOpacity }
                     setter={

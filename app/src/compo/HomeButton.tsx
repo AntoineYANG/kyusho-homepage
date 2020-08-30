@@ -2,7 +2,7 @@
  * @Author: Antoine YANG 
  * @Date: 2020-08-30 22:42:24 
  * @Last Modified by: Antoine YANG
- * @Last Modified time: 2020-08-30 22:43:15
+ * @Last Modified time: 2020-08-31 00:02:08
  */
 
 import React, { Component } from "react";
@@ -20,28 +20,25 @@ export class HomeButton extends Component<{}, {}> {
         return (
             <div style={{
                 position: "absolute",
-                left: "10px",
-                top: "10px",
+                left: "12px",
+                top: "12px",
                 pointerEvents: "none"
             }} >
                 <HashRouter>
                     <Link to="/" >
-                        <svg width="40px" height="40px" >
-                            <path d={
-                                "M32,22 A16.5,16.5,0,0,0,32,18 L29,18 A13.5,13.5,0,0,0,28,15"
-                                + " L30,13 A16.5,16.5,0,0,0,27,10 L25,12 A13.5,13.5,0,0,0,22,11"
-                                + " L22,8 A16.5,16.5,0,0,0,18,8 L18,11 A13.5,13.5,0,0,0,15,12"
-                                + " L13,10 A16.5,16.5,0,0,0,10,13 L12,15 A13.5,13.5,0,0,0,11,18"
-                                + " L8,18 A16.5,16.5,0,0,0,8,22 L11,22 A13.5,13.5,0,0,0,12,25"
-                                + " L10,27 A16.5,16.5,0,0,0,13,30 L15,28 A13.5,13.5,0,0,0,18,29"
-                                + " L18,32 A16.5,16.5,0,0,0,22,32 L22,29 A13.5,13.5,0,0,0,25,28"
-                                + " L27,30 A16.5,16.5,0,0,0,30,27 L28,25 A13.5,13.5,0,0,0,29,22"
-                            }
+                        <svg width="40px" height="40px"
+                        style={{
+                            scale: "144%"
+                        }} >
+                            <rect key="0"
+                            x={ 20 } y={ 20 } width={ 20 } height={ 20 }
                             style={{
-                                fill: "rgb(212,212,213)",
-                                stroke: "rgb(37,37,38)",
+                                fill: Shared.theme.colortab.frontground,
+                                stroke: Shared.theme.colortab.background,
                                 pointerEvents: "all",
-                                cursor: "none"
+                                cursor: "none",
+                                transform: "rotate(18deg) translate(-10px,-10px)",
+                                transformOrigin: "20px 20px"
                             }}
                             onMouseOver={
                                 () => {
@@ -53,6 +50,46 @@ export class HomeButton extends Component<{}, {}> {
                                     Shared.cursorState = "normal";
                                 }
                             } />
+                            <rect key="1"
+                            x={ 20 } y={ 20 } width={ 16 } height={ 16 }
+                            style={{
+                                fill: Shared.theme.colortab.frontground2,
+                                stroke: Shared.theme.colortab.background,
+                                transform: "rotate(36deg) translate(-8px,-8px)",
+                                transformOrigin: "20px 20px"
+                            }} />
+                            <rect key="2"
+                            x={ 20 } y={ 20 } width={ 12.8 } height={ 12.8 }
+                            style={{
+                                fill: Shared.theme.colortab.frontground3,
+                                stroke: Shared.theme.colortab.background,
+                                transform: "rotate(54deg) translate(-6.4px,-6.4px)",
+                                transformOrigin: "20px 20px"
+                            }} />
+                            <rect key="4"
+                            x={ 20 } y={ 20 } width={ 9.8 } height={ 9.8 }
+                            style={{
+                                fill: Shared.theme.colortab.frontground,
+                                stroke: Shared.theme.colortab.background,
+                                transform: "rotate(72deg) translate(-4.9px,-4.9px)",
+                                transformOrigin: "20px 20px"
+                            }} />
+                            <rect key="5"
+                            x={ 20 } y={ 20 } width={ 7.6 } height={ 7.6 }
+                            style={{
+                                fill: Shared.theme.colortab.frontground2,
+                                stroke: Shared.theme.colortab.background,
+                                transform: "rotate(90deg) translate(-3.8px,-3.8px)",
+                                transformOrigin: "20px 20px"
+                            }} />
+                            <rect key="6"
+                            x={ 20 } y={ 20 } width={ 6 } height={ 6 }
+                            style={{
+                                fill: Shared.theme.colortab.frontground3,
+                                stroke: Shared.theme.colortab.background,
+                                transform: "rotate(108deg) translate(-3px,-3px)",
+                                transformOrigin: "20px 20px"
+                            }} />
                         </svg>
                     </Link>
                 </HashRouter>

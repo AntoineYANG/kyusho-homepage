@@ -2,7 +2,7 @@
  * @Author: Antoine YANG 
  * @Date: 2020-08-29 21:17:55 
  * @Last Modified by: Antoine YANG
- * @Last Modified time: 2020-08-29 21:29:01
+ * @Last Modified time: 2020-08-30 23:23:26
  */
 
 import React, { Component } from "react";
@@ -20,13 +20,16 @@ export class SettingsButton extends Component<{}, {}> {
         return (
             <div style={{
                 position: "absolute",
-                right: "10px",
-                top: "10px",
+                right: "12px",
+                top: "12px",
                 pointerEvents: "none"
             }} >
                 <HashRouter>
                     <Link to="/settings" >
-                        <svg width="40px" height="40px" >
+                        <svg width="40px" height="40px"
+                        style={{
+                            scale: "144%"
+                        }} >
                             <path d={
                                 "M32,22 A16.5,16.5,0,0,0,32,18 L29,18 A13.5,13.5,0,0,0,28,15"
                                 + " L30,13 A16.5,16.5,0,0,0,27,10 L25,12 A13.5,13.5,0,0,0,22,11"
@@ -38,8 +41,7 @@ export class SettingsButton extends Component<{}, {}> {
                                 + " L27,30 A16.5,16.5,0,0,0,30,27 L28,25 A13.5,13.5,0,0,0,29,22"
                             }
                             style={{
-                                fill: "rgb(212,212,213)",
-                                stroke: "rgb(37,37,38)",
+                                fill: Shared.theme.colortab.frontground2,
                                 pointerEvents: "all",
                                 cursor: "none"
                             }}
@@ -53,6 +55,11 @@ export class SettingsButton extends Component<{}, {}> {
                                     Shared.cursorState = "normal";
                                 }
                             } />
+                            <circle
+                            cx={ 20 } cy={ 20 } r={ 5.6 }
+                            style={{
+                                fill: Shared.theme.colortab.frontground
+                            }} />
                         </svg>
                     </Link>
                 </HashRouter>
