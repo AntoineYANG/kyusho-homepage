@@ -2,13 +2,14 @@
  * @Author: Antoine YANG 
  * @Date: 2020-08-28 21:07:40 
  * @Last Modified by: Antoine YANG
- * @Last Modified time: 2020-08-30 23:46:46
+ * @Last Modified time: 2020-09-01 01:30:36
  */
 
 import React from "react";
 import { PageBody } from "../methods/typedict";
 import { Shared } from "../methods/globals";
 import { SettingsButton } from "../compo/SettingsButton";
+import { InfoView } from "../compo/InfoView";
 
 
 /**
@@ -28,12 +29,7 @@ export class Home extends PageBody<{}> {
     public render(): JSX.Element {
         return (
             <>
-                <h1 style={{
-                    color: Shared.theme.colortab.color,
-                    margin: "calc(20px + 3vh)"
-                }} >
-                    AntoineYANG
-                </h1>
+                <InfoView />
                 <div style={{
                     color: Shared.theme.colortab.color,
                     margin: "calc(10px + 6vh) calc(20px + 8vw) calc(10px + 3vh)",

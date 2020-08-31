@@ -2,14 +2,13 @@
  * @Author: Antoine YANG 
  * @Date: 2020-08-29 21:47:03 
  * @Last Modified by: Antoine YANG
- * @Last Modified time: 2020-08-31 03:19:13
+ * @Last Modified time: 2020-08-31 17:06:33
  */
 
 import React, { Component } from "react";
 import $ from "jquery";
 import { Shared } from "../methods/globals";
 import Color from "../preference/Color";
-import { lastCalled } from "../methods/decorator";
 
 
 export interface SettingItemProps {
@@ -66,8 +65,6 @@ export class SettingValueBar extends SettingItem<SettingValueBarProps, SettingVa
     protected dragging: boolean;
     protected curVal: number;
 
-    protected submitTouchEnd: Promise<() => Promise<void | null>>;
-
     public constructor(props: SettingValueBarProps) {
         super(props);
         this.state = {
@@ -79,17 +76,6 @@ export class SettingValueBar extends SettingItem<SettingValueBarProps, SettingVa
 
         this.dragging = false;
         this.curVal = this.props.default;
-
-        this.submitTouchEnd = lastCalled(() => {
-            const val: number = this.props.setter(this.curVal);
-
-            if (val !== this.state.value) {
-                this.props.valueChanged(val);
-                this.setState({
-                    value: val
-                })
-            }
-        });
     }
 
     public render(): JSX.Element {
@@ -97,7 +83,7 @@ export class SettingValueBar extends SettingItem<SettingValueBarProps, SettingVa
             <div style={{
                 display: "inline-flex",
                 margin: "2vh 2vw",
-                fontSize: "110%",
+                fontSize: "105%",
                 alignItems: "center"
             }} >
                 <label style={{
@@ -106,7 +92,9 @@ export class SettingValueBar extends SettingItem<SettingValueBarProps, SettingVa
                     width: "20vw",
                     maxWidth: "260px",
                     marginLeft: "auto",
-                    marginRight: "calc(4px + 0.1vw)"
+                    marginRight: "calc(4px + 0.1vw)",
+                    wordBreak: "break-all",
+                    wordWrap: "break-word"
                 }} >
                     { this.props.name }
                 </label>
@@ -213,14 +201,9 @@ export class SettingValueBar extends SettingItem<SettingValueBarProps, SettingVa
                             );
                         }
                     }
-                    onTouchStart={
-                        () => {
-                            this.dragging = true;
-                        }
-                    }
                     onTouchMove={
                         async e => {
-                            if (this.dragging && e.touches[0]) {
+                            if (e.touches[0]) {
                                 const w: number = $(
                                     e.currentTarget.parentElement!
                                 ).width()!;
@@ -240,15 +223,15 @@ export class SettingValueBar extends SettingItem<SettingValueBarProps, SettingVa
                                     "x", x
                                 );
                                 const val: number = this.props.setter(this.curVal);
-                                $(e.currentTarget.parentElement!).children("text").css(
-                                    "fill", Shared.theme.colortab.frontground
-                                ).text(
+                                $(e.currentTarget.parentElement!).children("text").text(
                                     this.props.formatter(val)
                                 );
-                                this.props.previewChanging(val);
-                                
-                                const submitTouchEnd = await this.submitTouchEnd;
-                                await submitTouchEnd();
+                                if (val !== this.state.value) {
+                                    this.props.valueChanged(val);
+                                    this.setState({
+                                        value: val
+                                    })
+                                }
                             }
                         }
                     } />
@@ -341,7 +324,7 @@ export class SettingRadio extends SettingItem<SettingRadioProps, SettingRadioSta
             <div style={{
                 display: "inline-flex",
                 margin: "2vh 2vw",
-                fontSize: "110%",
+                fontSize: "105%",
                 alignItems: "center"
             }} >
                 <label style={{
@@ -350,7 +333,9 @@ export class SettingRadio extends SettingItem<SettingRadioProps, SettingRadioSta
                     width: "20vw",
                     maxWidth: "260px",
                     marginLeft: "auto",
-                    marginRight: "calc(4px + 0.1vw)"
+                    marginRight: "calc(4px + 0.1vw)",
+                    wordBreak: "break-all",
+                    wordWrap: "break-word"
                 }} >
                     { this.props.name }
                 </label>

@@ -2,7 +2,7 @@
  * @Author: Antoine YANG 
  * @Date: 2020-08-28 21:37:20 
  * @Last Modified by: Antoine YANG
- * @Last Modified time: 2020-08-30 04:57:28
+ * @Last Modified time: 2020-09-01 03:01:10
  */
 
 import { Theme, Partical } from "../methods/typedict";
@@ -10,6 +10,7 @@ import $ from "jquery";
 import { getSelectedElement, getStyle } from "../methods/selection";
 import Color from "../preference/Color";
 import { Shared } from "../methods/globals";
+import { renderingState } from "./BackgroundCanvas";
 
 
 interface SnowBall {
@@ -67,6 +68,35 @@ export const Yuki: Theme<YukiState> = {
     paint: (ctx: CanvasRenderingContext2D, ctx2: CanvasRenderingContext2D) => {
         /** 到下一帧的间隔毫秒数 */
         const span: number = 1000 / Shared.animationFPS;
+        /** 绘制的时间 */
+        const time: number = (new Date()).getTime();
+        const realSpan: number = time - renderingState.getTime();
+        Shared.realFPS = Math.round(
+            1000 / realSpan
+        );
+        renderingState.setTime(time);
+
+        if (Shared.autoFPS) {
+            const ita: number = 0.1 / Shared.animationFPS;
+            const u: number = (realSpan - span) / span;
+            if (u <= 0.67) {
+                Shared.animationFPS += 50 * (1.67 - u) / Shared.animationFPS;
+            }
+            Shared.animationFPS = Math.max(
+                10, Math.min(
+                    120, Math.floor(
+                        (
+                            Shared.animationFPS * (
+                                1 - ita
+                            )
+                        ) + (
+                            Shared.realFPS * 2
+                        ) * ita
+                    )
+                )
+            );
+        }
+
         const width: number = ctx.canvas.width;
         const height: number = ctx.canvas.height;
         const max: number = Math.sqrt(width * height) / 16;
@@ -182,6 +212,14 @@ export const Yuki: Theme<YukiState> = {
         // 鼠标指针
         if (Yuki.data.cursor) {
             ctx2.globalAlpha = 1;
+            ctx2.strokeStyle = "rgb(8,36,76)";
+            ctx2.lineWidth = 3;
+            ctx2.beginPath();
+            ctx2.moveTo(Yuki.data.cursor.x + 1, Yuki.data.cursor.y + 1);
+            ctx2.lineTo(Yuki.data.cursor.x + 17, Yuki.data.cursor.y + 17);
+            ctx2.lineTo(Yuki.data.cursor.x + 7, Yuki.data.cursor.y + 23);
+            ctx2.lineTo(Yuki.data.cursor.x + 1, Yuki.data.cursor.y + 1);
+            ctx2.stroke();
             if (Shared.cursorState === "normal") {
                 ctx2.strokeStyle = "rgb(23,126,209)";
                 ctx2.lineWidth = 1;

@@ -2,7 +2,7 @@
  * @Author: Antoine YANG 
  * @Date: 2020-08-29 21:41:10 
  * @Last Modified by: Antoine YANG
- * @Last Modified time: 2020-08-31 03:19:40
+ * @Last Modified time: 2020-08-31 19:18:38
  */
 
 import React from "react";
@@ -21,9 +21,21 @@ import { HomeButton } from "../compo/HomeButton";
  */
 export class Settings extends PageBody<{}> {
 
+    protected fpsSetter: React.RefObject<SettingValueBar>;
+    protected fpsRadio: React.RefObject<SettingRadio>;
+    protected fpsUpdater: NodeJS.Timeout;
+
     public constructor(props: {}) {
         super(props);
         this.state = {};
+
+        this.fpsSetter = React.createRef<SettingValueBar>();
+        this.fpsRadio = React.createRef<SettingRadio>();
+        this.fpsUpdater = Shared.autoFPS ? setInterval(() => {
+            this.fpsSetter.current?.setState({
+                value: Shared.animationFPS
+            });
+        }, 400) : setTimeout(() => {}, 0);
     }
     
     public render(): JSX.Element {
@@ -42,7 +54,7 @@ export class Settings extends PageBody<{}> {
                     padding: "calc(12px + 5vh) 3vw",
                     display: "block"
                 }} >
-                    <SettingValueBar name="Animation FPS"
+                    <SettingValueBar ref={ this.fpsSetter } name="Animation FPS"
                     min={ 10 } max={ 120 } default={ Shared.animationFPS }
                     formatter={
                         (val: number) => val
@@ -52,6 +64,14 @@ export class Settings extends PageBody<{}> {
                     }
                     previewChanging={
                         (val: number) => {
+                            clearInterval(this.fpsUpdater);
+                            this.fpsUpdater = setTimeout(() => {}, 0);
+                            if (Shared.autoFPS) {
+                                Shared.autoFPS = false;
+                                this.fpsRadio.current?.setState({
+                                    value: false
+                                });
+                            }
                             Shared.animationFPS = val;
                         }
                     }
@@ -60,12 +80,23 @@ export class Settings extends PageBody<{}> {
                             Shared.animationFPS = val;
                         }
                     } />
-                    <SettingRadio name="Set Automatically" default={ false }
+                    <SettingRadio ref={ this.fpsRadio } name="Auto FPS"
+                    default={ Shared.autoFPS }
                     formatter={
-                        (val: boolean) => val.toString()
+                        (val: boolean) => val ? "on" : "off"
                     }
                     valueChanged={
-                        (_val: boolean) => {}
+                        (val: boolean) => {
+                            Shared.autoFPS = val;
+
+                            clearInterval(this.fpsUpdater);
+
+                            this.fpsUpdater = Shared.autoFPS ? setInterval(() => {
+                                this.fpsSetter.current?.setState({
+                                    value: Shared.animationFPS
+                                });
+                            }, 400) : setTimeout(() => {}, 0);
+                        }
                     } />
                     <SettingValueBar name="Partical Effects"
                     formatter={
@@ -116,6 +147,10 @@ export class Settings extends PageBody<{}> {
 
     public componentDidMount(): void {
         Shared.cursorState = "normal";
+    }
+
+    public componentWillUnmount(): void {
+        clearInterval(this.fpsUpdater);
     }
 
 };

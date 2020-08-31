@@ -2,7 +2,7 @@
  * @Author: Antoine YANG 
  * @Date: 2020-08-28 21:15:16 
  * @Last Modified by: Antoine YANG
- * @Last Modified time: 2020-08-29 18:02:58
+ * @Last Modified time: 2020-08-31 18:46:41
  */
 
 import React, { Component } from "react";
@@ -130,4 +130,12 @@ export class BackgroundCanvas extends Component<BackgroundCanvasProps, Backgroun
         this.state.curTheme.start(this.ctx!, this.ctx2!);
     }
 
+};
+
+
+/** 记录绘制的时间 */
+export const renderingState = {
+    prev: (new Date()).getTime(),
+    setTime: (val: number) => renderingState.prev = val,
+    getTime: () => renderingState.prev
 };
