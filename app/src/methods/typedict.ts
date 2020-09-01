@@ -2,7 +2,7 @@
  * @Author: Antoine YANG 
  * @Date: 2020-08-28 20:55:09 
  * @Last Modified by: Antoine YANG
- * @Last Modified time: 2020-08-29 22:50:27
+ * @Last Modified time: 2020-09-01 23:12:38
  */
 
 import { Component } from "react";
@@ -97,4 +97,32 @@ export interface Partical {
     };
     ms: number;
     life: number;
+};
+
+/**
+ * 文章.
+ */
+export type Article = {
+    title: string;
+    data: string;
+};
+
+/**
+ * 论文信息.
+ */
+export type PaperInfo = {
+    authors: Array<string>;
+    title: string;
+    publishingPlace: string;
+    year: number;
+    pageRange?: string;
+};
+
+/**
+ * 书签.
+ */
+export type Bookmark = {
+    type: "tech" | "design" | "other";
+    title: string;
+    url: string;
 };

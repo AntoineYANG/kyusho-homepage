@@ -2,7 +2,7 @@
  * @Author: Antoine YANG 
  * @Date: 2020-08-29 21:41:10 
  * @Last Modified by: Antoine YANG
- * @Last Modified time: 2020-08-31 19:18:38
+ * @Last Modified time: 2020-09-01 19:53:40
  */
 
 import React from "react";
@@ -140,7 +140,7 @@ export class Settings extends PageBody<{}> {
                         }
                     } />
                 </div>
-                <HomeButton />
+                <HomeButton active={ true } />
             </>
         );
     }

@@ -2,7 +2,7 @@
  * @Author: Antoine YANG 
  * @Date: 2020-09-01 01:28:18 
  * @Last Modified by: Antoine YANG
- * @Last Modified time: 2020-09-01 04:05:08
+ * @Last Modified time: 2020-09-01 20:05:00
  */
 
 import React from "react";
@@ -98,7 +98,7 @@ export const InfoView = (): JSX.Element => {
                 fontSize: "calc(12px + 0.4vmax)",
                 color: Shared.theme.colortab.frontground
             }} >
-                Contact me
+                Contact Info
             </label>
             <div key="links" style={{
                 margin: "1vh auto calc(4vh - 12px)",

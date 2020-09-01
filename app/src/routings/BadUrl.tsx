@@ -2,7 +2,7 @@
  * @Author: Antoine YANG 
  * @Date: 2020-08-28 20:50:07 
  * @Last Modified by: Antoine YANG
- * @Last Modified time: 2020-08-30 22:43:52
+ * @Last Modified time: 2020-09-01 23:06:15
  */
 
 import React from "react";
@@ -29,12 +29,6 @@ export class BadUrl extends PageBody<{}> {
     public render(): JSX.Element {
         return (
             <>
-                <h1 style={{
-                    color: Shared.theme.colortab.color,
-                    margin: "calc(20px + 3vh)"
-                }} >
-                    404
-                </h1>
                 <div style={{
                     color: Shared.theme.colortab.color,
                     margin: "calc(10px + 6vh) calc(20px + 8vw) calc(10px + 3vh)",
@@ -48,12 +42,18 @@ export class BadUrl extends PageBody<{}> {
                         )
                     }`
                 }} >
-                    很抱歉，您访问的页面不存在。
+                    <h1 style={{
+                        color: Shared.theme.colortab.color,
+                        margin: "calc(20px + 3vh)"
+                    }} >
+                        404 - Bad Gateway
+                    </h1>
                     <br />
-                    <br />
-                    Bad Gateway
+                    <span style={{ color: Shared.theme.colortab.frontground }} >
+                        很抱歉，您访问的页面不存在。
+                    </span>
                 </div>
-                <HomeButton />
+                <HomeButton active={ true } />
                 <SettingsButton />
             </>
         );
