@@ -2,7 +2,7 @@
  * @Author: Antoine YANG 
  * @Date: 2020-09-01 01:28:18 
  * @Last Modified by: Antoine YANG
- * @Last Modified time: 2020-09-01 20:05:00
+ * @Last Modified time: 2020-09-02 15:26:33
  */
 
 import React from "react";
@@ -18,7 +18,7 @@ export const InfoView = (): JSX.Element => {
             background: 'rgba(0, 0, 0, 0) url("./home.png") no-repeat scroll 22% 0% / cover',
             margin: "calc(10px + 8vh) calc(20px + 8vw) calc(10px + 3vh)",
             minHeight: "calc(12vw - 10px)",
-            padding: "calc(-20px + 3vh) calc(12px + 3vw) calc(-20px + 3vh) 30%",
+            padding: "calc(-20px + 3vh) calc(6px + 1.5vw) calc(-20px + 3vh) 28%",
             fontSize: "calc(8px + 0.6vmax)",
             border: `1px solid ${ Shared.theme.colortab.border }`,
             boxShadow: `6px 5px 0 1px ${
@@ -32,14 +32,14 @@ export const InfoView = (): JSX.Element => {
             <div key="name" style={{
                 maxWidth: "36vw",
                 fontSize: "calc(10px + 1vmax)",
-                margin: "1em auto 0.2em"
+                margin: "1em auto 0.6em"
             }} >
                 <label key="1" style={{
                     display: "inline-block",
                     margin: "0 auto",
                     cursor: "none"
                 }} >
-                    Antoine You
+                    { `Zhendong Yang` }
                 </label>
                 <label key="2" style={{
                     display: "inline-block",
@@ -49,13 +49,13 @@ export const InfoView = (): JSX.Element => {
                     opacity: 0.9,
                     fontSize: "90%"
                 }} >
-                    (A. YANG)
+                    { `(Kanata You)` }
                 </label>
             </div>
             <label key="prof" style={{
                 display: "inline-block",
                 padding: "0.1em 0.6em",
-                margin: "0.2em auto 0.3em",
+                margin: "0.2em auto",
                 cursor: "none",
                 color: Color.setLightness(
                     Shared.theme.colortab.color, 0.1
@@ -68,7 +68,7 @@ export const InfoView = (): JSX.Element => {
                     ")", ",0.3)"
                 )
             }} >
-                Student
+                { `Student, China` }
             </label>
             <label key="belong" style={{
                 display: "inline-block",
@@ -108,7 +108,7 @@ export const InfoView = (): JSX.Element => {
             }} >
                 <div key="github"
                 style={{
-                    margin: "0 calc(0.8vw + 2px) 0 auto",
+                    margin: "0 calc(1vw - 4px) 0 auto",
                     padding: "0 2px",
                     display: "flex",
                     alignItems: "center"
@@ -152,9 +152,42 @@ export const InfoView = (): JSX.Element => {
                         </svg>
                     </a>
                 </div>
+                <div key="npm"
+                style={{
+                    margin: "0 calc(1vw - 4px)",
+                    padding: "0 2px",
+                    display: "flex",
+                    alignItems: "center"
+                }}
+                onMouseEnter={
+                    () => {
+                        Shared.cursorState = "pointer";
+                    }
+                }
+                onMouseLeave={
+                    () => {
+                        Shared.cursorState = "normal";
+                    }
+                } >
+                    <a href="https://www.npmjs.com/~kanatayou" target="new"
+                    style={{
+                        cursor: "none"
+                    }} >
+                        <svg height="28" width="28" viewBox="0 0 780 250">
+                            <path d={
+                                "M240,250h100v-50h100V0H240V250z M340,50h50v100h-50V50z "
+                                + "M480,0v200h100V50h50v150h50V50h50v150h50V0H480z "
+                                + "M0,200h100V50h50v150h50V0H0V200z"
+                            }
+                            style={{
+                                fill: Shared.theme.colortab.frontground2
+                            }} />
+                        </svg>
+                    </a>
+                </div>
                 <div key="mail" title="Click to copy"
                 style={{
-                    margin: "0 auto 0 calc(0.8vw + 2px)",
+                    margin: "0 calc(1vw - 4px)",
                     padding: "0 2px",
                     display: "flex",
                     alignItems: "center"
@@ -182,17 +215,46 @@ export const InfoView = (): JSX.Element => {
                         <rect
                         x={ 2 } y={ 5 } width={ 24 } height={ 18 }
                         style={{
-                            fill: Shared.theme.colortab.frontground2,
+                            fill: Shared.theme.colortab.color,
                             pointerEvents: "none"
                         }} />
                         <path
-                        d="M2,5 L14,14 L26,5"
+                        d="M3,23 L3,6 L14,14 L25,6 L25,23"
                         style={{
                             fill: "none",
-                            stroke: "white",
+                            stroke: Shared.theme.colortab.frontground2,
+                            strokeWidth: 2,
                             pointerEvents: "none"
                         }} /> />
                     </svg>
+                </div>
+                <div key="zhihu"
+                style={{
+                    margin: "0 auto 0 calc(1vw - 4px)",
+                    padding: "0 2px",
+                    display: "flex",
+                    alignItems: "center"
+                }}
+                onMouseEnter={
+                    () => {
+                        Shared.cursorState = "pointer";
+                    }
+                }
+                onMouseLeave={
+                    () => {
+                        Shared.cursorState = "normal";
+                    }
+                } >
+                    <a href="https://www.zhihu.com/people/bu-yuan-86-22" target="new"
+                    style={{
+                        cursor: "none"
+                    }} >
+                        <img src="./zhihu.jpeg" alt="知乎" width="28" height="28"
+                        onDragStart={ e => e.preventDefault() }
+                        style={{
+                            transform: "translateY(1.6px)"
+                        }} />
+                    </a>
                 </div>
             </div>
         </div>

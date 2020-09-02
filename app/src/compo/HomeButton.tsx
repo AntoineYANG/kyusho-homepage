@@ -94,25 +94,13 @@ export const HomeButton = (props: HomeButtonProps): JSX.Element => {
             props.active ? (
                 <HashRouter>
                     <Link to="/" >
-                        <div style={{
-                            position: "absolute",
-                            left: "12px",
-                            top: "12px",
-                            pointerEvents: "none"
-                        }} >
-                            { svg }
-                        </div>
+                        { svg }
                     </Link>
                 </HashRouter>
             ) : (
-                <div style={{
-                    position: "absolute",
-                    left: "12px",
-                    top: "12px",
-                    pointerEvents: "none"
-                }} >
+                <>
                     { svg }
-                </div>
+                </>
             )
         }
         </div>

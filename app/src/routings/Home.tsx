@@ -2,7 +2,7 @@
  * @Author: Antoine YANG 
  * @Date: 2020-08-28 21:07:40 
  * @Last Modified by: Antoine YANG
- * @Last Modified time: 2020-09-01 23:28:28
+ * @Last Modified time: 2020-09-02 15:48:55
  */
 
 import React from "react";
@@ -13,6 +13,7 @@ import { InfoView } from "../compo/InfoView";
 import { HomeButton } from "../compo/HomeButton";
 import { ListView } from "../compo/ListView";
 import { displayPaperInfo, displayBookmark } from "../methods/display";
+import { InterestView } from "../compo/InterestView";
 
 
 /**
@@ -39,38 +40,12 @@ export class Home extends PageBody<{}> {
         return (
             <>
                 <InfoView />
-                {/* <div style={{
-                    color: Shared.theme.colortab.color,
-                    margin: "calc(10px + 6vh) calc(20px + 8vw) calc(10px + 3vh)",
-                    padding: "calc(12px + 5vh)",
-                    border: `1px solid ${ Shared.theme.colortab.border }`,
-                    boxShadow: `6px 5px 0 1px ${
-                        Shared.theme.colortab.border.replace(
-                            "(", "a("
-                        ).replace(
-                            ")", ",0.1)"
-                        )
-                    }`
-                }} >
-                    网站升级中...
-                    <br />
-                    <br />
-                    <span style={{ color: Shared.theme.colortab.frontground }} >
-                        Sorry,&nbsp;
-                    </span>
-                    <span style={{ color: Shared.theme.colortab.frontground2 }} >
-                        this website&nbsp;
-                    </span>
-                    <span style={{ color: Shared.theme.colortab.frontground3 }} >
-                        is under&nbsp;
-                    </span>
-                    <span style={{ color: "rgb(63,119,134)" }} >rebuilding...</span>
-                </div> */}
+                <InterestView />
                 <ListView<PaperInfo> ref={ this.paperList }
                 title="Paper Publications" maxPerPage={ 8 }
                 display={ displayPaperInfo } />
                 <ListView<Bookmark> ref={ this.bookmarkList }
-                title="Bookmarks" maxPerPage={ 8 }
+                title="Bookmarks (external links)" maxPerPage={ 8 }
                 display={ displayBookmark } />
                 <HomeButton active={ false } />
                 <SettingsButton />
@@ -98,8 +73,8 @@ export class Home extends PageBody<{}> {
         const bookmarks: Array<Bookmark> = [{
             "type": "tech",
             "title": "[翻译] 神经网络的直观解释 - HackCV",
-            "url": "https://hackcv.com/2016/10/%E7%BF%BB%E8%AF%91-%E7%A5%9E%E7%BB%8F"
-                + "%E7%BD%91%E7%BB%9C%E7%9A%84%E7%9B%B4%E8%A7%82%E8%A7%A3%E9%87%8A/"
+            "url": "https://hackcv.com/posts/%E7%BF%BB%E8%AF%91-%E7%A5%9E%E7%BB%8F%E7%BD%"
+                + "91%E7%BB%9C%E7%9A%84%E7%9B%B4%E8%A7%82%E8%A7%A3%E9%87%8A/"
         }, {
             "type": "tech",
             "title": ".md格式的markdown文件常用语法介绍 - 简书",
