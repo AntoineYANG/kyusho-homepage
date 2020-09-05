@@ -7,6 +7,7 @@ import { BackgroundCanvas } from './themes/BackgroundCanvas';
 import { Theme } from './methods/typedict';
 import { Shared } from './methods/globals';
 import { Settings } from './routings/Settings';
+import { ProductDetail } from './routings/ProductDetail';
 
 
 export interface AppState {
@@ -38,6 +39,7 @@ class App extends Component<{}, AppState> {
             <Switch>
               <Route path="/" exact component={ Home } />
               <Route path="/settings" exact component={ Settings } />
+              <Route path="/product/*" exact component={ ProductDetail } />
               <Route path="/**" component={ BadUrl } />
             </Switch>
           </HashRouter>

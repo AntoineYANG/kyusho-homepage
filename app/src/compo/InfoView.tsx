@@ -2,7 +2,7 @@
  * @Author: Antoine YANG 
  * @Date: 2020-09-01 01:28:18 
  * @Last Modified by: Antoine YANG
- * @Last Modified time: 2020-09-02 15:26:33
+ * @Last Modified time: 2020-09-05 15:25:20
  */
 
 import React from "react";
@@ -15,7 +15,7 @@ export const InfoView = (): JSX.Element => {
     return (
         <div style={{
             color: Shared.theme.colortab.color,
-            background: 'rgba(0, 0, 0, 0) url("./home.png") no-repeat scroll 22% 0% / cover',
+            background: 'rgba(0, 0, 0, 0) url("./images/home.png") no-repeat scroll 22% 0% / cover',
             margin: "calc(10px + 8vh) calc(20px + 8vw) calc(10px + 3vh)",
             minHeight: "calc(12vw - 10px)",
             padding: "calc(-20px + 3vh) calc(6px + 1.5vw) calc(-20px + 3vh) 28%",
@@ -249,7 +249,7 @@ export const InfoView = (): JSX.Element => {
                     style={{
                         cursor: "none"
                     }} >
-                        <img src="./zhihu.jpeg" alt="知乎" width="28" height="28"
+                        <img src="./images/zhihu.jpeg" alt="知乎" width="28" height="28"
                         onDragStart={ e => e.preventDefault() }
                         style={{
                             transform: "translateY(1.6px)"

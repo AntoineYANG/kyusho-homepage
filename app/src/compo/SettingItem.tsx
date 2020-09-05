@@ -2,7 +2,7 @@
  * @Author: Antoine YANG 
  * @Date: 2020-08-29 21:47:03 
  * @Last Modified by: Antoine YANG
- * @Last Modified time: 2020-08-31 17:06:33
+ * @Last Modified time: 2020-09-05 20:53:12
  */
 
 import React, { Component } from "react";
@@ -320,7 +320,7 @@ export class SettingRadio extends SettingItem<SettingRadioProps, SettingRadioSta
     }
 
     public render(): JSX.Element {
-        return (
+        return this.props.name ? (
             <div style={{
                 display: "inline-flex",
                 margin: "2vh 2vw",
@@ -343,6 +343,74 @@ export class SettingRadio extends SettingItem<SettingRadioProps, SettingRadioSta
                     maxWidth: "68vw",
                     minWidth: "34vw",
                     marginRight: "auto"
+                }} >
+                    <rect key="background" className="background"
+                    x={ 0 } y={ 6 } width={ 28 } height={ 28 }
+                    rx={ 6 } ry={ 6 }
+                    style={{
+                        fill: Color.setLightness(
+                            Shared.theme.colortab.background, 0.2
+                        ),
+                        stroke: Color.setLightness(
+                            Shared.theme.colortab.background, 0.8
+                        ),
+                        strokeWidth: 3
+                    }}
+                    onMouseOver={
+                        e => {
+                            Shared.cursorState = "pointer";
+                            e.currentTarget.style.fill = Color.setLightness(
+                                Shared.theme.colortab.background, 0.08
+                            );
+                        }
+                    }
+                    onMouseOut={
+                        e => {
+                            Shared.cursorState = "normal";
+                            e.currentTarget.style.fill = Color.setLightness(
+                                Shared.theme.colortab.background, 0.2
+                            );
+                        }
+                    }
+                    onClick={
+                        () => {
+                            const val: boolean = !this.state.value;
+                            this.props.valueChanged(val);
+                            this.setState({
+                                value: val
+                            });
+                        }
+                    } />
+                    <circle key="target" className="target"
+                    cx={ 20 } cy={ 20 } r={ 9 }
+                    style={{
+                        display: this.state.value ? "initial" : "none",
+                        fill: "none",
+                        stroke: Color.setLightness(
+                            Shared.theme.colortab.frontground2, 0.7
+                        ),
+                        strokeWidth: 3.6,
+                        pointerEvents: "none"
+                    }} />
+                    <text x={ 100 } y={ 20 } textAnchor="middle"
+                    style={{
+                        fill: Shared.theme.colortab.border,
+                        transform: "translate(-0.5em,0.2em)"
+                    }} >
+                        { this.props.formatter(this.state.value) }
+                    </text>
+                </svg>
+            </div>
+        ) : (
+            <div style={{
+                display: "inline-flex",
+                margin: "2vh 2vw",
+                fontSize: "105%",
+                alignItems: "center"
+            }} >
+                <svg ref={ this.svg } height="40px" style={{
+                    width: "36px",
+                    height: "36px"
                 }} >
                     <rect key="background" className="background"
                     x={ 0 } y={ 6 } width={ 28 } height={ 28 }

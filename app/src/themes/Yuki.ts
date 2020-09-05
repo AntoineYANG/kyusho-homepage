@@ -2,7 +2,7 @@
  * @Author: Antoine YANG 
  * @Date: 2020-08-28 21:37:20 
  * @Last Modified by: Antoine YANG
- * @Last Modified time: 2020-09-01 03:01:10
+ * @Last Modified time: 2020-09-05 23:25:34
  */
 
 import { Theme, Partical } from "../methods/typedict";
@@ -33,6 +33,7 @@ interface YukiState {
 /** 主题：雪 */
 export const Yuki: Theme<YukiState> = {
     colortab: {
+        base: "rgb(11,11,14)",
         color: "rgb(208,213,215)",
         border: "rgb(155,255,254)",
         background: "rgb(154,154,155)",
@@ -102,7 +103,7 @@ export const Yuki: Theme<YukiState> = {
         const max: number = Math.sqrt(width * height) / 16;
 
         // 绘制和更新
-        ctx.fillStyle = "rgb(11,11,14)";
+        ctx.fillStyle = Yuki.colortab.base;
         ctx.fillRect(0, 0, width, height);
         ctx2.clearRect(0, 0, width, height);
 

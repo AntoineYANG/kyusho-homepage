@@ -50,7 +50,7 @@ export class BadUrl extends PageBody<{}> {
                     </h1>
                     <br />
                     <span style={{ color: Shared.theme.colortab.frontground }} >
-                        很抱歉，您访问的页面不存在。
+                        Sorry, the URL you required is not valid.
                     </span>
                 </div>
                 <HomeButton active={ true } />

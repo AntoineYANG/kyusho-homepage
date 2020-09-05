@@ -2,7 +2,7 @@
  * @Author: Antoine YANG 
  * @Date: 2020-08-28 20:55:09 
  * @Last Modified by: Antoine YANG
- * @Last Modified time: 2020-09-01 23:12:38
+ * @Last Modified time: 2020-09-05 23:24:50
  */
 
 import { Component } from "react";
@@ -20,6 +20,31 @@ import { Component } from "react";
 export class PageBody<S> extends Component<{}, S> {};
 
 /**
+ * 以"年+月"表示的时间.
+ */
+export type YearMonthLike = [string, string] | [number, number] | "-";
+
+/**
+ * 语言.
+ */
+export type Language = "JavaScript" | "TypeScript" | "C++" | "HTML" | "CSS" | "Other"
+    | "Python";
+
+/**
+ * 语言的使用信息.
+ */
+export type LanguageInfo = {
+    name: Language;
+    rate: number;
+};
+
+/**
+ * 技术.
+ */
+export type Tech = "Express" | "React" | "D3.js" | "JQuery" | "Leaflet" | "MapBox" | "axios"
+    | "Other";
+
+/**
  * 页面的配色方案.
  *
  * @export
@@ -28,6 +53,7 @@ export class PageBody<S> extends Component<{}, S> {};
 export interface Colortab {
     color: string;
     border: string;
+    base: string;
     background: string;
     frontground: string;
     frontground2: string;
@@ -125,4 +151,28 @@ export type Bookmark = {
     type: "tech" | "design" | "other";
     title: string;
     url: string;
+};
+
+export type Role = "individual" | "engineer" | "leader" | "collaborator" | "contributor";
+
+/**
+ * 作品 id.
+ */
+export type ProductId = string;
+
+/**
+ * 作品详细数据.
+ */
+export interface Product {
+    name: string;
+    id: string;
+    role: Role;
+    languages: Array<LanguageInfo>;
+    techs: Array<Tech>;
+    beginTime: YearMonthLike;
+    closeTime: YearMonthLike;
+    avatarURL: string;
+    videoURL?: string;
+    githubURL: string;
+    description: string;
 };
