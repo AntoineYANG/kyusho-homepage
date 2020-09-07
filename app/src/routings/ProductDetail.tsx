@@ -2,7 +2,7 @@
  * @Author: Antoine YANG 
  * @Date: 2020-09-05 15:50:49 
  * @Last Modified by: Antoine YANG
- * @Last Modified time: 2020-09-06 02:40:06
+ * @Last Modified time: 2020-09-06 14:42:13
  */
 
 import React from "react";
@@ -53,7 +53,7 @@ export class ProductDetail extends PageBody<{}> {
             <>
                 <div style={{
                     color: Shared.theme.colortab.color,
-                    margin: "calc(10px + 6vh) calc(20px + 8vw) calc(10px + 3vh)",
+                    margin: "calc(10px + 6vh) 10vw calc(10px + 3vh)",
                     padding: "calc(12px + 5vh) 2vmin",
                     border: `1px solid ${
                         Shared.theme.colortab.border.replace(
@@ -396,7 +396,7 @@ export class ProductDetail extends PageBody<{}> {
                                             Video
                                         </h3>
                                     </div>
-                                    <BilibiliFlv url={ this.data.videoURL } />
+                                    <BilibiliFlv url={ this.data.videoURL } type="mp4" />
                                 </div>
                             ) : null
                         }
