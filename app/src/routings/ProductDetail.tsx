@@ -2,7 +2,7 @@
  * @Author: Antoine YANG 
  * @Date: 2020-09-05 15:50:49 
  * @Last Modified by: Antoine YANG
- * @Last Modified time: 2020-09-06 14:42:13
+ * @Last Modified time: 2020-09-08 00:32:40
  */
 
 import React from "react";
@@ -383,8 +383,19 @@ export class ProductDetail extends PageBody<{}> {
                                 <div key="video"
                                 style={{
                                     margin: "2em 4%",
-                                    padding: "1em 1vmin"
-                                }} >
+                                    padding: "1em 1vmin",
+                                    cursor: "default"
+                                }}
+                                onMouseOver={
+                                    () => {
+                                        Shared.cursorState = "origin";
+                                    }
+                                }
+                                onMouseOut={
+                                    () => {
+                                        Shared.cursorState = "normal";
+                                    }
+                                } >
                                     <div key="head" style={{
                                         display: "block",
                                         color: Shared.theme.colortab.border

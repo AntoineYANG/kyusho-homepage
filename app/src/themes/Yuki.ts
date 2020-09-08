@@ -2,7 +2,7 @@
  * @Author: Antoine YANG 
  * @Date: 2020-08-28 21:37:20 
  * @Last Modified by: Antoine YANG
- * @Last Modified time: 2020-09-05 23:25:34
+ * @Last Modified time: 2020-09-08 00:31:32
  */
 
 import { Theme, Partical } from "../methods/typedict";
@@ -211,7 +211,7 @@ export const Yuki: Theme<YukiState> = {
         }
 
         // 鼠标指针
-        if (Yuki.data.cursor) {
+        if (Yuki.data.cursor && Shared.cursorState !== "origin" ) {
             ctx2.globalAlpha = 1;
             ctx2.strokeStyle = "rgb(8,36,76)";
             ctx2.lineWidth = 3;
