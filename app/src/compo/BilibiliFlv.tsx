@@ -974,7 +974,7 @@ export class BilibiliFlv extends ResponsiveComponent<BilibiliFlvProps, BilibiliF
                             // 更新播放状态
                             this.setState({
                                 duration: this.dom.current!.duration,
-                                buffered: this.dom.current!.buffered.end(0),
+                                buffered: 0,
                                 curTime: this.dom.current!.currentTime
                             });
                         }

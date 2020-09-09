@@ -1,8 +1,8 @@
 /*
  * @Author: Antoine YANG 
  * @Date: 2020-08-29 21:41:10 
- * @Last Modified by: Antoine YANG
- * @Last Modified time: 2020-09-01 19:53:40
+ * @Last Modified by: Kanata You
+ * @Last Modified time: 2020-09-09 20:05:06
  */
 
 import React from "react";
@@ -10,6 +10,7 @@ import { PageBody } from "../methods/typedict";
 import { Shared } from "../methods/globals";
 import { SettingValueBar, SettingRadio } from "../compo/SettingItem";
 import { HomeButton } from "../compo/HomeButton";
+import { Navigator } from "../compo/Navigator";
 
 
 /**
@@ -41,17 +42,21 @@ export class Settings extends PageBody<{}> {
     public render(): JSX.Element {
         return (
             <>
+                <Navigator>
+                    <HomeButton active={ true } />
+                </Navigator>
                 <h1 style={{
                     color: Shared.theme.colortab.color,
-                    margin: "calc(20px + 3vh)"
+                    margin: "calc(10px + 8vh) 0 calc(10px + 2vh)",
+                    padding: "1vh 5vw"
                 }} >
                     Settings
                 </h1>
                 <div style={{
                     color: Shared.theme.colortab.color,
                     width: "86vw",
-                    margin: "calc(10px + 6vh) 4vw calc(10px + 3vh)",
-                    padding: "calc(12px + 5vh) 3vw",
+                    margin: "calc(10px + 4vh) 0 calc(10px + 2vh)",
+                    padding: "1vh 5vw",
                     display: "block"
                 }} >
                     <SettingValueBar ref={ this.fpsSetter } name="Animation FPS"
@@ -140,7 +145,6 @@ export class Settings extends PageBody<{}> {
                         }
                     } />
                 </div>
-                <HomeButton active={ true } />
             </>
         );
     }

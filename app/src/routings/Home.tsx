@@ -1,13 +1,14 @@
 /*
  * @Author: Antoine YANG 
  * @Date: 2020-08-28 21:07:40 
- * @Last Modified by: Antoine YANG
- * @Last Modified time: 2020-09-05 20:55:52
+ * @Last Modified by: Kanata You
+ * @Last Modified time: 2020-09-09 22:20:28
  */
 
 import React from "react";
 import { PageBody, PaperInfo, Bookmark } from "../methods/typedict";
 import { Shared } from "../methods/globals";
+import { Navigator } from "../compo/Navigator";
 import { SettingsButton } from "../compo/SettingsButton";
 import { InfoView } from "../compo/InfoView";
 import { HomeButton } from "../compo/HomeButton";
@@ -16,6 +17,8 @@ import { displayPaperInfo, displayBookmark } from "../methods/display";
 import { InterestView } from "../compo/InterestView";
 import { ProductView } from "../compo/ProductView";
 import { InfoSet } from "../constant/InfoSet";
+import { ScrollTop } from "../compo/ScrollTop";
+import { ContactMe } from "../compo/ContactMe";
 
 
 /**
@@ -43,6 +46,12 @@ export class Home extends PageBody<{}> {
     public render(): JSX.Element {
         return (
             <>
+                <Navigator >
+                    <HomeButton active={ false } />
+                    <ScrollTop />
+                    <SettingsButton />
+                    <ContactMe />
+                </Navigator>
                 <InfoView />
                 <InterestView />
                 <ProductView ref={ this.productList }
@@ -53,8 +62,6 @@ export class Home extends PageBody<{}> {
                 <ListView<Bookmark> ref={ this.bookmarkList }
                 title="Bookmarks (external links)" maxPerPage={ 8 }
                 display={ displayBookmark } />
-                <HomeButton active={ false } />
-                <SettingsButton />
             </>
         );
     }

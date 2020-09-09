@@ -16,7 +16,7 @@ export const InfoView = (): JSX.Element => {
         <div style={{
             color: Shared.theme.colortab.color,
             background: 'rgba(0, 0, 0, 0) url("./images/home.png") no-repeat scroll 22% 0% / cover',
-            margin: "calc(10px + 8vh) calc(20px + 8vw) calc(10px + 3vh)",
+            margin: "calc(10px + 8vh) 5vw calc(10px + 2vh)",
             minHeight: "calc(12vw - 10px)",
             padding: "calc(-20px + 3vh) calc(6px + 1.5vw) calc(-20px + 3vh) 28%",
             fontSize: "calc(8px + 0.6vmax)",
@@ -70,6 +70,7 @@ export const InfoView = (): JSX.Element => {
             }} >
                 { `Student, China` }
             </label>
+            <br />
             <label key="belong" style={{
                 display: "inline-block",
                 fontSize: "90%",
@@ -90,6 +91,7 @@ export const InfoView = (): JSX.Element => {
                 School of Information Management and Artifitial Intelligence,
                 Zhejiang University of Finance and Economics
             </label>
+            <br />
             <label key="contact" style={{
                 display: "inline-block",
                 padding: "0.3em 0.6em 0.1em",
@@ -100,15 +102,20 @@ export const InfoView = (): JSX.Element => {
             }} >
                 Contact Info
             </label>
+            <br />
             <div key="links" style={{
-                margin: "1vh auto calc(4vh - 12px)",
-                padding: "0.4vh 2vw 0.4vh",
-                display: "flex",
-                border: "1px solid " + Shared.theme.colortab.frontground3
+                margin: "1vh 0 calc(4vh - 12px)",
+                padding: "0.6vh 1vw",
+                display: "inline-flex",
+                backgroundColor: Shared.theme.colortab.frontground.replace(
+                    "(", "a("
+                ).replace(
+                    ")", ",0.1)"
+                )
             }} >
                 <div key="github"
                 style={{
-                    margin: "0 calc(1vw - 4px) 0 auto",
+                    margin: "0 calc(1vw - 4px)",
                     padding: "0 2px",
                     display: "flex",
                     alignItems: "center"
@@ -230,7 +237,7 @@ export const InfoView = (): JSX.Element => {
                 </div>
                 <div key="zhihu"
                 style={{
-                    margin: "0 auto 0 calc(1vw - 4px)",
+                    margin: "0 calc(1vw - 4px)",
                     padding: "0 2px",
                     display: "flex",
                     alignItems: "center"

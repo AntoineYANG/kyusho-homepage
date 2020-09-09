@@ -27,8 +27,8 @@ export const InterestView = (props: InterestViewProps): JSX.Element => {
     return (
         <div style={{
             color: Shared.theme.colortab.color,
-            margin: "calc(10px + 6vh) calc(20px + 8vw) calc(10px + 3vh)",
-            padding: "calc(4px + 2vh) calc(-60px + 6vmax)",
+            margin: "calc(10px + 4vh) 0 calc(10px + 2vh)",
+            padding: "1vh 5vw",
             textAlign: "left",
             ...props.style
         }} >

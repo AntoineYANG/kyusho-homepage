@@ -1,8 +1,8 @@
 /*
  * @Author: Antoine YANG 
  * @Date: 2020-09-05 15:10:09 
- * @Last Modified by: Antoine YANG
- * @Last Modified time: 2020-09-05 23:12:15
+ * @Last Modified by: Kanata You
+ * @Last Modified time: 2020-09-09 20:09:06
  */
 
 import React, { Component } from "react";
@@ -55,8 +55,8 @@ export class ProductView extends Component<ProductViewProps, ProductViewState> {
         return (
             <div style={{
                 color: Shared.theme.colortab.color,
-                margin: "calc(10px + 3vh) calc(20px + 8vw)",
-                padding: "calc(4px + 2vh) calc(-60px + 6vmax)",
+                margin: "calc(10px + 4vh) 0 calc(10px + 2vh)",
+                padding: "1vh 5vw",
                 ...this.props.style
             }} >
                 <div key="header" style={{
@@ -90,7 +90,8 @@ export class ProductView extends Component<ProductViewProps, ProductViewState> {
                         justifyContent: "end"
                     }} >
                         <label style={{
-                            cursor: "none"
+                            cursor: "none",
+                            marginLeft: "auto"
                         }} >
                             Detail
                         </label>
@@ -129,7 +130,7 @@ export class ProductView extends Component<ProductViewProps, ProductViewState> {
                         return (
                             <div key={ id } style={{
                                 display: "inline-block",
-                                width: "calc(150px + 16vmin)",
+                                width: "calc(200px + 18vmin)",
                                 margin: "1.2vmax 1.6vmin",
                                 padding: "3vmin 4vmin"
                             }} >
@@ -138,8 +139,8 @@ export class ProductView extends Component<ProductViewProps, ProductViewState> {
                                 onDragStart={ e => e.preventDefault() }
                                 style={{
                                     display: "block",
-                                    width: "calc(150px + 16vmin)",
-                                    height: "calc(81.82px + 8.72vmin)",
+                                    width: "calc(200px + 18vmin)",
+                                    height: "calc(109.09px + 9.81vmin)",
                                     marginBottom: "calc(4px + 0.5em)",
                                     objectFit: "contain",
                                     backgroundColor: "#000000"

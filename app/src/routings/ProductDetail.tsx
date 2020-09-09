@@ -1,20 +1,23 @@
 /*
  * @Author: Antoine YANG 
  * @Date: 2020-09-05 15:50:49 
- * @Last Modified by: Antoine YANG
- * @Last Modified time: 2020-09-08 00:32:40
+ * @Last Modified by: Kanata You
+ * @Last Modified time: 2020-09-09 22:34:59
  */
 
 import React from "react";
+import $ from "jquery";
 import { PageBody, Product, Role } from "../methods/typedict";
 import { Shared } from "../methods/globals";
-import { SettingsButton } from "../compo/SettingsButton";
 import { HomeButton } from "../compo/HomeButton";
 import { find } from "../methods/arrayhelper";
 import { InfoSet } from "../constant/InfoSet";
 import Color from "../preference/Color";
 import { InlineHTML } from "../compo/InlineHTML";
 import { BilibiliFlv } from "../compo/BilibiliFlv";
+import { Navigator } from "../compo/Navigator";
+import { ScrollTop } from "../compo/ScrollTop";
+import { ContactMe } from "../compo/ContactMe";
 
 
 /**
@@ -51,22 +54,24 @@ export class ProductDetail extends PageBody<{}> {
         
         return (
             <>
+                <Navigator>
+                    <HomeButton active={ true } />
+                    <ScrollTop />
+                    <ContactMe />
+                </Navigator>
                 <div style={{
                     color: Shared.theme.colortab.color,
-                    margin: "calc(10px + 6vh) 10vw calc(10px + 3vh)",
-                    padding: "calc(12px + 5vh) 2vmin",
-                    border: `1px solid ${
-                        Shared.theme.colortab.border.replace(
-                            "(", "a("
-                        ).replace(
-                            ")", ",0.3)"
-                        )
-                    }`
+                    margin: "calc(10px + 4vh) 0 calc(10px + 2vh)",
+                    padding: "1vh 5vw"
                 }} >
                     <div
                     style={{
                         display: "block",
-                        border: "1px solid " + Shared.theme.colortab.border,
+                        border: "1px solid " + Shared.theme.colortab.border.replace(
+                            "(", "a("
+                        ).replace(
+                            ")", ",0.2)"
+                        ),
                         margin: "4vh 3vw",
                         padding: "1em 0 6vh",
                         fontSize: "calc(6px + 1.6vmin)"
@@ -109,16 +114,17 @@ export class ProductDetail extends PageBody<{}> {
                             style={{
                                 minWidth: "30%",
                                 display: "inline-flex",
-                                padding: "4vh 4%",
+                                padding: "3%",
                                 border: "1px solid " + Shared.theme.colortab.border,
-                                justifyContent: "center"
+                                justifyContent: "center",
+                                flex: 1
                             }} >
                                 <img src={ `./images/product_${ this.data.id }.png` }
                                 alt={ `product_${ this.data.id }` }
                                 onDragStart={ e => e.preventDefault() }
                                 style={{
                                     display: "block",
-                                    maxWidth: "300px",
+                                    maxWidth: "100%",
                                     objectFit: "contain",
                                     backgroundColor: "#000000"
                                 }} />
@@ -128,6 +134,7 @@ export class ProductDetail extends PageBody<{}> {
                                 minWidth: "61%",
                                 textAlign: "left",
                                 display: "inline-flex",
+                                wordBreak: "break-all",
                                 flexDirection: "column"
                             }} >
                                 <div key="name"
@@ -142,7 +149,7 @@ export class ProductDetail extends PageBody<{}> {
                                         maxWidth: "20vw",
                                         minWidth: "18%",
                                         textAlign: "center",
-                                        padding: "0.5em 1em",
+                                        padding: "0.5em",
                                         border: "1px solid " + Shared.theme.colortab.border
                                     }} >
                                         Name
@@ -151,8 +158,7 @@ export class ProductDetail extends PageBody<{}> {
                                     style={{
                                         cursor: "none",
                                         border: "1px solid " + Shared.theme.colortab.border,
-                                        wordBreak: "break-all",
-                                        padding: "0.5em 1em",
+                                        padding: "0.5em",
                                         flex: "auto",
                                         fontWeight: "bold"
                                     }} >
@@ -171,7 +177,7 @@ export class ProductDetail extends PageBody<{}> {
                                         maxWidth: "20vw",
                                         minWidth: "18%",
                                         textAlign: "center",
-                                        padding: "0.5em 1em",
+                                        padding: "0.5em",
                                         border: "1px solid " + Shared.theme.colortab.border,
                                         borderBottom: "none"
                                     }} />
@@ -179,8 +185,7 @@ export class ProductDetail extends PageBody<{}> {
                                     style={{
                                         cursor: "none",
                                         border: "1px solid " + Shared.theme.colortab.border,
-                                        wordBreak: "break-all",
-                                        padding: "0.5em 1em",
+                                        padding: "0.5em",
                                         flex: "auto",
                                         fontWeight: "bold",
                                         borderBottom: "none"
@@ -208,7 +213,7 @@ export class ProductDetail extends PageBody<{}> {
                                         maxWidth: "20vw",
                                         minWidth: "18%",
                                         textAlign: "center",
-                                        padding: "0.5em 1em",
+                                        padding: "0.5em",
                                         border: "1px solid " + Shared.theme.colortab.border,
                                         borderTop: "none"
                                     }} >
@@ -218,8 +223,7 @@ export class ProductDetail extends PageBody<{}> {
                                     style={{
                                         cursor: "none",
                                         border: "1px solid " + Shared.theme.colortab.border,
-                                        wordBreak: "break-all",
-                                        padding: "0.5em 1em",
+                                        padding: "0.5em",
                                         flex: "auto",
                                         color: colorf(this.data.role)
                                     }} >
@@ -238,7 +242,7 @@ export class ProductDetail extends PageBody<{}> {
                                         maxWidth: "20vw",
                                         minWidth: "18%",
                                         textAlign: "center",
-                                        padding: "0.5em 1em",
+                                        padding: "0.5em",
                                         border: "1px solid " + Shared.theme.colortab.border
                                     }} >
                                         Period
@@ -247,8 +251,7 @@ export class ProductDetail extends PageBody<{}> {
                                     style={{
                                         cursor: "none",
                                         border: "1px solid " + Shared.theme.colortab.border,
-                                        wordBreak: "break-all",
-                                        padding: "0.5em 1em",
+                                        padding: "0.5em",
                                         flex: "auto"
                                     }} >
                                     {
@@ -278,7 +281,7 @@ export class ProductDetail extends PageBody<{}> {
                                         maxWidth: "20vw",
                                         minWidth: "18%",
                                         textAlign: "center",
-                                        padding: "0.5em 1em",
+                                        padding: "0.5em",
                                         border: "1px solid " + Shared.theme.colortab.border
                                     }} >
                                         GitHub
@@ -287,8 +290,7 @@ export class ProductDetail extends PageBody<{}> {
                                     style={{
                                         cursor: "none",
                                         border: "1px solid " + Shared.theme.colortab.border,
-                                        wordBreak: "break-all",
-                                        padding: "0.5em 1em",
+                                        padding: "0.5em",
                                         flex: "auto"
                                     }} >
                                     {
@@ -335,7 +337,7 @@ export class ProductDetail extends PageBody<{}> {
                                         maxWidth: "20vw",
                                         minWidth: "18%",
                                         textAlign: "center",
-                                        padding: "0.5em 1em",
+                                        padding: "0.5em",
                                         border: "1px solid " + Shared.theme.colortab.border
                                     }} >
                                         Techs
@@ -344,8 +346,7 @@ export class ProductDetail extends PageBody<{}> {
                                     style={{
                                         cursor: "none",
                                         border: "1px solid " + Shared.theme.colortab.border,
-                                        wordBreak: "break-all",
-                                        padding: "0.5em 1em",
+                                        padding: "0.5em",
                                         flex: "auto"
                                     }} >
                                     {
@@ -494,14 +495,13 @@ export class ProductDetail extends PageBody<{}> {
                         </div>
                     </div>
                 </div>
-                <HomeButton active={ true } />
-                <SettingsButton />
             </>
         );
     }
 
     public componentDidMount(): void {
         Shared.cursorState = "normal";
+        $(window).scrollTop(0);
     }
 
     public componentDidCatch(): void {
