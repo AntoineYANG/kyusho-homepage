@@ -1,11 +1,12 @@
 /*
  * @Author: Antoine YANG 
  * @Date: 2020-08-28 20:55:09 
- * @Last Modified by: Antoine YANG
- * @Last Modified time: 2020-09-05 23:24:50
+ * @Last Modified by: Kanata You
+ * @Last Modified time: 2020-09-15 11:41:58
  */
 
 import { Component } from "react";
+import { BilibiliFlvControlAppearance } from "../compo/BilibiliFlv";
 
 
 /**
@@ -72,6 +73,10 @@ export interface Theme<T=any> {
      * 配色方案.
      */
     colortab: Colortab;
+    /**
+     * 播放器组件外观替换件.
+     */
+    videoController: BilibiliFlvControlAppearance;
     /**
      * 绘制下一帧的定时器.
      */

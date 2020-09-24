@@ -2,7 +2,7 @@
  * @Author: Kanata You 
  * @Date: 2020-09-08 01:41:51 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2020-09-08 04:54:03
+ * @Last Modified time: 2020-09-15 11:30:34
  */
 
 import React from "react";
@@ -89,6 +89,24 @@ export class BilibiliFlv extends ResponsiveComponent<BilibiliFlvProps, BilibiliF
      * @memberof BilibiliFlv
      */
     protected dom: React.RefObject<HTMLVideoElement>;
+
+    /**
+     * 无交互进度条的容器的引用.
+     *
+     * @protected
+     * @type {React.RefObject<SVGSVGElement>}
+     * @memberof BilibiliFlv
+     */
+    protected prog: React.RefObject<SVGSVGElement>;
+
+    /**
+     * 无交互进度条的引用.
+     *
+     * @protected
+     * @type {React.RefObject<SVGRectElement>}
+     * @memberof BilibiliFlv
+     */
+    protected progBar: React.RefObject<SVGRectElement>;
 
     /**
      * 控件组容器元素的引用.
@@ -385,6 +403,8 @@ export class BilibiliFlv extends ResponsiveComponent<BilibiliFlvProps, BilibiliF
 
         // 构造引用，初始化上下文
         this.dom = React.createRef<HTMLVideoElement>();
+        this.prog = React.createRef<SVGSVGElement>();
+        this.progBar = React.createRef<SVGRectElement>();
         this.control = React.createRef<HTMLDivElement>();
         this.progBase = React.createRef<SVGRectElement>();
         this.progBuffer = React.createRef<SVGRectElement>();
@@ -989,6 +1009,22 @@ export class BilibiliFlv extends ResponsiveComponent<BilibiliFlvProps, BilibiliF
                     position: "absolute",   // 加载完成和窗口缩放时会自动计算新的位置和宽高
                     display: "none"
                 }} />
+                {/* 静态进度条 */}
+                <svg key="prog" ref={ this.prog }
+                style={{
+                    width: `${ this.state.w + 2 }px`,
+                    height: "2px",
+                    position: "relative",
+                    top: `-20px`,
+                    marginBottom: "-2px",
+                    pointerEvents: "none"
+                }} >
+                    <rect ref={ this.progBar }
+                    x="0" y="0" width="0" height="2px"
+                    style={{
+                        fill: this.controller.progStyle
+                    }} />
+                </svg>
                 {/* 组件栏 */}
                 <div key="control" ref={ this.control }
                 style={{
@@ -997,7 +1033,7 @@ export class BilibiliFlv extends ResponsiveComponent<BilibiliFlvProps, BilibiliF
                     height: `${ 36 * this.scaling }px`,
                     padding: "0 6px",
                     position: "relative",
-                    top: `-${ 36 * this.scaling }px`,
+                    top: `-${ 36 * this.scaling + 22 }px`,
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -1975,11 +2011,17 @@ export class BilibiliFlv extends ResponsiveComponent<BilibiliFlvProps, BilibiliF
      */
     private adjustProgress(): void {
         if (!this.progBase.current || !this.progBuffer.current
-            || !this.progCurrent.current || !this.progFlag.current) {
+            || !this.progCurrent.current || !this.progFlag.current
+            || !this.progBar.current) {
             return;
         }
 
         const w: number = this.progW;
+
+        // upper-progress
+        this.progBar.current.setAttribute("width", `${ 
+            100 * this.state.curTime / (this.state.duration || 1)
+         }%`);
         
         // progress-buffered
         this.progBuffer.current.setAttribute("width", `${
@@ -2007,7 +2049,7 @@ export class BilibiliFlv extends ResponsiveComponent<BilibiliFlvProps, BilibiliF
      * @memberof BilibiliFlv
      */
     protected showController(mode: "fadein" | "fadein-nofadeout" | "show" | "show-nofadeout"): void {
-        if (this.control.current) {
+        if (this.control.current && this.prog.current) {
             // 停止淡出定时
             clearTimeout(this.timer);
 
@@ -2261,6 +2303,9 @@ export interface BilibiliFlvControlInterface {
     /** 时间字体颜色 */
     color: string;
 
+    /** 无交互进度条样式 */
+    progStyle: string;
+
     /** 进度条：背景，rect，x坐标自动延伸 */
     progressBase: JSX.Element;
     /** 进度条：加载，rect，x坐标自动定位 */
@@ -2362,6 +2407,8 @@ export const BilibiliFlvControlDefault: BilibiliFlvControlInterface = {
     )],
 
     color: "rgb(255,255,255)",
+
+    progStyle: "rgb(255,100,100)",
 
     progressBase: (
         <rect y="15" height="6" rx="3" ry="3"

@@ -2,7 +2,7 @@
  * @Author: Kanata You 
  * @Date: 2020-09-09 18:37:14 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2020-09-09 22:05:49
+ * @Last Modified time: 2020-09-24 17:39:23
  */
 
 import React from "react";
@@ -12,7 +12,7 @@ import Color from "../preference/Color";
 
 
 export const Navigator = (props: { children?: any }): JSX.Element => {
-    let display: boolean = true;
+    let display: boolean = false;
     let timers: Array<NodeJS.Timeout> = [];
     let width: number = 0;
 
@@ -34,7 +34,9 @@ export const Navigator = (props: { children?: any }): JSX.Element => {
         }} >
             <div key="menu"
             style={{
-                minWidth: "calc(64px + 1.5vw)",
+                // minWidth: "calc(64px + 1.5vw)",
+                minWidth: "0",
+                maxWidth: "0",
                 padding: "8px 0",
                 fontSize: "calc(14px + 0.5vw)",
                 backgroundColor: Color.interpolate(

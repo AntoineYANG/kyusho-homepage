@@ -2,10 +2,10 @@
  * @Author: Antoine YANG 
  * @Date: 2020-09-05 15:10:09 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2020-09-09 20:09:06
+ * @Last Modified time: 2020-09-24 18:27:39
  */
 
-import React, { Component } from "react";
+import React from "react";
 import { Shared } from "../methods/globals";
 import { ProductId, Role } from "../methods/typedict";
 import { find } from "../methods/arrayhelper";
@@ -14,6 +14,7 @@ import Color from "../preference/Color";
 import { InlineHTML } from "./InlineHTML";
 import { LanguageChart } from "./LanguageChart";
 import { SettingRadio } from "./SettingItem";
+import { InitComponent, InitComponentProps } from "./InitComponent";
 
 
 export interface ProductViewProps {
@@ -31,11 +32,11 @@ export interface ProductViewState {
  *
  * @export
  * @class ProductView
- * @extends {Component<ProductViewProps, ProductViewState>}
+ * @extends {InitComponent<ProductViewProps, ProductViewState>}
  */
-export class ProductView extends Component<ProductViewProps, ProductViewState> {
+export class ProductView extends InitComponent<ProductViewProps, ProductViewState> {
 
-    public constructor(props: ProductViewProps) {
+    public constructor(props: ProductViewProps & InitComponentProps<ProductViewState>) {
         super(props);
         this.state = {
             items: [],

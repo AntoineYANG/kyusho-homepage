@@ -1,14 +1,15 @@
 /*
  * @Author: Antoine YANG 
  * @Date: 2020-09-01 19:34:27 
- * @Last Modified by: Antoine YANG
- * @Last Modified time: 2020-09-01 23:10:18
+ * @Last Modified by: Kanata You
+ * @Last Modified time: 2020-09-24 18:10:50
  */
 
-import React, { Component } from "react";
+import React from "react";
 import { Shared } from "../methods/globals";
 import { Article } from "../methods/typedict";
 import Color from "../preference/Color";
+import { InitComponent, InitComponentProps } from "./InitComponent";
 
 
 export interface ListViewProps<ItemType> {
@@ -28,10 +29,10 @@ export interface ListViewState<ItemType> {
  *
  * @export
  * @class ListView
- * @extends {Component<ListViewProps<ItemType>, ListViewState<ItemType>>}
+ * @extends {InitComponent<ListViewProps<ItemType>, ListViewState<ItemType>>}
  * @template ItemType
  */
-export class ListView<ItemType=Article> extends Component<
+export class ListView<ItemType=Article> extends InitComponent<
     ListViewProps<ItemType>, ListViewState<ItemType>
 > {
 
@@ -39,7 +40,7 @@ export class ListView<ItemType=Article> extends Component<
 
     protected pageCount: number;
 
-    public constructor(props: ListViewProps<ItemType>) {
+    public constructor(props: ListViewProps<ItemType> & InitComponentProps<ItemType>) {
         super(props);
         this.state = {
             items: [],
@@ -364,6 +365,11 @@ export class ListView<ItemType=Article> extends Component<
     }
 
     public componentDidMount(): void {
+        this.setState(
+            this.props.init as unknown as Pick<
+                ListViewState<ItemType>, keyof ListViewState<ItemType>
+            >
+        );
         if (this.pageInput.current) {
             this.pageInput.current.value = (this.state.pageId + 1).toString();
         }

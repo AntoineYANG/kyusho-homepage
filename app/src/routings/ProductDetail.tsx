@@ -2,7 +2,7 @@
  * @Author: Antoine YANG 
  * @Date: 2020-09-05 15:50:49 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2020-09-09 22:34:59
+ * @Last Modified time: 2020-09-15 11:40:37
  */
 
 import React from "react";
@@ -408,7 +408,8 @@ export class ProductDetail extends PageBody<{}> {
                                             Video
                                         </h3>
                                     </div>
-                                    <BilibiliFlv url={ this.data.videoURL } type="mp4" />
+                                    <BilibiliFlv url={ this.data.videoURL } type="mp4"
+                                    control={ Shared.theme.videoController } />
                                 </div>
                             ) : null
                         }
