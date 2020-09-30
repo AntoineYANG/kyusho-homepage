@@ -2,7 +2,7 @@
  * @Author: Antoine YANG 
  * @Date: 2020-09-01 19:34:27 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2020-09-24 18:10:50
+ * @Last Modified time: 2020-09-30 09:48:35
  */
 
 import React from "react";
@@ -44,7 +44,10 @@ export class ListView<ItemType=Article> extends InitComponent<
         super(props);
         this.state = {
             items: [],
-            pageId: 0
+            pageId: 0,
+            ...(this.props.init as unknown as Pick<
+                ListViewState<ItemType>, keyof ListViewState<ItemType>
+            >)
         };
         
         this.pageInput = React.createRef<HTMLInputElement>();
@@ -365,11 +368,6 @@ export class ListView<ItemType=Article> extends InitComponent<
     }
 
     public componentDidMount(): void {
-        this.setState(
-            this.props.init as unknown as Pick<
-                ListViewState<ItemType>, keyof ListViewState<ItemType>
-            >
-        );
         if (this.pageInput.current) {
             this.pageInput.current.value = (this.state.pageId + 1).toString();
         }

@@ -2,10 +2,11 @@
  * @Author: Kanata You 
  * @Date: 2020-09-24 14:06:26 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2020-09-24 18:43:52
+ * @Last Modified time: 2020-09-30 10:02:18
  */
 
 import React, { Component } from "react";
+import { Shared } from "../methods/globals";
 
 
 export interface PageFlowProps {
@@ -24,6 +25,10 @@ export class PageFlow extends Component<PageFlowProps, PageFlowState> {
 
     protected container: React.RefObject<HTMLDivElement>;
 
+    protected cdHolder: boolean;
+    protected aniDirection: "up" | "down";
+    protected timers: Array<NodeJS.Timeout>;
+
     public constructor(props: PageFlowProps) {
         super(props);
         this.state = {
@@ -33,6 +38,10 @@ export class PageFlow extends Component<PageFlowProps, PageFlowState> {
         this.wheelEvent = () => void 0;
 
         this.container = React.createRef<HTMLDivElement>();
+
+        this.cdHolder = false;
+        this.aniDirection = "down";
+        this.timers = [];
     }
 
     public render(): JSX.Element {
@@ -43,7 +52,7 @@ export class PageFlow extends Component<PageFlowProps, PageFlowState> {
             }} >
                 <div
                 style={{
-                    border: "1px solid white",
+                    // border: "1px solid white",
                     ...this.props.style,
                     height: this.props.height,
                     overflow: "hidden auto",
@@ -55,6 +64,14 @@ export class PageFlow extends Component<PageFlowProps, PageFlowState> {
                 </div>
             </div>
         );
+    }
+
+    protected clearTimers(): void {
+        this.timers.forEach(timer => {
+            clearTimeout(timer);
+        });
+
+        this.timers = [];
     }
 
     protected resetListener(): void {
@@ -83,6 +100,11 @@ export class PageFlow extends Component<PageFlowProps, PageFlowState> {
                         } else {
                             return;
                         }
+                    }
+
+                    if (this.cdHolder) {
+                        e.preventDefault();
+                        return;
                     }
                     
                     if (this.props.children.length === 1) {
@@ -155,9 +177,29 @@ export class PageFlow extends Component<PageFlowProps, PageFlowState> {
 
     public componentDidUpdate(): void {
         this.resetListener();
+
+        if (this.container.current) {
+            const content = this.container.current.firstElementChild!.firstElementChild! as HTMLElement;
+            content.style.opacity = `0`;
+            for (let t: number = 0; t < 240; t += Math.floor(1000 / Shared.animationFPS)) {
+                this.timers.push(
+                    setTimeout(() => {
+                        if (content) {
+                            content.style.transform = `translateY(${ (
+                                this.aniDirection === "up" ? 1 : -1
+                            ) * (240 - Math.min(
+                                240, t + Math.floor(1000 / Shared.animationFPS)
+                            )) }px)`;
+                            content.style.opacity = `${ Math.min(1, Math.max(t - 50, 0) / 180) }`;
+                        }
+                    }, t)
+                );
+            }
+        }
     }
 
     public componentWillUnmount(): void {
+        this.clearTimers();
         document.body.removeEventListener("wheel", this.wheelEvent);
     }
 
@@ -169,19 +211,48 @@ export class PageFlow extends Component<PageFlowProps, PageFlowState> {
             )
         );
 
-        this.setState({
-            idx: to
-        });
+        this.cdHolder = true;
+        this.timers.push(
+            setTimeout(() => {
+                this.cdHolder = false;
+            }, 600)
+        );
+
+        if (this.container.current) {
+            const content = this.container.current.firstElementChild!.firstElementChild! as HTMLElement;
+            for (let t: number = 0; t < 240; t += Math.floor(1000 / Shared.animationFPS)) {
+                this.timers.push(
+                    setTimeout(() => {
+                        if (content) {
+                            content.style.transform = `translateY(${ (
+                                this.aniDirection === "up" ? -1 : 1
+                            ) * t * 2 }px)`;
+                            content.style.opacity = `${ 1 - t / 240 }`;
+                        }
+                    }, t)
+                );
+            }
+        }
+
+        this.timers.push(
+            setTimeout(() => {
+                this.setState({
+                    idx: to
+                });
+            }, 250)
+        );
 
         return to;
     }
 
     public nextPage(): number {
+        this.aniDirection = "up";
         const to: number = this.state.idx + 1;
         return this.shiftTo(to);
     }
 
     public prevPage(): number {
+        this.aniDirection = "down";
         const to: number = this.state.idx - 1;
         return this.shiftTo(to);
     }

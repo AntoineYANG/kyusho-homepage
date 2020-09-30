@@ -1,12 +1,13 @@
 /*
  * @Author: Antoine YANG 
  * @Date: 2020-08-29 00:17:10 
- * @Last Modified by: Antoine YANG
- * @Last Modified time: 2020-09-08 00:30:15
+ * @Last Modified by: Kanata You
+ * @Last Modified time: 2020-09-30 10:05:48
  */
 
 import { Theme } from "./typedict";
 import { Yuki } from "../themes/Yuki";
+import { Opening } from "../kanata/Opening";
 
 export interface SharedItem {
     theme: Theme;
@@ -16,6 +17,7 @@ export interface SharedItem {
     autoFPS: boolean;
     particalEffects: 0 | 1 | 2 | 3;
     particalOpacity: number;
+    opening?: Opening;
 };
 
 export let Shared: SharedItem = {

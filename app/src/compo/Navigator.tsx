@@ -2,7 +2,7 @@
  * @Author: Kanata You 
  * @Date: 2020-09-09 18:37:14 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2020-09-24 17:39:23
+ * @Last Modified time: 2020-09-30 10:20:04
  */
 
 import React from "react";
@@ -30,7 +30,7 @@ export const Navigator = (props: { children?: any }): JSX.Element => {
             color: Shared.theme.colortab.color,
             display: "flex",
             alignItems: "stretch",
-            zIndex: 9999
+            zIndex: 999
         }} >
             <div key="menu"
             style={{

@@ -8,6 +8,7 @@ import { Theme } from './methods/typedict';
 import { Shared } from './methods/globals';
 import { Settings } from './routings/Settings';
 import { ProductDetail } from './routings/ProductDetail';
+import { Opening } from './kanata/Opening';
 
 
 export interface AppState {
@@ -34,6 +35,7 @@ class App extends Component<{}, AppState> {
 
     return (
       <div className="App">
+        <Opening />
         <BackgroundCanvas initTheme={ this.state.theme } >
           <HashRouter>
             <Switch>

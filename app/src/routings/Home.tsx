@@ -2,7 +2,7 @@
  * @Author: Antoine YANG 
  * @Date: 2020-08-28 21:07:40 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2020-09-24 18:16:50
+ * @Last Modified time: 2020-09-30 10:53:34
  */
 
 import React from "react";
@@ -54,11 +54,11 @@ export class Home extends PageBody<{}> {
                     <ProductView title="Products" init={
                         { items: InfoSet.products.map(d => d.id) }
                     } />
-                    <ListView<PaperInfo> title="Paper Publications"
+                    <ListView<PaperInfo> title="Paper Publications" key="1"
                     maxPerPage={ 8 } display={ displayPaperInfo } init={
                         { items: InfoSet.papers }
                     } />
-                    <ListView<Bookmark> title="Bookmarks (external links)"
+                    <ListView<Bookmark> title="Bookmarks (external links)" key="2"
                     maxPerPage={ 8 } display={ displayBookmark } init={
                         { items: InfoSet.bookmarks }
                     } />
@@ -69,6 +69,8 @@ export class Home extends PageBody<{}> {
 
     public componentDidMount(): void {
         Shared.cursorState = "normal";
+
+        // Shared.opening?.play();
     }
 
 };
