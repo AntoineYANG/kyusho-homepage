@@ -2,10 +2,11 @@
  * @Author: Kanata You 
  * @Date: 2020-12-02 20:44:30 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2020-12-02 20:46:00
+ * @Last Modified time: 2020-12-06 02:05:01
  */
 
 import React, { Component } from "react";
+import { PageFlow } from "../containers/PageFlow";
 
 
 /**
@@ -25,6 +26,31 @@ export class Home extends Component {
     public render(): JSX.Element {
         return (
             <>
+                <PageFlow height="88vh" >
+                    <div key="1"
+                    style={{
+                        background: "white",
+                        padding: "10vh 10vw",
+                        display: "inline-block",
+                        fontSize: "160%"
+                    }} >
+                        <p>
+                            <label>
+                                This page is not released yet,&nbsp;
+                            </label>
+                        </p>
+                        <p>
+                            <a href="/v2" style={{
+                                color: "rgb(255,215,61)"
+                            }} >
+                                click here to move back to v2.x
+                            </a>
+                        </p>
+                    </div>
+                    <div key="2" style={{ background: "white", padding: "10vh 10vw", display: "inline-block" }} >b</div>
+                    <div key="3" style={{ background: "white", padding: "50vh 10vw", display: "inline-block" }} >c</div>
+                    <div key="4" style={{ background: "white", padding: "10vh 10vw", display: "inline-block" }} >d</div>
+                </PageFlow>
             </>
         );
     }
