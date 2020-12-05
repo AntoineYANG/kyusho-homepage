@@ -1,13 +1,14 @@
 /*
  * @Author: Antoine YANG 
  * @Date: 2020-08-28 21:15:16 
- * @Last Modified by: Antoine YANG
- * @Last Modified time: 2020-08-31 18:46:41
+ * @Last Modified by: Kanata You
+ * @Last Modified time: 2020-12-02 19:37:44
  */
 
 import React, { Component } from "react";
 import $ from "jquery";
 import { Theme } from "../methods/typedict";
+import { Shared } from "../methods/globals";
 
 
 export interface BackgroundCanvasProps {
@@ -73,8 +74,11 @@ export class BackgroundCanvas extends Component<BackgroundCanvasProps, Backgroun
     }
 
     public componentDidMount(): void {
-        // 隐藏默认指针
-        $("body").css("cursor", "none");
+        if (Shared.version === "2.x") {
+            // 隐藏默认指针
+            $("body").css("cursor", "none");
+        }
+
         // 设定大小
         this.canvas.current!.width = $(window).width()!;
         this.canvas.current!.height = $(window).height()!;

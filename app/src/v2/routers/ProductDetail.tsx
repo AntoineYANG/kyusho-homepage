@@ -2,7 +2,7 @@
  * @Author: Antoine YANG 
  * @Date: 2020-09-05 15:50:49 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2020-09-15 11:40:37
+ * @Last Modified time: 2020-12-06 00:40:46
  */
 
 import React from "react";
@@ -36,7 +36,7 @@ export class ProductDetail extends PageBody<{}> {
         super(props);
         this.state = {};
 
-        const params: RegExpExecArray | null = /(?<=(\/#\/product\/))[0-9]+(?!.)/.exec(
+        const params: RegExpExecArray | null = /(?<=(\/product\/))[0-9]+(?!.)/.exec(
             window.location.href
         );
         this.url = params ? params[0] : "undefined";
@@ -119,7 +119,7 @@ export class ProductDetail extends PageBody<{}> {
                                 justifyContent: "center",
                                 flex: 1
                             }} >
-                                <img src={ `./images/product_${ this.data.id }.png` }
+                                <img src={ `/images/product_${ this.data.id }.png` }
                                 alt={ `product_${ this.data.id }` }
                                 onDragStart={ e => e.preventDefault() }
                                 style={{

@@ -2,11 +2,11 @@
  * @Author: Antoine YANG 
  * @Date: 2020-08-30 22:42:24 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2020-09-09 22:07:10
+ * @Last Modified time: 2020-12-06 00:53:19
  */
 
 import React from "react";
-import { HashRouter, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Shared } from "../methods/globals";
 
 
@@ -41,16 +41,14 @@ export const HomeButton = (props: HomeButtonProps): JSX.Element => {
     );
 
     return props.active ? (
-        <HashRouter>
-            <Link to="/"
-            style={{
-                textDecoration: "none",
-                display: "flex",
-                cursor: "none"
-            }} >
-                { svg }
-            </Link>
-        </HashRouter>
+        <Link to="/v2"
+        style={{
+            textDecoration: "none",
+            display: "flex",
+            cursor: "none"
+        }} >
+            { svg }
+        </Link>
     ) : (
         <>
             { svg }

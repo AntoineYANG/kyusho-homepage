@@ -1,8 +1,8 @@
 /*
  * @Author: Antoine YANG 
  * @Date: 2019-10-24 17:47:11 
- * @Last Modified by: Antoine YANG
- * @Last Modified time: 2020-08-29 17:43:20
+ * @Last Modified by: Kanata You
+ * @Last Modified time: 2020-12-02 20:27:41
  */
 
 
@@ -246,17 +246,31 @@ const setLightness: (color: string, degree: number) => string
  * @param {number} step a number between [0, 1]
  * @returns
  */
-const interpolate: (color1: string, color2: string, step?: number) => string
-    = (color1: string, color2: string, step: number = 0.5) => {
-        const hsl1: { code: string; h: number; s: number; l: number; a: number; } = toHsl(color1);
-        const hsl2: { code: string; h: number; s: number; l: number; a: number; } = toHsl(color2);
-        let h: number = hsl1.h * (1 - step) + hsl2.h * step;
-        let s: number = hsl1.s * (1 - step) + hsl2.s * step;
-        let l: number = hsl1.l * (1 - step) + hsl2.l * step;
-        let a: number = hsl1.a * (1 - step) + hsl2.a * step;
-        a = isNaN(a) ? 1 : a;
-        let hsl: string = a === 1 ? `hsl(${ h },${ s },${ l })` : `hsla(${ h },${ s },${ l },${ a })`;
-        return toRgb(hsl);
+const interpolate: (color1: string, color2: string, step?: number, mode?: "rgb" | "hsl") => string
+    = (color1: string, color2: string, step: number = 0.5, mode: "rgb" | "hsl" = "hsl") => {
+        if (mode === "hsl") {
+            const hsl1: { code: string; h: number; s: number; l: number; a: number; } = toHsl(color1);
+            const hsl2: { code: string; h: number; s: number; l: number; a: number; } = toHsl(color2);
+            let h: number = hsl1.h * (1 - step) + hsl2.h * step;
+            let s: number = hsl1.s * (1 - step) + hsl2.s * step;
+            let l: number = hsl1.l * (1 - step) + hsl2.l * step;
+            let a: number = hsl1.a * (1 - step) + hsl2.a * step;
+            a = isNaN(a) ? 1 : a;
+            let hsl: string = a === 1 ? `hsl(${ h },${ s },${ l })` : `hsla(${ h },${ s },${ l },${ a })`;
+            return toRgb(hsl);
+        } else {
+            const rgb1 = getRgba(color1);
+            const rgb2 = getRgba(color2);
+            return `rgba(${
+                Math.floor(rgb1.r * (1 - step) + rgb2.r * step)
+            },${
+                Math.floor(rgb1.g * (1 - step) + rgb2.g * step)
+            },${
+                Math.floor(rgb1.b * (1 - step) + rgb2.b * step)
+            },${
+                rgb1.a * (1 - step) + rgb2.a * step
+            })`;
+        }
     };
 
 

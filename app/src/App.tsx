@@ -1,55 +1,38 @@
 import React, { Component } from 'react';
-import './App.css';
-import { HashRouter, Switch, Route } from 'react-router-dom';
-import { Home } from './routings/Home';
-import { BadUrl } from './routings/BadUrl';
-import { BackgroundCanvas } from './themes/BackgroundCanvas';
-import { Theme } from './methods/typedict';
-import { Shared } from './methods/globals';
-import { Settings } from './routings/Settings';
-import { ProductDetail } from './routings/ProductDetail';
-import { Opening } from './kanata/Opening';
+import { connect } from "react-redux";
+import AppV2 from './v2/AppV2';
+import AppV3 from './v3/AppV3';
+import { PageConfig, VersionID } from "./v3/reducers/PageConfig";
 
 
-export interface AppState {
-  theme: Theme;
+interface AppProps {
+  version: VersionID;
+  setVersion: (versionId: VersionID) => any;
 };
 
 /**
  * 默认的最外层渲染元素.
  *
  * @class App
- * @extends {Component<{}, {}>}
+ * @extends {ConnectedComponent<AppProps, {}>}
  */
-class App extends Component<{}, AppState> {
-
-  public constructor(props: {}) {
-    super(props);
-    this.state = {
-      theme: Shared.theme
-    };
-  }
+// @ts-ignore
+@connect(PageConfig.mapStateToProps, PageConfig.mapDispatchToProps)
+// @ts-ignore
+export default class App extends Component<AppProps> {
 
   public render(): JSX.Element {
-    Shared.theme = this.state.theme;
+    const version = this.props.version;
+    console.log(version);
+    (window as any)['a'] = this.props.setVersion
 
-    return (
-      <div className="App">
-        <Opening />
-        <BackgroundCanvas initTheme={ this.state.theme } >
-          <HashRouter>
-            <Switch>
-              <Route path="/" exact component={ Home } />
-              <Route path="/settings" exact component={ Settings } />
-              <Route path="/product/*" exact component={ ProductDetail } />
-              <Route path="/**" component={ BadUrl } />
-            </Switch>
-          </HashRouter>
-        </BackgroundCanvas>
-      </div>
+    return version === 2 ? (
+      <AppV2 />
+    ) : version === 3 ? (
+      <AppV3 />
+    ) : (
+      <></>
     );
   }
 
 };
-
-export default App;

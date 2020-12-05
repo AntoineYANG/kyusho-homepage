@@ -95,7 +95,7 @@ export class PageFlow extends Component<PageFlowProps, PageFlowState> {
                             // 已在最上，继续向上
                         } else if (scrollTop + this.container.current.offsetHeight > (
                             content.offsetHeight + 60
-                        )) {
+                        ) && e.deltaY > 0) {
                             // 已在最下，继续向下
                         } else {
                             return;

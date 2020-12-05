@@ -2,7 +2,7 @@
  * @Author: Antoine YANG 
  * @Date: 2020-09-05 15:10:09 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2020-09-24 18:27:39
+ * @Last Modified time: 2020-12-06 00:39:19
  */
 
 import React from "react";
@@ -337,8 +337,8 @@ export class ProductView extends InitComponent<ProductViewProps, ProductViewStat
      * @memberof ProductView
      */
     protected jumpTo(id: string): void {
-        const root: string = /.*\/#\//.exec(window.location.href)![0];
-        window.location.href = root + "product/" + id;
+        const root: string = /.*\//.exec(window.location.href)![0];
+        window.location.href = root + "v2/product/" + id;
     }
 
 };
