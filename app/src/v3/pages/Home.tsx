@@ -2,11 +2,12 @@
  * @Author: Kanata You 
  * @Date: 2020-12-02 20:44:30 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2020-12-06 02:05:01
+ * @Last Modified time: 2020-12-06 18:09:27
  */
 
 import React, { Component } from "react";
 import { PageFlow } from "../containers/PageFlow";
+import { WelcomeCard } from "../cards/WelcomeCard";
 
 
 /**
@@ -27,6 +28,7 @@ export class Home extends Component {
         return (
             <>
                 <PageFlow height="88vh" >
+                    <WelcomeCard />
                     <div key="1"
                     style={{
                         background: "white",

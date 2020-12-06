@@ -21,6 +21,12 @@ body {
     div.navi {
         margin: 0;
     }
+
+    div.card {
+        width: 64vw;
+        font-size: 95%;
+        padding: 3.2vh 6vw;
+    }
 }
 
 @media screen and (orientation: landscape) {
@@ -33,6 +39,12 @@ body {
 
     div.navi {
         margin: 0 -2vw;
+    }
+
+    div.card {
+        width: 40vw;
+        font-size: 110%;
+        padding: 3.2vh 8vw;
     }
 }
 
@@ -76,5 +88,51 @@ button:focus {
 
 
 .AppV3 {
-    margin: 6vh 0 0;
+    margin: 1vh 0;
+    font-family: ubuntu, source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+div.card {
+    background: white;
+    min-width: 8vh;
+    display: inline-flex;
+    flex-direction: column;
+    box-shadow: 6px 5px 0 1px rgba(70,136,92,0.5);
+}
+
+.card header {
+    text-align: left;
+    margin: 1.2em 0 2em;
+    border-bottom: 1px solid black;
+    font-size: 130%;
+    font-weight: bold;
+}
+
+.card p {
+    text-align: left;
+}
+
+div.ButtonGroup {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+div.LinkButton {
+    display: inline-block;
+    font-size: 120%;
+    text-align: center;
+    cursor: pointer;
+    min-width: 2.8em;
+    padding: 0.2em 0.8em;
+    background: rgb(255,255,255) !important;
+    color: rgb(64,196,99) !important;
+    border: 1px solid rgb(64,196,99);
+    transition: color 0.6s, background 0.6s;
+    /* transition-duration: 0.6s; */
+}
+
+div.LinkButton:hover {
+    background: rgb(64,196,99) !important;
+    color: rgb(255,255,255) !important;
 }

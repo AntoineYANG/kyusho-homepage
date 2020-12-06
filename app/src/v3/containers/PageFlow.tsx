@@ -2,7 +2,7 @@
  * @Author: Kanata You 
  * @Date: 2020-09-24 14:06:26 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2020-12-06 02:01:02
+ * @Last Modified time: 2020-12-06 18:12:55
  */
 
 import React, { Component } from "react";
@@ -61,7 +61,7 @@ export class PageFlow extends Component<PageFlowProps, PageFlowState> {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    overflow: "hidden auto",
+                    overflow: "hidden",
                     margin: 0
                 }} >
                 {
@@ -96,8 +96,19 @@ export class PageFlow extends Component<PageFlowProps, PageFlowState> {
                                         },0.9)`,
                                         border: "1px solid #888",
                                         borderRadius: "3px",
+                                        pointerEvents: "all",
                                         cursor: "pointer"
-                                    }} />
+                                    }}
+                                    onClick={
+                                        () => {
+                                            if (i !== this.state.idx) {
+                                                this.aniDirection = (
+                                                    i < this.state.idx
+                                                ) ? "down" : "up";
+                                                return this.shiftTo(i);
+                                            }
+                                        }
+                                    } />
                                 );
                             })
                         }

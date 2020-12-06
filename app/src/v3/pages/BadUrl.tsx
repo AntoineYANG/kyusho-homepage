@@ -2,54 +2,62 @@
  * @Author: Kanata You 
  * @Date: 2020-12-02 20:47:07 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2020-12-06 00:42:46
+ * @Last Modified time: 2020-12-06 17:43:16
  */
 
-import React, { Component } from "react";
+import React from "react";
+import { Card, TextNodeV3, HTMLNodeV3 } from "../cards/Card";
+import { TextV3 } from "../TypesV3";
+import { LinkButton } from "../interactive/LinkButton";
+import { ButtonGroup } from "../interactive/ButtonGroup";
 
 
 /**
  * 这个页面级组件在无法访问对应网址时渲染.
- * 
- * @export
- * @class BadUrl
- * @extends {Component<{}>}
  */
-export class BadUrl extends Component<{}> {
-
-    public constructor(props: {}) {
-        super(props);
-        this.state = {};
-    }
-    
-    public render(): JSX.Element {
-        return (
-            <>
-                <div style={{
-                    margin: "calc(10px + 6vh) 0 calc(10px + 3vh)",
-                    padding: "calc(12px + 5vh) calc(20px + 5vw)",
-                    // boxShadow: `6px 5px 0 1px ${
-                    //     Shared.theme.colortab.border.replace(
-                    //         "(", "a("
-                    //     ).replace(
-                    //         ")", ",0.1)"
-                    //     )
-                    // }`
-                }} >
-                    <h1 style={{
-                        margin: "calc(20px + 3vh)"
-                    }} >
-                        404 - Bad Gateway (v3)
-                    </h1>
-                    <br />
-                    <span >
-                        Sorry, the URL you required is not valid.
-                    </span>
-                </div>
-            </>
-        );
-    }
-
-    public componentDidMount(): void {}
-
-};
+export const BadUrl: React.FC = _props => (
+    <div style={{
+        height: "88vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center"
+    }} >
+        <Card>
+            <header>
+                <TextNodeV3>
+                    {
+                        new TextV3(
+                            "404 - 找不到页面",
+                            undefined,
+                            "404 - Bad GateWay"
+                        )
+                    }
+                </TextNodeV3>
+            </header>
+            <p>
+                <HTMLNodeV3>
+                    {
+                        new TextV3(
+                            `<u>${ window.location.href }</u> 指向了一个不存在的资源。`,
+                            undefined,
+                            `Could not get <u>${ window.location.href }</u>. `
+                        )
+                    }
+                </HTMLNodeV3>
+            </p>
+            <ButtonGroup style={{
+                padding: "20px"
+            }} >
+                <LinkButton to="/" >
+                    {
+                        new TextV3(
+                            `主页`,
+                            undefined,
+                            `Home`
+                        )
+                    }
+                </LinkButton>
+            </ButtonGroup>
+        </Card>
+    </div>
+);

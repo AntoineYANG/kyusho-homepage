@@ -24,7 +24,7 @@ export default class App extends Component<AppProps> {
   public render(): JSX.Element {
     const version = this.props.version;
     // console.log(version);
-    (window as any)['a'] = this.props.setVersion;
+    // (window as any)['setVersion'] = this.props.setVersion;
 
     return version === 2 ? (
       <AppV2 />
