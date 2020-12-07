@@ -18,7 +18,12 @@ window.onload = () => {
     document.body.appendChild(clip);
 };
 
-export const execCopy = (text: string) => {
+export const execCopy = (text: string, callback?: () => void) => {
+    if (!navigator.userAgent.toLocaleLowerCase().includes("firefox")) {
+        (toast as any)("This function doesnot work on navigators except for FireFox.");
+        return;
+    }
+
     clip.innerText = text;
 
     const selection = window.getSelection()!;
@@ -33,9 +38,10 @@ export const execCopy = (text: string) => {
 
     selection.removeAllRanges();
 
-    (toast as any).call(
-        {},
-        `Copied successfully: \n\n"${ text }"`
-    );
+    if (callback) {
+        callback();
+    } else {
+        (toast as any)("Copied successfully");
+    }
 };
 

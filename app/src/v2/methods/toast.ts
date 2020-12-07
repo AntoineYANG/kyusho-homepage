@@ -31,5 +31,8 @@ export const toast: () => void | null = debounced((text: string) => {
 
     setTimeout(() => {
         $(t).fadeOut(600);
+        setTimeout(() => {
+            $(t).remove();
+        }, 600);
     }, 800);
 });

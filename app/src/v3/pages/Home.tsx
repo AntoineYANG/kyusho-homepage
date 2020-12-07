@@ -2,12 +2,16 @@
  * @Author: Kanata You 
  * @Date: 2020-12-02 20:44:30 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2020-12-06 18:09:27
+ * @Last Modified time: 2020-12-08 00:11:10
  */
 
 import React, { Component } from "react";
 import { PageFlow } from "../containers/PageFlow";
 import { WelcomeCard } from "../cards/WelcomeCard";
+import { Card, TextNodeV3 } from "../cards/Card";
+import { TextV3 } from "../TypesV3";
+import { InterestCard } from "../cards/InterestCard";
+import { TechCard } from "../cards/TechCard";
 
 
 /**
@@ -27,31 +31,40 @@ export class Home extends Component {
     public render(): JSX.Element {
         return (
             <>
-                <PageFlow height="88vh" >
+                <PageFlow height="92vh" >
                     <WelcomeCard />
-                    <div key="1"
-                    style={{
-                        background: "white",
-                        padding: "10vh 10vw",
-                        display: "inline-block",
-                        fontSize: "160%"
-                    }} >
+                    <TechCard />
+                    <InterestCard />
+                    <Card>
                         <p>
                             <label>
-                                This page is not released yet,&nbsp;
+                                <TextNodeV3>
+                                    {
+                                        new TextV3(
+                                            "网站的建设工作还在进行中，",
+                                            "申し訳ありませんが、このヴァージョンはまだ完成されません。",
+                                            "This page is not released yet, "
+                                        )
+                                    }
+                                </TextNodeV3>
                             </label>
                         </p>
                         <p>
                             <a href="/v2" style={{
-                                color: "rgb(255,215,61)"
+                                color: "rgb(206,186,133)"
                             }} >
-                                click here to move back to v2.x
+                                <TextNodeV3>
+                                    {
+                                        new TextV3(
+                                            "点击此处返回 2.x 版本",
+                                            "v2.x へ",
+                                            "click here to move back to v2.x"
+                                        )
+                                    }
+                                </TextNodeV3>
                             </a>
                         </p>
-                    </div>
-                    <div key="2" style={{ background: "white", padding: "10vh 10vw", display: "inline-block" }} >b</div>
-                    <div key="3" style={{ background: "white", padding: "50vh 10vw", display: "inline-block" }} >c</div>
-                    <div key="4" style={{ background: "white", padding: "10vh 10vw", display: "inline-block" }} >d</div>
+                    </Card>
                 </PageFlow>
             </>
         );

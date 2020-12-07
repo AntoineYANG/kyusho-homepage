@@ -2,7 +2,8 @@ body {
     overflow-x: hidden;
     text-align: center;
     font-family: ubuntu, source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
-    background: radial-gradient(rgb(165,243,203) 40px, rgb(86,173,126));
+    /* background: radial-gradient(rgb(165,243,203) 40px, rgb(86,173,126)); */
+    background: url("/images/photowall.jpg") no-repeat scroll 50% 0 / cover;
     background-attachment: fixed;
     display: flex;
     flex-direction: column;
@@ -25,8 +26,14 @@ body {
     div.card {
         width: 64vw;
         font-size: 95%;
-        padding: 3.2vh 6vw;
+        padding: 6vh 6vw;
     }
+
+    div.card.nopad {
+        width: 76vw;
+        padding: 0;
+    }
+
 }
 
 @media screen and (orientation: landscape) {
@@ -44,8 +51,14 @@ body {
     div.card {
         width: 40vw;
         font-size: 110%;
-        padding: 3.2vh 8vw;
+        padding: 6vh 8vw;
     }
+
+    div.card.nopad {
+        width: 56vw;
+        padding: 0;
+    }
+
 }
 
 input[type="number"]::-webkit-outer-spin-button,
@@ -97,7 +110,7 @@ div.card {
     min-width: 8vh;
     display: inline-flex;
     flex-direction: column;
-    box-shadow: 6px 5px 0 1px rgba(70,136,92,0.5);
+    box-shadow: 6px 5px 0 1px rgba(70,70,70,0.25);
 }
 
 .card header {
