@@ -2,23 +2,31 @@
  * @Author: Kanata You 
  * @Date: 2020-09-24 14:06:26 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2020-12-07 12:05:02
+ * @Last Modified time: 2020-12-10 16:58:10
  */
 
 import React, { Component } from "react";
 import { SubscribeWheelEvent, IsWheelEventValid, UnsubscribeWheelEvent } from "../tools/WheelEventManager";
+import { TextNodeV3 } from "../cards/Card";
+import { TextV3 } from "../TypesV3";
+import { Fonts } from "../design/design";
+import { connect } from "react-redux";
+import { LangConfig } from "../reducers/LangConfig";
 
 
 export interface PageFlowProps {
     height: string | number;
     children?: Array<JSX.Element>;
     style?: React.CSSProperties;
+    showTip?: boolean;
 };
 
 export interface PageFlowState {
     idx: number;
 };
 
+// @ts-ignore
+@connect(LangConfig.mapStateToProps)
 export class PageFlow extends Component<PageFlowProps, PageFlowState> {
 
     protected wheelEvent: (this: HTMLElement, ev: WheelEvent) => any;
@@ -32,6 +40,8 @@ export class PageFlow extends Component<PageFlowProps, PageFlowState> {
 
     protected touched: boolean;
     protected originY: number;
+
+    protected showTip: boolean;
 
     public constructor(props: PageFlowProps) {
         super(props);
@@ -119,6 +129,8 @@ export class PageFlow extends Component<PageFlowProps, PageFlowState> {
 
         this.touched = false;
         this.originY = 0;
+
+        this.showTip = this.props.showTip ?? false;
     }
 
     public render(): JSX.Element {
@@ -170,6 +182,7 @@ export class PageFlow extends Component<PageFlowProps, PageFlowState> {
                     height: this.props.height,
                     flex: 1,
                     display: "flex",
+                    flexDirection: "column",
                     alignItems: "center",
                     justifyContent: "center",
                     overflow: "hidden",
@@ -196,7 +209,7 @@ export class PageFlow extends Component<PageFlowProps, PageFlowState> {
                         {
                             this.props.children!.map((_, i) => {
                                 return (
-                                    <div key={ i }
+                                    <div key={ i } tabIndex={ 1 }
                                     style={{
                                         display: "block",
                                         width: "6px",
@@ -225,6 +238,36 @@ export class PageFlow extends Component<PageFlowProps, PageFlowState> {
                         }
                         </div>
                     ) : null
+                }
+                {
+                    this.showTip ? (
+                        <div key="tip" className="tip"
+                        style={{
+                            position: "relative",
+                            width: "1em",
+                            display: "flex",
+                            alignItems: "center",
+                            marginLeft: "calc(-1.5em - 2px)",
+                            right: "48px",
+                            writingMode: "vertical-lr",
+                            // @ts-ignore
+                            fontFamily: Fonts[this.props.lang] || "inherit"
+                        }} >
+                            <label>
+                                <pre>
+                                    <TextNodeV3>
+                                        {
+                                            new TextV3(
+                                                " 向下滑动屏幕查看更多 → ",
+                                                "下へスクロールすると次の内容が表示する  →",
+                                                "scroll down to view more  →"
+                                            )
+                                        }
+                                    </TextNodeV3>
+                                </pre>
+                            </label>
+                        </div>
+                    ) : false
                 }
             </div>
         );
@@ -301,6 +344,8 @@ export class PageFlow extends Component<PageFlowProps, PageFlowState> {
             return -1;
         }
 
+        this.showTip = false;
+
         const to: number = Math.min(
             this.props.children?.length - 1,
             Math.max(
@@ -311,7 +356,10 @@ export class PageFlow extends Component<PageFlowProps, PageFlowState> {
         this.cdHolder = true;
         this.timers.push(
             setTimeout(() => {
+                const content = this.container.current!.firstElementChild!.firstElementChild! as HTMLElement;
+                content.style.opacity = "";
                 this.cdHolder = false;
+                this.clearTimers();
                 UnsubscribeWheelEvent();
             }, 360)
         );

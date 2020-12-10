@@ -12,7 +12,7 @@ export interface AppV3Props {};
  */
 const AppV3 = (_props: AppV3Props): JSX.Element => {
   return (
-    <div className="App AppV3" >
+    <div className="App AppV3">
       <svg width="0" height="0"> 
         <filter id="filter">
           <feTurbulence type="fractalNoise" baseFrequency=".01" numOctaves="6"></feTurbulence>

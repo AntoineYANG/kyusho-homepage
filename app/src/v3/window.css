@@ -1,7 +1,14 @@
+/*
+ * @Author: Kanata You 
+ * @Date: 2020-12-5 20:56:28 
+ * @Last Modified by: Kanata You
+ * @Last Modified time: 2020-12-10 21:10:34
+ */
+
 body {
     overflow-x: hidden;
     text-align: center;
-    font-family: ubuntu, source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+    font-family: ubuntu, "Yu Mincho", 游明朝, source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
     /* background: radial-gradient(rgb(165,243,203) 40px, rgb(86,173,126)); */
     background: url("/images/photowall.jpg") no-repeat scroll 50% 0 / cover;
     background-attachment: fixed;
@@ -9,6 +16,10 @@ body {
     flex-direction: column;
     align-items: stretch;
     justify-content: center;
+    position: fixed;
+    left: 0;
+    top: 0;
+    overflow-y: hidden;
 }
 
 @media screen and (orientation: portrait) {
@@ -148,4 +159,99 @@ div.LinkButton {
 div.LinkButton:hover {
     background: rgb(64,196,99) !important;
     color: rgb(255,255,255) !important;
+}
+
+div.tip {
+    padding: 0 0.25em;
+    pointer-events: none;
+    border: 1px solid rgb(204,179,143);
+    background-color: white;
+    color: rgb(255,127,127);
+    font-weight: 600;
+    font-size: 120%;
+    border-radius: 0.4em;
+    animation: twinkle 1.6s infinite alternate;
+}
+
+@keyframes twinkle {
+    0% {
+        opacity: 0.4;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes twinkle {
+    0% {
+        opacity: 0.4;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+
+div.DisplayCardContainer {
+    background-image: radial-gradient(circle farthest-side at 12% 4%, rgb(249,225,161), rgb(180,134,65) 18%, rgb(71,63,51) 50%, rgb(54,45,32));
+}
+
+div.card.DisplayCard {
+    padding: 2vh 2vw !important;
+    width: 80vw;
+    max-width: 800px;
+    line-height: 1.5em;
+
+    background-color: rgba(24,31,40,0);
+    background-image: url(/images/card-rect.png);
+    background-size: 10px 10px;
+
+    overflow: hidden;
+}
+
+div.DisplayCardContent {
+    background-color: rgba(24,31,40,0.7);
+    box-shadow: 3px 2px 0px 2px rgba(0,0,0,0.5);
+}
+
+div.DisplayCardContent header {
+    font-size: 130%;
+    text-align: left;
+    margin: 0.8em;
+    border-bottom: none;
+    font-weight: bold;
+    letter-spacing: 1.2px;
+    /* background-color: rgba(24,31,40,0.9); */
+}
+
+div.DisplayCardContent header span {
+    border-bottom: 1px solid white;
+}
+
+label.LangOption {
+    color: rgb(246,246,246);
+    transition: all 0.2s;
+}
+
+label.LangOption:hover {
+    color: rgb(24,31,40);
+    background-color: rgb(246,246,246);
+}
+
+label.LangOption svg path {
+    stroke: rgb(246,246,246);
+    transition: stroke 0.2s;
+}
+
+label.LangOption:hover svg path {
+    stroke: rgb(24,31,40);
+}
+
+label.option {
+    color: rgb(180,195,202);
+    transition: color 0.2s;
+}
+
+label.option:hover {
+    color: rgb(249,225,161);
 }

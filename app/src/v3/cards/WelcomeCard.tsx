@@ -2,7 +2,7 @@
  * @Author: Kanata You 
  * @Date: 2020-12-06 15:10:22 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2020-12-08 00:05:32
+ * @Last Modified time: 2020-12-10 21:56:19
  */
 
 import React from "react";
@@ -13,24 +13,22 @@ import { TextV3 } from "../TypesV3";
 export const WelcomeCard: React.FC<{}> = _props => {
     return (
         <Card key="content" style={{
-            background: "#fff",
-            height: "64vh",
             fontSize: "100%",
             display: "flex",
             alignItems: "center",
-            justifyContent: "flex-start",
-            paddingTop: "4vh",
-            paddingBottom: "4vh"
+            justifyContent: "space-between",
+            paddingTop: "6vh",
+            paddingBottom: "8vh"
         }} >
             <div className="avatar"
             style={{
                 marginTop: "-10px"
             }} >
-                <img src="/images/avatar.png"
+                <img src="/images/avatar.png" alt="avatar"
                 style={{
-                    width: "100px",
-                    height: "100px",
-                    borderRadius: "50px"
+                    width: "140px",
+                    height: "140px",
+                    borderRadius: "70px"
                 }} />
             </div>
             <label key="1" style={{
@@ -51,7 +49,7 @@ export const WelcomeCard: React.FC<{}> = _props => {
             <label key="prof" style={{
                 display: "block",
                 margin: "0 auto",
-                color: "rgb(120,120,120)"
+                color: "rgb(114,123,132)"
             }} >
                 <TextNodeV3>
                     {
@@ -72,14 +70,14 @@ export const WelcomeCard: React.FC<{}> = _props => {
                 minHeight: "3em",
                 fontSize: "90%",
                 padding: "0.3em -4vw",
-                color: "rgb(120,120,120)"
+                color: "rgb(114,123,132)"
             }} >
                 <TextNodeV3>
                     {
                         new TextV3(
                             "浙江财经大学-信息管理与人工智能学院",
                             "浙江財政経済大学　情報科学学部",
-                            "School of Information Management and Artifitial Intelligence, "
+                            "School of Information Management and Artifitial Intelligence, \n"
                                 + "Zhejiang University of Finance and Economics"
                         )
                     }

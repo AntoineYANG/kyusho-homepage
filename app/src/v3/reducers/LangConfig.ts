@@ -2,10 +2,11 @@
  * @Author: Kanata You 
  * @Date: 2020-12-06 15:41:45 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2020-12-06 16:24:11
+ * @Last Modified time: 2020-12-09 19:13:59
  */
 
 import { Lang } from "../TypesV3";
+import $ from "jquery";
 
 
 export interface LangReduxState {
@@ -26,9 +27,14 @@ export type LangReduxAction<AT extends LangActionType> = {
     } : {}
 );
 
+const pageLang = navigator.language.slice(0, 2);
+
+const initLang: Lang = pageLang === "zh" ? "CH" : pageLang === "ja" ? "JP" : "EN";
+
+$("html").attr("lang", pageLang);
+
 const initData: LangReduxState = {
-    lang: navigator.language.startsWith("zh") ? "CH"
-        : navigator.language.startsWith("ja") ? "JP" : "EN"
+    lang: initLang
 };
 
 
@@ -37,7 +43,8 @@ export const LangRedux = <AT extends LangActionType>(state: LangReduxState = ini
         case "CHANGE_LANG":
             const clAction = action as LangReduxAction<"CHANGE_LANG">;
             if (clAction.lang !== state.lang) {
-                return Object.assign({}, state, { version: clAction.lang });
+                $("html").attr("lang", clAction.lang.toLocaleLowerCase());
+                return Object.assign({}, state, { lang: clAction.lang });
             }
             return state;
         default:

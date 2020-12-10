@@ -7,7 +7,6 @@ import { PageConfig, VersionID } from "./v3/reducers/PageConfig";
 
 interface AppProps {
   version: VersionID;
-  setVersion: (versionId: VersionID) => any;
 };
 
 /**
@@ -17,7 +16,7 @@ interface AppProps {
  * @extends {ConnectedComponent<AppProps, {}>}
  */
 // @ts-ignore
-@connect(PageConfig.mapStateToProps, PageConfig.mapDispatchToProps)
+@connect(PageConfig.mapStateToProps)
 // @ts-ignore
 export default class App extends Component<AppProps> {
 
