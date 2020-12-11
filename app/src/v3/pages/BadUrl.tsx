@@ -2,7 +2,7 @@
  * @Author: Kanata You 
  * @Date: 2020-12-02 20:47:07 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2020-12-06 17:43:16
+ * @Last Modified time: 2020-12-11 21:34:17
  */
 
 import React from "react";
@@ -52,7 +52,7 @@ export const BadUrl: React.FC = _props => (
                     {
                         new TextV3(
                             `主页`,
-                            undefined,
+                            "戻る",
                             `Home`
                         )
                     }

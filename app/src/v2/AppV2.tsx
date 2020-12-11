@@ -61,6 +61,16 @@ class AppV2 extends Component<{}, AppV2State> {
     );
   }
 
+  public componentDidMount(): void {
+    document.body.style.overflowY = "scroll";
+    document.body.style.position = "initial";
+  }
+
+  public componentWillUnmount(): void {
+    document.body.style.overflowY = "";
+    document.body.style.position = "fixed";
+  }
+
 };
 
 export default AppV2;

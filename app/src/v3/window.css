@@ -2,7 +2,7 @@
  * @Author: Kanata You 
  * @Date: 2020-12-5 20:56:28 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2020-12-10 21:10:34
+ * @Last Modified time: 2020-12-11 20:50:04
  */
 
 body {
@@ -140,6 +140,7 @@ div.ButtonGroup {
     display: flex;
     align-items: center;
     justify-content: space-around;
+    flex-wrap: wrap;
 }
 
 div.LinkButton {
@@ -149,16 +150,16 @@ div.LinkButton {
     cursor: pointer;
     min-width: 2.8em;
     padding: 0.2em 0.8em;
-    background: rgb(255,255,255) !important;
-    color: rgb(64,196,99) !important;
-    border: 1px solid rgb(64,196,99);
+    background: rgb(24,31,40) !important;
+    color: rgb(249,225,161) !important;
+    border: 1px solid rgb(249,225,161);
     transition: color 0.6s, background 0.6s;
     /* transition-duration: 0.6s; */
 }
 
 div.LinkButton:hover {
-    background: rgb(64,196,99) !important;
-    color: rgb(255,255,255) !important;
+    background: rgb(249,225,161) !important;
+    color: rgb(24,31,40) !important;
 }
 
 div.tip {

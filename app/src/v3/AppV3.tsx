@@ -3,6 +3,7 @@ import './window.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Home } from './pages/Home';
 import { BadUrl } from './pages/BadUrl';
+import { Papers } from './pages/Papers';
 
 
 export interface AppV3Props {};
@@ -23,6 +24,9 @@ const AppV3 = (_props: AppV3Props): JSX.Element => {
         <Switch>
           <Route path="/" exact >
             <Home />
+          </Route>
+          <Route path="/paper" exact >
+            <Papers />
           </Route>
           <Route path="/**" >
             <BadUrl />
