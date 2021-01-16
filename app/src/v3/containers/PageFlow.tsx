@@ -2,7 +2,7 @@
  * @Author: Kanata You 
  * @Date: 2020-09-24 14:06:26 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2020-12-10 16:58:10
+ * @Last Modified time: 2021-01-16 20:58:48
  */
 
 import React, { Component } from "react";
@@ -12,7 +12,129 @@ import { TextV3 } from "../TypesV3";
 import { Fonts } from "../design/design";
 import { connect } from "react-redux";
 import { LangConfig } from "../reducers/LangConfig";
+import { createAnimation, createStyle, connectStyle } from "reacss";
 
+
+const twinkle = createAnimation("twinkle", {
+    '0%': {
+        opacity: 0.4
+    },
+    '100%': {
+        opacity: 1
+    }
+});
+
+const upExit = createAnimation("up-exit", {
+    '0%': {
+        opacity:    1
+    },
+    '100%': {
+        transform:  'translateY(-200px)',
+        opacity:    0.4
+    }
+});
+const upEnter = createAnimation("up-enter", {
+    '0%': {
+        transform:  'translateY(200px)',
+        opacity:    0.4
+    },
+    '100%': {
+        transform:  undefined,
+        opacity:    undefined
+    }
+});
+const downExit = createAnimation("down-exit", {
+    '0%': {
+        opacity:    1
+    },
+    '100%': {
+        transform:  'translateY(200px)',
+        opacity:    0.4
+    }
+});
+const downEnter = createAnimation("down-enter", {
+    '0%': {
+        transform:  'translateY(-200px)',
+        opacity:    0.4
+    },
+    '100%': {
+        transform:  undefined,
+        opacity:    undefined
+    }
+});
+
+const PageFlowStyle = createStyle({
+    "div": {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center"
+    },
+    "div > div:first-child": {
+        flex:           1,
+        display:        "flex",
+        flexDirection:  "column",
+        alignItems:     "center",
+        justifyContent: "center",
+        overflow:       "hidden",
+        margin:         0
+    },
+    "div > div:first-child > .up-exit": {
+        animation:      upExit({ duration: '160ms', timingFunction: 'ease-in' })
+    },
+    "div > div:first-child > .up-enter": {
+        animation:      upEnter({ duration: '160ms', timingFunction: 'ease-out' })
+    },
+    "div > div:first-child > .down-exit": {
+        animation:      downExit({ duration: '160ms', timingFunction: 'ease-in' })
+    },
+    "div > div:first-child > .down-enter": {
+        animation:      downEnter({ duration: '160ms', timingFunction: 'ease-out' })
+    },
+    "div > div.navi": {
+        width:          "20px",
+        height:         "40%",
+        display:        "flex",
+        flexDirection:  "column",
+        alignItems:     "center",
+        justifyContent: "center",
+        margin:         "0 calc(0.6vw + 6px) 0 calc(-0.6vw - 26px)",
+        pointerEvents:  "none"
+    },
+    "div > div.navi > div": {
+        display:        "block",
+        width:          "6px",
+        height:         "6px",
+        margin:         "6px 4px",
+        border:         "1px solid rgb(255,255,255)",
+        borderRadius:   "3px",
+        pointerEvents:  "all",
+        cursor:         "pointer"
+    },
+    "* .tip": {
+        padding:        '0 0.25em',
+        pointerEvents:  'none',
+        border:         '1px solid rgb(204,179,143)',
+        background:     'white',
+        color:          'rgb(255,127,127)',
+        fontWeight:     600,
+        fontSize:       '120%',
+        borderRadius:   '0.4em',
+        
+        animation: twinkle({
+            duration:       '1.6s',
+            iterationCount: 'infinite',
+            direction:      'alternate'
+        }),
+
+        position:   "relative",
+        width:      "1em",
+        display:    "flex",
+        alignItems: "center",
+        marginLeft: "calc(-1.5em - 2px)",
+        right:      "48px",
+        writingMode:"vertical-lr",
+    }
+})
 
 export interface PageFlowProps {
     height: string | number;
@@ -133,14 +255,12 @@ export class PageFlow extends Component<PageFlowProps, PageFlowState> {
         this.showTip = this.props.showTip ?? false;
     }
 
+    @connectStyle(PageFlowStyle)
     public render(): JSX.Element {
         return (
-            <div ref={ this.container } className="PageFlowContainer"
+            <div ref={ this.container }
             style={{
-                padding: this.props.style?.margin,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center"
+                padding: this.props.style?.margin
             }}
             onTouchStart={
                 e => {
@@ -177,16 +297,8 @@ export class PageFlow extends Component<PageFlowProps, PageFlowState> {
             } >
                 <div key="box"
                 style={{
-                    // border: "1px solid white",
-                    ...this.props.style,
                     height: this.props.height,
-                    flex: 1,
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    overflow: "hidden",
-                    margin: 0
+                    ...this.props.style
                 }} >
                 {
                     this.props.children?.length ? this.props.children[this.state.idx] : null
@@ -194,34 +306,15 @@ export class PageFlow extends Component<PageFlowProps, PageFlowState> {
                 </div>
                 {
                     this.props.children?.length || 0 > 1 ? (
-                        <div key="navi"
-                        style={{
-                            // border: "1px solid white",
-                            width: "20px",
-                            height: "40%",
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            margin: "0 calc(0.6vw + 6px) 0 calc(-0.6vw - 26px)",
-                            pointerEvents: "none"
-                        }} >
+                        <div key="navi" className="navi" >
                         {
                             this.props.children!.map((_, i) => {
                                 return (
                                     <div key={ i } tabIndex={ 1 }
                                     style={{
-                                        display: "block",
-                                        width: "6px",
-                                        height: "6px",
-                                        margin: "6px 4px",
                                         background: `rgba(255,255,255,${
                                             i === this.state.idx ? 1 : 0.2
-                                        })`,
-                                        border: "1px solid rgb(255,255,255)",
-                                        borderRadius: "3px",
-                                        pointerEvents: "all",
-                                        cursor: "pointer"
+                                        })`
                                     }}
                                     onClick={
                                         () => {
@@ -243,13 +336,6 @@ export class PageFlow extends Component<PageFlowProps, PageFlowState> {
                     this.showTip ? (
                         <div key="tip" className="tip"
                         style={{
-                            position: "relative",
-                            width: "1em",
-                            display: "flex",
-                            alignItems: "center",
-                            marginLeft: "calc(-1.5em - 2px)",
-                            right: "48px",
-                            writingMode: "vertical-lr",
                             // @ts-ignore
                             fontFamily: Fonts[this.props.lang] || "inherit"
                         }} >
@@ -315,21 +401,9 @@ export class PageFlow extends Component<PageFlowProps, PageFlowState> {
 
         if (this.container.current) {
             const content = this.container.current.firstElementChild!.firstElementChild! as HTMLElement;
-            content.style.opacity = `0`;
-            for (let t: number = 0; t < 160; t += 10) {
-                this.timers.push(
-                    setTimeout(() => {
-                        if (content) {
-                            content.style.transform = `translateY(${ (
-                                this.aniDirection === "up" ? 1 : -1
-                            ) * (160 - Math.min(
-                                160, t + 10
-                            )) }px)`;
-                            content.style.opacity = `${ Math.min(1, Math.max(t - 30, 0) / 120) }`;
-                        }
-                    }, t)
-                );
-            }
+            content.classList.add(
+                this.aniDirection === "down" ? "down-enter" : "up-enter"
+            );
         }
     }
 
@@ -356,8 +430,6 @@ export class PageFlow extends Component<PageFlowProps, PageFlowState> {
         this.cdHolder = true;
         this.timers.push(
             setTimeout(() => {
-                const content = this.container.current!.firstElementChild!.firstElementChild! as HTMLElement;
-                content.style.opacity = "";
                 this.cdHolder = false;
                 this.clearTimers();
                 UnsubscribeWheelEvent();
@@ -366,18 +438,9 @@ export class PageFlow extends Component<PageFlowProps, PageFlowState> {
 
         if (this.container.current) {
             const content = this.container.current.firstElementChild!.firstElementChild! as HTMLElement;
-            for (let t: number = 0; t < 160; t += 10) {
-                this.timers.push(
-                    setTimeout(() => {
-                        if (content) {
-                            content.style.transform = `translateY(${ (
-                                this.aniDirection === "up" ? -1 : 1
-                            ) * t * 2 }px)`;
-                            content.style.opacity = `${ 1 - t / 160 }`;
-                        }
-                    }, t)
-                );
-            }
+            content.classList.add(
+                this.aniDirection === "down" ? "down-exit" : "up-exit"
+            );
         }
 
         this.timers.push(

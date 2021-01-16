@@ -2,7 +2,7 @@
  * @Author: Kanata You 
  * @Date: 2020-12-06 15:17:27 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2020-12-10 20:09:02
+ * @Last Modified time: 2021-01-16 20:22:21
  */
 
 import React, { Component } from "react";
@@ -10,6 +10,8 @@ import { TextV3, Lang } from "../TypesV3";
 import { connect } from "react-redux";
 import { LangConfig } from "../reducers/LangConfig";
 import Design from "../design/design";
+import { createStyle } from "reacss";
+import { SchemeConfig, ColorScheme } from "../reducers/SchemeConfig";
 
 
 interface FfTextNodeV3Props {
@@ -73,15 +75,77 @@ export interface CardProps {
     style?: React.CSSProperties;
 };
 
+const CardSchemeLight = createStyle({
+    "div": {
+        backgroundColor:    Design.white,
+        color:              Design.black,
+        boxShadow:          `6px 5px 0 1px ${ Design.black.replace("(", "a(").replace(")", ",0.33)") }`,
+        minWidth:           "8vh",
+        width:              "80vw",
+        maxWidth:           "600px",
+        fontSize:           "95%",
+        padding:            "6vh 6vw",
+        display:            "inline-flex",
+        flexDirection:      "column"
+    },
+    "div header": {
+        textAlign:      "left",
+        margin:         "1.2em 0 2em",
+        borderBottom:   "1px solid black",
+        fontSize:       "130%",
+        fontWeight:     "bold"
+    },
+    "div p": {
+        textAlign:      "left"
+    }
+});
+
+const CardSchemeDark = createStyle({
+    "div": {
+        background:     "rgba(36,24,40,0.4)",
+        border:         "1px solid rgb(128,82,119)",
+        color:          Design.white,
+        minWidth:       "8vh",
+        width:          "80vw",
+        maxWidth:       "600px",
+        fontSize:       "95%",
+        padding:        "6vh 6vw",
+        display:        "inline-flex",
+        flexDirection:  "column"
+    },
+    "div header": {
+        textAlign:      "left",
+        margin:         "1.2em 0 2em",
+        borderBottom:   "1px solid rgb(140,113,129)",
+        fontSize:       "130%",
+        fontWeight:     "bold"
+    },
+    "div p": {
+        textAlign:      "left"
+    }
+});
+
 export const Card: React.FC<CardProps> = props => {
     return (
-        <div className="card" style={{
-            backgroundColor: Design.white,
-            color: Design.black,
-            boxShadow: `6px 5px 0 1px ${ Design.black.replace("(", "a(").replace(")", ",0.33)") }`,
-            ...props.style
-        }} >
+        <CardFf>
             { props.children }
-        </div>
+        </CardFf>
     );
 };
+
+// @ts-ignore
+@connect(SchemeConfig.mapStateToProps)
+class CardFf extends Component<CardProps> {
+    public render(): JSX.Element {
+        const scheme = (this.props as { scheme: ColorScheme }).scheme;
+        const style = scheme === "dark" ? CardSchemeDark : CardSchemeLight;
+        
+        return (
+            <div className={ style.id } style={{
+                ...this.props.style
+            }} >
+                { this.props.children }
+            </div>
+        );
+    }
+}

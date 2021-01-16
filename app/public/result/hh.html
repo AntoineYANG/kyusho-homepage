@@ -1,0 +1,78 @@
+<html><head>
+    <meta charset="utf-8">
+    <title>浙江财经大学健康通行码</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="https://e.zufe.edu.cn/zcxs/resources/jkm/css/main.css">
+<script src="https://e.zufe.edu.cn/zcxs/resources/jkm/js/jquery-1.7.2.min.js"></script><script type="text/javascript" src="https://e.zufe.edu.cn/zcxs/resources/jkm/js/jquery.qrcode.min.js"></script><script>
+
+    //获取系统时间
+    function showTime() {
+        nowtime = new Date();
+        year = nowtime.getFullYear();//年
+        month = nowtime.getMonth() + 1;//月
+        day = nowtime.getDate();//日
+        hour = nowtime.getHours();//时
+        minutes = nowtime.getMinutes(); //分
+        seconds = nowtime.getSeconds(); //秒
+        //文字增加空格
+        document.getElementById("div_timer").style = "white-space:pre;";
+        //显示时间
+        document.getElementById("div_timer").innerText = p(month) + "月" + p(day) + "日 " + p(hour) + ":" + p(minutes) + ":" + p(seconds);
+    }
+
+    function initSpan() {
+        nowtime = new Date();
+        year = nowtime.getFullYear();//年
+        month = nowtime.getMonth() + 1;//月
+        day = nowtime.getDate();//日
+        hour = nowtime.getHours();//时
+        minutes = nowtime.getMinutes(); //分
+        seconds = nowtime.getSeconds(); //秒
+        //文字增加空格
+        document.getElementById("vspan").style = "white-space:pre;";
+        //显示时间
+        document.getElementById("vspan").innerText = "有效期：" + year + "-" + p(month) + "-" + p(day) + " " + (hour >= 12 ? "11:30—23:00" : "06:30—12:00");
+    }
+    setTimeout(initSpan, 1000);
+
+    setInterval("showTime()", 1000);
+
+    //月日时分秒小于10补0
+    function p(s) {
+        return s < 10 ? '0' + s : s;
+    }
+
+</script></head>
+
+
+
+
+
+<body class="blue-bg">
+<div class="banner"><img src="https://e.zufe.edu.cn/zcxs/resources/jkm/images/text.png"></div>
+
+<div class="content-box">
+    <div class="top-title">
+        <p style="font-size:1.0rem;">姓名：杨振东</p>
+        <p style="font-size:1.0rem;">单位：信息管理与人工智能学院</p>
+    </div>
+    <div>
+        <a href="" class="link-btn"><img src="https://e.zufe.edu.cn/zcxs/resources/jkm/images/an1.png"></a>
+    </div>
+    <div class="now-time" id="div_timer" style="white-space: pre;">--月--日 --:--:--</div>
+    <div class="qr">
+        
+            <div id="output"><img src="/images/w.png"></div>
+        
+    </div>
+    
+    
+        <div id="vspan" class="time">有效期：****-**-** **:**—**:**</div>
+    
+    <div style="text-align:center;padding-top: 20px">
+        <a target="_blank" href="https://e.zufe.edu.cn/404">晨午晚检测申报</a>&nbsp;&nbsp;&nbsp;&nbsp;
+        <a target="_blank" href="https://e.zufe.edu.cn/404">查看申请记录</a>
+    </div>
+</div>
+
+</body></html>

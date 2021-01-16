@@ -2,30 +2,29 @@
  * @Author: Kanata You 
  * @Date: 2020-12-09 18:20:50 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2021-01-16 20:16:14
+ * @Last Modified time: 2021-01-16 20:15:53
  */
 
 import React, { Component } from "react";
-import { Lang } from "../TypesV3";
 import { connect } from "react-redux";
-import { LangConfig } from "../reducers/LangConfig";
+import { SchemeConfig, ColorScheme } from "../reducers/SchemeConfig";
 import Design from "../design/design";
 
 
-interface FfLangOptionProps {
-    lang: Lang;
-    setLang: (lang: Lang) => any;
+interface FfSchemeOptionProps {
+    scheme:     ColorScheme;
+    setScheme:  (scheme: ColorScheme) => any;
 };
 
-interface FfLangOptionState {
+interface FfSchemeOptionState {
     opened: boolean;
 };
 
 // @ts-ignore
-@connect(LangConfig.mapStateToProps, LangConfig.mapDispatchToProps)
-class FfLangOption extends Component<FfLangOptionProps, FfLangOptionState> {
+@connect(SchemeConfig.mapStateToProps, SchemeConfig.mapDispatchToProps)
+class FfSchemeOption extends Component<FfSchemeOptionProps, FfSchemeOptionState> {
 
-    public constructor(props: FfLangOptionProps) {
+    public constructor(props: FfSchemeOptionProps) {
         super(props);
         this.state = {
             opened: false
@@ -35,7 +34,7 @@ class FfLangOption extends Component<FfLangOptionProps, FfLangOptionState> {
     public render(): JSX.Element {
         return (
             <div>
-                <label key="chosen" title="language" tabIndex={ 1 }
+                <label key="chosen" title="color scheme" tabIndex={ 1 }
                 onClick={
                     () => {
                         this.setState({
@@ -44,7 +43,7 @@ class FfLangOption extends Component<FfLangOptionProps, FfLangOptionState> {
                     }
                 } >
                     <span>
-                        { this.props.lang }
+                        { this.props.scheme }
                     </span>
                     <svg width="20px" height="20px" viewBox="0 0 10 10" >
                         <path d="M2,5 L5,8 L8,5" />
@@ -52,17 +51,17 @@ class FfLangOption extends Component<FfLangOptionProps, FfLangOptionState> {
                 </label>
                 {
                     this.state.opened ? (
-                        (["CH", "JP", "EN"] as Array<Lang>).map(d => {
+                        (["light", "dark"] as Array<ColorScheme>).map(d => {
                             return (
                                 <label key={ d } className="option" tabIndex={ 1 }
                                 style={{
-                                    cursor: d !== this.props.lang ? "pointer" : "default",
-                                    color: d === this.props.lang ? Design.white : undefined
+                                    cursor: d !== this.props.scheme ? "pointer" : "default",
+                                    color: d === this.props.scheme ? Design.white : undefined
                                 }}
                                 onClick={
                                     () => {
-                                        if (d !== this.props.lang) {
-                                            this.props.setLang(d);
+                                        if (d !== this.props.scheme) {
+                                            this.props.setScheme(d);
                                         }
                                         this.setState({
                                             opened: false
@@ -81,9 +80,9 @@ class FfLangOption extends Component<FfLangOptionProps, FfLangOptionState> {
 
 };
 
-export const LangOption: React.FC = _props => {
+export const SchemeOption: React.FC = _props => {
     return (
         // @ts-ignore
-        <FfLangOption />
+        <FfSchemeOption />
     );
 };

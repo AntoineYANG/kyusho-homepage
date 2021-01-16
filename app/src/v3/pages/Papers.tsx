@@ -2,13 +2,12 @@
  * @Author: Kanata You 
  * @Date: 2020-12-11 21:06:02 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2020-12-11 21:34:30
+ * @Last Modified time: 2021-01-16 16:55:22
  */
 
 import React, { Component } from "react";
 import { Card, TextNodeV3 } from "../cards/Card";
 import { TextV3 } from "../TypesV3";
-import { LangOption } from "../interactive/LangOption";
 import { ButtonGroup } from "../interactive/ButtonGroup";
 import { LinkButton } from "../interactive/LinkButton";
 
@@ -36,7 +35,6 @@ export class Papers extends Component {
                 justifyContent: "center",
                 alignItems: "center"
             }} >
-                <LangOption />
                 <Card key="main" >
                     <header>
                         <TextNodeV3>
