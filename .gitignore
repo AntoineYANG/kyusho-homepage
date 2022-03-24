@@ -1,0 +1,15 @@
+# Logs
+logs
+*.log
+
+# Dependency directories
+node_modules/
+
+# Espoir cache
+.espoir/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache

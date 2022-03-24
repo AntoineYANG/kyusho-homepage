@@ -1,0 +1,11 @@
+{
+  "commit": {
+    "types": [
+      "feature",
+      "bugfix",
+      "refactor",
+      "performance",
+      "chore"
+    ]
+  }
+}

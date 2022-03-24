@@ -1,0 +1,9 @@
+{
+  "rootDir": ".",
+  "template": "public/index.html",
+  "src": "src",
+  "entry": "index.tsx",
+  "referencePath": ".",
+  "publicPath": "public",
+  "output": "build"
+}

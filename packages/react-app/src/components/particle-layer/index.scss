@@ -1,0 +1,92 @@
+@function random_range($min, $max) {
+  $rand: random();
+  $random_range: $min + floor($rand * (($max - $min) + 1));
+  @return $random_range;
+}
+
+@function random_square($abs) {
+  $rand_a: random_range(-1 * $abs, $abs);
+  $rand_b: random_range(-1 * $abs, $abs);
+  $rand: $rand_a * $rand_b;
+  @return $rand;
+}
+
+div.particle {
+  $n-pattern: 512;
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+
+  @for $i from 1 through $n-pattern {
+    $random-x: random(100) * 1vw;
+    $random-offset: random_range(-100, 100) * 0.12vw;
+    $random-x-end: $random-x + $random-offset;
+    $random-x-end-wandering: $random-x + ($random-offset / 2);
+    $random-wandering-time: random_range(0, 12) / 100;
+    $random-wandering-y: (1 - $random-wandering-time) * 100vh;
+    $random-scale: 0.5 + max(
+      min(
+        random_square(1.14),
+        0.99
+      ),
+      -0.99
+    ) * 0.5;
+    $floating-duration: random_range(24, 48) * 1s;
+    $floating-delay: random(32) * -1s;
+
+    &:nth-child(#{$i}) {
+      // background-color: hsl(347, percentage(
+      //   0.85 + max(
+      //     min(
+      //       random_square(1) * 0.4,
+      //       0.15
+      //     ),
+      //     -0.35
+      //   )
+      // ), 90%);
+      background-color: hsl(275, percentage(
+        0.88 + max(
+          min(
+            random_square(1) * 0.4,
+            0.12
+          ),
+          -0.30
+        )
+      ), 60%);
+      transform: translate($random-x, -10px) scale($random-scale);
+      box-shadow: 0 0 ($random-scale * 10px) hsl(347, 100%, 92%);
+      animation: floating-#{$i} $floating-duration $floating-delay linear infinite;
+    }
+
+    @keyframes floating-#{$i} {
+      from {
+        opacity: 0;
+        transform: translate($random-x-end, $random-wandering-y) scale($random-scale);
+      }
+
+      #{max(percentage($random-wandering-time), percentage($random-wandering-time) - 0.0001)} {
+        opacity: 0;
+        transform: translate($random-x-end, $random-wandering-y) scale($random-scale);
+      }
+
+      #{percentage($random-wandering-time)} {
+        transform: translate($random-x-end, $random-wandering-y) scale($random-scale);
+      }
+
+      #{percentage($random-wandering-time) + 8} {
+        opacity: 0.7 + max(
+          min(
+            random_square(-1.14) * 0.7,
+            0.28
+          ),
+          -0.68
+        );
+      }
+
+      to {
+        transform: translate($random-x-end-wandering, 25vh) scale($random-scale);
+      }
+    }
+  }
+}

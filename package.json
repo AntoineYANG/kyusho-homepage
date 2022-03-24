@@ -1,0 +1,23 @@
+{
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "espoirVersion": 1,
+  "contributors": [
+    "Kyusho antoineyang99@gmail.com"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AntoineYANG/kyusho-homepage.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AntoineYANG/kyusho-homepage/issues"
+  },
+  "homepage": "https://github.com/AntoineYANG/kyusho-homepage/README.md",
+  "scripts": {},
+  "devDependencies": {},
+  "peerDependencies": {
+    "espoir-cli": "^1.2.1"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  // Prevent eslint from looking for configuration files
+  // in all parent folders up to the root directory.
+  "root": true,
+  "plugins": [
+    "react",
+    "eslint-plugin-no-memo-displayname"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ],
+  "rules": {
+    "react/jsx-pascal-case": ["error", {
+      "allowLeadingUnderscore": true
+    }],
+    // Since TS is enabled,
+    // we don't and don't ever need to trust the react/prop-types rule.
+    "react/prop-types": "off"
+  },
+  "parserOptions": {
+    // Use ES6
+    "ecmaVersion": 6
+  },
+  "env": {
+    "node": true,
+    "browser": true,
+    "commonjs": true,
+    "amd": true
+  }
+}
