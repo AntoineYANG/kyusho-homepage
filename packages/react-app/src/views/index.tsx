@@ -9,14 +9,18 @@ import {
 import styled from 'styled-components';
 
 import Homepage from './homepage';
+import LangSwitch from '@components/lang-switch';
 
 
 const App: React.FC = () => (
-  <Router>
-    <Routes>
-      <Route path="/" element={ <Homepage /> } />
-    </Routes>
-  </Router>
+  <>
+    <Router>
+      <Routes>
+        <Route path="/" element={ <Homepage /> } />
+      </Routes>
+    </Router>
+    <LangSwitch />
+  </>
 );
 
 export const Page = styled.div({
@@ -25,7 +29,7 @@ export const Page = styled.div({
   overflow: 'hidden auto',
   display: 'flex',
   flexDirection: 'column',
-  alignItems: 'center'
+  alignItems: 'center',
 });
 
 export const Main = styled.main`
@@ -40,14 +44,14 @@ export const Main = styled.main`
   box-shadow: inset 8px 10px 8px rgba(255, 255, 255, 0.25),
               inset -8px -10px 8px rgba(0, 0, 0, 0.2);
 
-  @media screen and (max-width: 375px) {
+  @media screen and (orientation: portrait) {
     & {
       padding: 8vh 3.2rem 8vh;
       width: calc(100vw - 3.2rem);
     }
   }
 
-  @media screen and (min-width: 376px) {
+  @media screen and (orientation: landscape) {
     & {
       padding: 11.5vh 20vw 12vh;
       width: 60vw;

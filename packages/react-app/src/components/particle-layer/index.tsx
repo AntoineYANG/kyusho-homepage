@@ -2,7 +2,7 @@
  * @Author: Kanata You 
  * @Date: 2022-03-22 00:38:39 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2022-03-25 02:37:51
+ * @Last Modified time: 2022-03-25 16:21:17
  */
 
 import React from 'react';
@@ -21,7 +21,7 @@ const ParticleBody = styled.div({
   overflow: 'hidden',
   filter: 'drop-shadow(0 0 10px white)',
   pointerEvents: 'none',
-  WebkitMaskBoxImage: '-webkit-linear-gradient(transparent 66%, #0008 88%, #000c 93%, #000 96%)'
+  WebkitMaskBoxImage: '-webkit-linear-gradient(transparent 24%,#0008 80%,#000c 88%,#000 92%)'
 });
 
 const ParticleAmbience = styled.div({
@@ -30,7 +30,7 @@ const ParticleAmbience = styled.div({
   top: 0,
   width: '100vw',
   height: '100vh',
-  background: 'linear-gradient(to top, #C879FF42, #C879FF10 12%, #C879FF02 24%)'
+  background: 'linear-gradient(to top, #C879FF42, #C879FF10 8%, transparent 14%)'
   // background: 'linear-gradient(to top, #ffd6df18, #f3e2e602 36%)'
 });
 
@@ -52,7 +52,10 @@ const ParticleLayer: React.FC<ParticleLayerProps> = ({
       role="presentation"
       aria-hidden
     >
-      <ParticleAmbience />
+      <ParticleAmbience
+        role="presentation"
+        aria-hidden
+      />
       <div
         role="presentation"
         aria-hidden

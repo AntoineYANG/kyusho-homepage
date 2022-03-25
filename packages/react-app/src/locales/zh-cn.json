@@ -1,0 +1,22 @@
+{
+  "welcome": {
+    "prefix": "你好，\n我是",
+    "me": "宮商",
+    "me-ruby": "",
+    "suffix": "，\n",
+    "desc": "一个学生 & 软件工程师 & 喜欢音乐的人。"
+  },
+  "intro": {
+    "github": {
+      "prefix": "你可以在 ",
+      "suffix": " 找到我的开源作品，\n或者联系我的"
+    },
+    "mail": "邮箱",
+    "suffix": "。\n下滑以查看我的论文发表、技术文章、项目介绍等更多内容。"
+  },
+  "header": {
+    "papers": "论文发表",
+    "articles": "技术文章",
+    "projects": "近期项目"
+  }
+}

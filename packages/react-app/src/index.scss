@@ -1,6 +1,6 @@
 /** ESPOIR TEMPLATE */
 :root {
-  font-size: calc(0.65vmin + 13.5px);
+  font-size: calc(0.65vmin + 12.5px);
 }
       
 body {
@@ -22,29 +22,14 @@ code {
     monospace;
 }
 
-.App {
-  text-align: center;
-}
-
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
+rt {
+  text-align: center;
 }
 
 ::-webkit-scrollbar {

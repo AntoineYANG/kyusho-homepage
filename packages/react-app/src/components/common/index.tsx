@@ -2,7 +2,7 @@
  * @Author: Kanata You 
  * @Date: 2022-03-24 20:45:26 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2022-03-25 02:27:41
+ * @Last Modified time: 2022-03-25 18:27:37
  */
 
 import React from 'react';
@@ -60,8 +60,7 @@ export const List = styled.div`
   counter-reset: list-index;
 `;
 
-export const ListItem = styled.div`
-  margin-left: 2.25em;
+export const ListItem = styled.div<{ mode?: 'ol' | 'ref' }>`
   padding: 0.5em 0 1em;
   min-height: 1.8em;
   counter-increment: list-index;
@@ -70,10 +69,20 @@ export const ListItem = styled.div`
   z-index: 1;
 
   &::before {
-    content: counter(list-index) ".";
+    content: ${
+      ({ mode = 'ol' }) => ({
+        ol: '',
+        ref: '"[" '
+      }[mode])
+    }counter(list-index)${
+      ({ mode = 'ol' }) => ({
+        ol: ' "."',
+        ref: ' "]"'
+      }[mode])
+    };
     position: absolute;
     width: 1.5em;
-    left: 1em;
+    left: -1.2em;
     display: inline-block;
     text-align: end;
   }
@@ -155,15 +164,15 @@ export const Anchor: React.FC<{
   );
 };
 
-export const Strong = styled.strong`
+export const Strong = styled.strong<{ weight?: 500 | 550 | 600 }>`
   position: relative;
-  font-weight: bolder;
+  font-weight: ${({ weight = 550 }) => weight};
 
   &::before {
     content: "";
     position: absolute;
     z-index: -1;
-    top: 60%;
+    top: 72%;
     left: -0.05em;
     right: -0.1em;
     bottom: 0;
@@ -176,11 +185,11 @@ export const Strong = styled.strong`
     content: "";
     position: absolute;
     z-index: 2;
-    top: 60%;
+    top: 72%;
     left: -0.05em;
     right: -0.1em;
     bottom: 0;
-    background-color: #BFE66C80;
+    background-color: #BFE66C90;
     border-radius: 0.5em 100% 130% 0.5em;
     backdrop-filter: contrast(150%);
     pointer-events: none;

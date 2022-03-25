@@ -1,0 +1,22 @@
+{
+  "welcome": {
+    "prefix": "Hello, I am\n",
+    "me": "宮商",
+    "me-ruby": "Kyusho",
+    "suffix": ". \n",
+    "desc": "A student & a software engineer & a music lover."
+  },
+  "intro": {
+    "github": {
+      "prefix": "You can find my open source works at ",
+      "suffix": ",\nor connect with me by "
+    },
+    "mail": "e-mail",
+    "suffix": ". \nScroll downwards to view more information about my publications, articles, projects and so on. "
+  },
+  "header": {
+    "papers": "Publications",
+    "articles": "Articles",
+    "projects": "Recent Projects"
+  }
+}

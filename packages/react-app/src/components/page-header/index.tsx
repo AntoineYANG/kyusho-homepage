@@ -2,11 +2,12 @@
  * @Author: Kanata You 
  * @Date: 2022-03-22 19:58:50 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2022-03-25 01:22:52
+ * @Last Modified time: 2022-03-25 20:14:47
  */
 
 import React from 'react';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
 
 import backgroundImg from '@public/images/header-background.png';
 import icon from '@public/images/logo.png';
@@ -58,7 +59,7 @@ const HeaderMainText = styled.p`
   color: #E8EEEBF0;
   text-shadow: 1px 2px 8px rgba(0, 0, 0, 0.85);
 
-  @media screen and (min-width: 500px) {
+  @media screen and (orientation: landscape) {
     & {
       max-width: 60vw;
     }
@@ -110,13 +111,13 @@ const HeaderSpace = styled.div`
   flex-shrink: 0;
   height: ${TOTAL_HEIGHT};
 
-  @media screen and (max-width: 375px) {
+  @media screen and (orientation: portrait) {
     & {
       width: 3.2rem;
     }
   }
 
-  @media screen and (min-width: 376px) {
+  @media screen and (orientation: landscape) {
     & {
       width: 20vw;
     }
@@ -224,6 +225,8 @@ const PageHeader: React.FC = () => {
     return undefined;
   }, [showFull, setShowFull]);
 
+  const { t } = useTranslation();
+
   return (
     <>
       <Header
@@ -236,21 +239,46 @@ const PageHeader: React.FC = () => {
         <HeaderContent>
           <HeaderMainText>
             {
-              `你好，
-我是`
+              t('welcome.prefix')
             }
             <HeaderMainTextStrong>
-              宮商
+              <ruby>
+                {
+                  t('welcome.me')
+                }
+                <rp>(</rp>
+                  <rt
+                    style={{
+                      fontSize: '0.28em',
+                      transform: 'translateY(0.4em)'
+                    }}
+                  >
+                    {
+                      t('welcome.me-ruby')
+                    }
+                  </rt>
+                <rp>)</rp>
+              </ruby>
             </HeaderMainTextStrong>
             {
-              `，\n`
+              t('welcome.suffix')
             }
             <HeaderMainTextSmall>
-              {`一个学生`}
-              <wbr/>
-              {` & 软件工程师`}
-              <wbr/>
-              {` & 喜欢音乐的人。`}
+              {
+                t('welcome.desc').split(' & ').map((t, i) => [
+                  i ? (
+                    <React.Fragment key={`${i}-con`}>
+                      <wbr />
+                      {' & '}
+                    </React.Fragment>
+                  ) : undefined,
+                  (
+                    <React.Fragment key={`${i}-text`}>
+                      {t}
+                    </React.Fragment>
+                  ),
+                ]).flat(Infinity)
+              }
             </HeaderMainTextSmall>
           </HeaderMainText>
         </HeaderContent>
