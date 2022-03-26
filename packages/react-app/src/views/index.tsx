@@ -9,6 +9,8 @@ import {
 import styled from 'styled-components';
 
 import Homepage from './homepage';
+import ArticlePage from './article-page';
+
 import LangSwitch from '@components/lang-switch';
 
 
@@ -17,6 +19,7 @@ const App: React.FC = () => (
     <Router>
       <Routes>
         <Route path="/" element={ <Homepage /> } />
+        <Route path="article/:aid" element={ <ArticlePage /> } />
       </Routes>
     </Router>
     <LangSwitch />
@@ -35,14 +38,9 @@ export const Page = styled.div({
 export const Main = styled.main`
   flex-grow: 1;
   flex-shrink: 0;
-  background-color: rgb(249,246,251);
-  background-image: linear-gradient(180deg,
-                      rgba(87, 14, 137, 0.04) 0%,
-                      rgba(87, 14, 137, 0.036) 60.42%,
-                      rgba(87, 14, 137, 0) 100%
-                    );
+  background-color: #fff;
   box-shadow: inset 8px 10px 8px rgba(255, 255, 255, 0.25),
-              inset -8px -10px 8px rgba(0, 0, 0, 0.2);
+              inset -8px -10px 8px rgba(0, 0, 0, 0.175);
 
   @media screen and (orientation: portrait) {
     & {

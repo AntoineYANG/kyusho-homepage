@@ -2,7 +2,7 @@
  * @Author: Kanata You 
  * @Date: 2022-01-24 15:46:57 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2022-01-26 02:25:25
+ * @Last Modified time: 2022-03-27 00:45:33
  */
 'use strict';
 
@@ -36,7 +36,18 @@ const prepareOutputDir = async () => {
   const prevStats = analyzeProduct(outputPath);
   
   // clear output directory
-  fs.emptyDirSync(outputPath);
+  fs.readdirSync(outputPath).forEach(n => {
+    if (n === '.git') {
+      return;
+    }
+    
+    const fn = path.join(outputPath, n);
+
+    fs.rmSync(fn, {
+      recursive: true,
+      force: true
+    });
+  });
 
   // merge public dir
   const publicPath = path.resolve(dir, paths.publicPath);

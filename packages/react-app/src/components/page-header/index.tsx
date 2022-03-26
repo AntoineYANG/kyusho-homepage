@@ -2,12 +2,13 @@
  * @Author: Kanata You 
  * @Date: 2022-03-22 19:58:50 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2022-03-25 20:14:47
+ * @Last Modified time: 2022-03-26 23:47:59
  */
 
 import React from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
 
 import backgroundImg from '@public/images/header-background.png';
 import icon from '@public/images/logo.png';
@@ -125,7 +126,13 @@ const HeaderSpace = styled.div`
 `;
 
 const PageHeader: React.FC = () => {
+  const { pathname } = useLocation();
+  
   const [showFull, setShowFull] = React.useState(() => {
+    if (pathname !== '/') {
+      return false;
+    }
+
     const scrollPos = document.querySelector('#root > div')?.scrollTop ?? 0;
 
     return scrollPos < 1;

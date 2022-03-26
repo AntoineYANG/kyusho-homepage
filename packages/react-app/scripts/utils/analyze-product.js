@@ -2,7 +2,7 @@
  * @Author: Kanata You 
  * @Date: 2022-01-25 19:57:58 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2022-03-17 18:02:17
+ * @Last Modified time: 2022-03-26 21:27:37
  */
 'use strict';
 
@@ -18,6 +18,10 @@ const formatSize = require('./format-size');
 const readDirAll = _path => {
   return fs.readdirSync(_path).reduce(
     (list, name) => {
+      if (name === '.git') {
+        return list;
+      }
+      
       const fn = path.join(_path, name);
       const stat = fs.statSync(fn);
 

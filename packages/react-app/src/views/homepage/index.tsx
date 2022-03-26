@@ -2,7 +2,7 @@
  * @Author: Kanata You 
  * @Date: 2022-03-22 14:57:54 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2022-03-25 20:42:48
+ * @Last Modified time: 2022-03-27 00:36:37
  */
 
 import React from 'react';
@@ -76,7 +76,7 @@ const Homepage: React.FC = () => {
           </ArticleHeader>
           <List>
             <ListItem>
-              <Anchor href="https://juejin.cn/post/7058248877593329695">
+              <Anchor internal href="/article/1">
                 espoir: 用 monorepo 讲一个前端的故事
               </Anchor>
             </ListItem>

@@ -2,7 +2,7 @@
  * @Author: Kanata You 
  * @Date: 2022-03-24 20:45:26 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2022-03-25 18:27:37
+ * @Last Modified time: 2022-03-27 00:25:35
  */
 
 import React from 'react';
@@ -11,6 +11,9 @@ import Lottie from 'react-lottie';
 
 import articleBefore from '@public/images/p-before.png';
 import lottieFile from './a-after-lottie.json';
+import { Link } from 'react-router-dom';
+
+import './index.scss';
 
 
 const ArticleContainer = styled.article`
@@ -88,7 +91,8 @@ export const ListItem = styled.div<{ mode?: 'ol' | 'ref' }>`
   }
 `;
 
-const _A = styled.a<{ active: boolean }>`
+const _A = styled.a<{ active: boolean; zIndexBase?: number }>`
+  z-index: ${({ zIndexBase = 0 }) => zIndexBase};
   margin: 0 0.25em;
   padding: 0 0.1em;
   color: ${({ active }) => active ? '#fcfcfc' : '#570E89'};
@@ -102,7 +106,7 @@ const _A = styled.a<{ active: boolean }>`
   &::before {
     content: "";
     position: absolute;
-    z-index: -1;
+    z-index: ${({ zIndexBase = 0 }) => zIndexBase - 1};
     top: ${({ active }) => active ? '12%' : '68%'};
     left: -0.1em;
     right: -0.2em;
@@ -139,16 +143,25 @@ export const Anchor: React.FC<{
   href: string;
   style?: React.CSSProperties;
   children: string;
-}> = ({ href, children: text, style }) => {
+  internal?: boolean;
+  zIndexBase?: number;
+}> = ({ href, children: text, style, internal = false, zIndexBase }) => {
   const [focused, setFocused] = React.useState(false);
+  const Parent = internal ? Link : _A;
 
   return (
-    <_A
-      active={focused}
-      href={href}
+    <Parent
+      active={(internal ? undefined : focused) as boolean}
+      className={internal ? `internal-link${focused ? ' active' : ''}` : undefined}
+      href={internal ? undefined : href}
+      to={(internal ? href : undefined) as string}
       role="link"
-      target={href.startsWith('/') ? '_self' : '_blank'}
-      style={style}
+      target={
+        internal ? undefined : (
+          href.match(/^(\/|#).*$/) ? '_self' : '_blank'
+        )
+      }
+      zIndexBase={(internal ? undefined : zIndexBase) as number}
       title={href.startsWith('mailto:') ? href.replace(/^mailto:/, '') : undefined}
       onFocus={() => !focused && setFocused(true)}
       onBlur={() => focused && setFocused(false)}
@@ -157,10 +170,18 @@ export const Anchor: React.FC<{
       onTouchStart={() => !focused && setFocused(true)}
       onTouchEnd={() => focused && setFocused(false)}
       onMouseUp={() => focused && setFocused(false)}
+      style={style}
+      onClick={() => {
+        if (href.startsWith('#')) {
+          const target = document.getElementById(href.replace(/^#/, ''));
+
+          target?.scrollIntoView();
+        }
+      }}
     >
       {text}
       {focused && (<_AAfter />)}
-    </_A>
+    </Parent>
   );
 };
 

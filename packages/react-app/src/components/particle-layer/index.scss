@@ -36,6 +36,15 @@ div.particle {
     $floating-delay: random(32) * -1s;
 
     &:nth-child(#{$i}) {
+      $color: hsl(275, percentage(
+        0.88 + max(
+          min(
+            random_square(1) * 0.4,
+            0.12
+          ),
+          -0.30
+        )
+      ), 60%);
       // background-color: hsl(347, percentage(
       //   0.85 + max(
       //     min(
@@ -45,18 +54,23 @@ div.particle {
       //     -0.35
       //   )
       // ), 90%);
-      background-color: hsl(275, percentage(
-        0.88 + max(
-          min(
-            random_square(1) * 0.4,
-            0.12
-          ),
-          -0.30
-        )
-      ), 60%);
+      background-color: $color;
       transform: translate($random-x, -10px) scale($random-scale);
       box-shadow: 0 0 ($random-scale * 10px) hsl(347, 100%, 92%);
       animation: floating-#{$i} $floating-duration $floating-delay linear infinite;
+
+      &::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 100%;
+        width: 36%;
+        height: (8 + random(24)) * 1vh;
+        background: $color;
+        transform: translateX(-50%);
+        mask-image: -webkit-linear-gradient(#0005, #0003, #0000);
+        -webkit-mask-image: -webkit-linear-gradient(#0008, #0000);
+      }
     }
 
     @keyframes floating-#{$i} {

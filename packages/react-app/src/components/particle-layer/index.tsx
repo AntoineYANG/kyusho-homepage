@@ -21,7 +21,7 @@ const ParticleBody = styled.div({
   overflow: 'hidden',
   filter: 'drop-shadow(0 0 10px white)',
   pointerEvents: 'none',
-  WebkitMaskBoxImage: '-webkit-linear-gradient(transparent 24%,#0008 80%,#000c 88%,#000 92%)'
+  WebkitMaskBoxImage: '-webkit-linear-gradient(transparent 64%,#0008 88%,#000c 92%,#000 96%)'
 });
 
 const ParticleAmbience = styled.div({

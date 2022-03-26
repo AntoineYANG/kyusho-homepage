@@ -2,7 +2,7 @@
  * @Author: Kanata You 
  * @Date: 2022-03-25 14:42:04 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2022-03-25 18:51:12
+ * @Last Modified time: 2022-03-27 00:41:24
  */
 
 import React from 'react';
@@ -74,10 +74,10 @@ const ProjectPartHeader = styled.h2`
     content: "";
     position: absolute;
     z-index: -1;
-    top: 72%;
+    top: 100%;
     left: -0.1em;
     right: -0.2em;
-    bottom: 12%;
+    bottom: -8%;
     background-image: linear-gradient(5deg, rgb(192,222,120) 6%, transparent 120%);
     box-shadow: 1px 1px 1px rgba(89,36,126,0.5);
     border-radius: 0.5em 100% 130% 0.5em;
