@@ -2,14 +2,14 @@
  * @Author: Kanata You 
  * @Date: 2022-03-26 22:18:57 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2022-03-27 00:36:07
+ * @Last Modified time: 2022-03-27 15:31:03
  */
 
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import type { ReactMarkdownOptions } from 'react-markdown/lib/react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { a11yDark as dark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 import { Anchor } from '@components/common';
 import Viewer from './components';
@@ -64,6 +64,13 @@ const markdownComponentsMap: Required<ReactMarkdownOptions>['components'] = {
       {children}
     </Viewer.p>
   ),
+  pre: ({ children, className: _, ...props }) => (
+    <Viewer.pre
+      {...props}
+    >
+      {children}
+    </Viewer.pre>
+  ),
   ul: ({ children, className: _, ...props }) => (
     <Viewer.ul
       {...props}
@@ -78,9 +85,10 @@ const markdownComponentsMap: Required<ReactMarkdownOptions>['components'] = {
       {children}
     </Viewer.ol>
   ),
-  img: ({ className: _, ...props }) => (
+  img: ({ className: _, src, alt }) => (
     <Viewer.img
-      {...props}
+      src={src ?? ''}
+      alt={alt ?? ''}
     />
   ),
   h1: ({ children, className: _, ...props }) => (
@@ -139,15 +147,20 @@ const markdownComponentsMap: Required<ReactMarkdownOptions>['components'] = {
         children={String(children).replace(/\n$/, '')}
         style={dark}
         language={match[1]}
-        PreTag="div"
+        PreTag="pre"
         {...props}
       />
     ) : (
-      <Viewer.inlineCode>
+      <Viewer.inlineCode {...props} >
         {children}
       </Viewer.inlineCode>
     )
   },
+  blockquote: ({ className: _, children, ...props }) => (
+    <Viewer.blockQuote {...props} >
+      {children}
+    </Viewer.blockQuote>
+  )
 };
 
 const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ children }) => {

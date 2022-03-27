@@ -20,6 +20,8 @@ _\<version description\>_
 
 ### article page
 
++ 🌱 **+ Skeleton & resizable image.** - AntoineYANG(814602569@qq.com) 2022/3/27, on _master_
+
 + 🌱 **Markdown parsing ability.** - AntoineYANG(814602569@qq.com) 2022/3/27, on _master_
 
 

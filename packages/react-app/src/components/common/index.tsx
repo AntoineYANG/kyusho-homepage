@@ -2,7 +2,7 @@
  * @Author: Kanata You 
  * @Date: 2022-03-24 20:45:26 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2022-03-27 00:25:35
+ * @Last Modified time: 2022-03-27 19:28:23
  */
 
 import React from 'react';
@@ -92,6 +92,7 @@ export const ListItem = styled.div<{ mode?: 'ol' | 'ref' }>`
 `;
 
 const _A = styled.a<{ active: boolean; zIndexBase?: number }>`
+  flex-grow: 0;
   z-index: ${({ zIndexBase = 0 }) => zIndexBase};
   margin: 0 0.25em;
   padding: 0 0.1em;
@@ -144,8 +145,7 @@ export const Anchor: React.FC<{
   style?: React.CSSProperties;
   children: string;
   internal?: boolean;
-  zIndexBase?: number;
-}> = ({ href, children: text, style, internal = false, zIndexBase }) => {
+}> = ({ href, children: text, style, internal = false }) => {
   const [focused, setFocused] = React.useState(false);
   const Parent = internal ? Link : _A;
 
@@ -161,7 +161,6 @@ export const Anchor: React.FC<{
           href.match(/^(\/|#).*$/) ? '_self' : '_blank'
         )
       }
-      zIndexBase={(internal ? undefined : zIndexBase) as number}
       title={href.startsWith('mailto:') ? href.replace(/^mailto:/, '') : undefined}
       onFocus={() => !focused && setFocused(true)}
       onBlur={() => focused && setFocused(false)}

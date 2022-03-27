@@ -21,6 +21,7 @@
     "@babel/plugin-proposal-private-property-in-object": "^7.16.7",
     "@babel/runtime": "7.12.1",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.4",
+    "axios": "^0.26.1",
     "babel-loader": "^8.2.3",
     "babel-plugin-named-asset-import": "^0.3.8",
     "babel-plugin-react-anonymous-display-name": "^0.1.0",
@@ -106,7 +107,8 @@
     "@views": "./src/views/",
     "@utils": "./src/utils/",
     "@public": "./public/",
-    "@data": "./src/data/",
+    "@api": "./src/api/",
+    "@hooks": "./src/hooks/",
     "@locales": "./src/locales/"
   }
 }

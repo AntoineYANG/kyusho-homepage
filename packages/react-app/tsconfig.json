@@ -53,8 +53,11 @@
       "@public/*": [
         "./public/*"
       ],
-      "@data/*": [
-        "./src/data/*"
+      "@api/*": [
+        "./src/api/*"
+      ],
+      "@hooks/*": [
+        "./src/hooks/*"
       ],
       "@locales/*": [
         "./src/locales/*"

@@ -2,7 +2,7 @@
  * @Author: Kanata You 
  * @Date: 2022-01-24 17:59:40 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2022-01-24 18:03:43
+ * @Last Modified time: 2022-03-27 18:40:51
  */
 'use strict';
 
@@ -17,10 +17,13 @@ const envVarsFile = env.resolvePathInPackage(
   'env.json'
 );
 
-const loadEnvVars = () => {
+/**
+ * @param {'dev' | 'prod'} buildMode
+ */
+const loadEnvVars = buildMode => {
   if (fs.existsSync(envVarsFile)) {
     return Object.fromEntries(
-      Object.entries(require(envVarsFile)).map(([k, v]) => {
+      Object.entries(require(envVarsFile)[buildMode] ?? {}).map(([k, v]) => {
         return [k, JSON.stringify(v)];
       })
     );

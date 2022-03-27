@@ -2,7 +2,7 @@
  * @Author: Kanata You 
  * @Date: 2022-03-26 22:55:19 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2022-03-27 00:00:03
+ * @Last Modified time: 2022-03-27 15:06:41
  */
 
 import p from './p';
@@ -16,6 +16,8 @@ import h6 from './h6';
 import inlineCode from './inline-code';
 import ul from './ul';
 import ol from './ol';
+import blockQuote from './blockQuote';
+import pre from './pre';
 
 
 const Index = {
@@ -29,7 +31,9 @@ const Index = {
   h6,
   inlineCode,
   ul,
-  ol
+  ol,
+  blockQuote,
+  pre,
 };
 
 

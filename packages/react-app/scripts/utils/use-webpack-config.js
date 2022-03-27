@@ -2,7 +2,7 @@
  * @Author: Kanata You 
  * @Date: 2022-01-24 16:09:18 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2022-03-24 22:42:52
+ * @Last Modified time: 2022-03-27 20:10:29
  */
 'use strict';
 
@@ -392,7 +392,11 @@ const useWebpackConfig = mode => {
               // by webpacks internal loaders.
               exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
               options: {
-                name: 'static/media/[name].[hash:8].[ext]',
+                name: resourcePath => (
+                  resourcePath.match(/\.md$/)
+                  ? 'static/get/article/[name]'
+                  : 'static/media/[name].[hash:8].[ext]'
+                ),
               },
             },
             // ** STOP ** Are you adding a new loader?
@@ -444,7 +448,7 @@ const useWebpackConfig = mode => {
       // the requesting resource.
       new ModuleNotFoundPlugin(dir),
       // Inject environment variables in JS code.
-      new DefinePlugin(loadEnvVars()),
+      new DefinePlugin(loadEnvVars(isDev ? 'dev' : 'prod')),
       // Watcher doesn't work well if you mistype casing in a path so we use
       // a plugin that prints an error when you attempt to do this.
       // See https://github.com/facebook/create-react-app/issues/240

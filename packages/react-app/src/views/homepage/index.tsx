@@ -2,7 +2,7 @@
  * @Author: Kanata You 
  * @Date: 2022-03-22 14:57:54 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2022-03-27 00:36:37
+ * @Last Modified time: 2022-03-27 20:23:05
  */
 
 import React from 'react';
@@ -22,8 +22,9 @@ import {
 import PaperInfo from '@components/paper-info';
 import ProjectInfo from '@components/project-info';
 
-import getAllPapers from '@data/get-all-papers';
-import getAllProjects from '@data/get-all-projects';
+import getAllPapers from '@api/get-all-papers';
+import getAllProjects from '@api/get-all-projects';
+import useTitle from '@hooks/use-title';
 
 
 const Homepage: React.FC = () => {
@@ -31,6 +32,10 @@ const Homepage: React.FC = () => {
   const projects = getAllProjects();
 
   const { t } = useTranslation();
+
+  React.useEffect(() => {
+    useTitle('Homepage - kyusho');
+  }, []);
 
   return (
     <Page>
@@ -76,9 +81,11 @@ const Homepage: React.FC = () => {
           </ArticleHeader>
           <List>
             <ListItem>
-              <Anchor internal href="/article/1">
-                espoir: 用 monorepo 讲一个前端的故事
-              </Anchor>
+              <p style={{ margin: 0 }}>
+                <Anchor internal href="/article/1000">
+                  espoir: 用 monorepo 讲一个前端的故事
+                </Anchor>
+              </p>
             </ListItem>
           </List>
         </Article>
