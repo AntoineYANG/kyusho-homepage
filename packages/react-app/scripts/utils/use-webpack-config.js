@@ -2,7 +2,7 @@
  * @Author: Kanata You 
  * @Date: 2022-01-24 16:09:18 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2022-03-27 20:10:29
+ * @Last Modified time: 2022-03-27 23:51:03
  */
 'use strict';
 
@@ -393,7 +393,7 @@ const useWebpackConfig = mode => {
               exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
               options: {
                 name: resourcePath => (
-                  resourcePath.match(/\.md$/)
+                  resourcePath.match(/aid\d{4}(\.md)?$/)
                   ? 'static/get/article/[name]'
                   : 'static/media/[name].[hash:8].[ext]'
                 ),

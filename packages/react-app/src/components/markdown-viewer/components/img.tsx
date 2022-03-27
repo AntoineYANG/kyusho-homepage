@@ -2,7 +2,7 @@
  * @Author: Kanata You 
  * @Date: 2022-03-26 22:54:25 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2022-03-27 20:32:47
+ * @Last Modified time: 2022-03-28 00:42:25
  */
 
 import React from 'react';
@@ -27,8 +27,21 @@ const _img = styled.img({
 });
 
 const _imgSkeleton = styled.div`
-  width: 40vw;
-  height: 30vh;
+
+  @media screen and (orientation: landscape) {
+    & {
+      width: 40vw;
+      height: 30vh;
+    }
+  }
+
+  @media screen and (orientation: portrait) {
+    & {
+      width: 100%;
+      height: 48vw;
+    }
+  }
+
   box-shadow: 2px 2px 1px #0004;
   cursor: progress;
 
@@ -57,14 +70,16 @@ const _imgPopup = styled.div`
   background-color: #fffa;
   backdrop-filter: blur(0.3vmax);
   cursor: zoom-out;
-  animation: fade-in 200ms forwards;
+  animation: fade-in 300ms forwards;
 
   @keyframes fade-in {
     from {
       opacity: 0;
+      backdrop-filter: blur(0.1vmax);
     }
     to {
       opacity: 1;
+      backdrop-filter: blur(0.3vmax);
     }
   }
 `;
@@ -211,7 +226,8 @@ const ResizableImg: React.FC<{
           }px, ${
             translateRef.current.y
           }px) scale(${scale})`,
-          transformOrigin: '50vw 50vh'
+          transformOrigin: '50vw 50vh',
+          transition: 'transform 100ms'
         }}
         onWheel={e => {
           if (e.deltaY < 0) {
@@ -247,40 +263,57 @@ const ResizableImg: React.FC<{
             );
           }
         }}
-        onTouchMove={e => {
-          if (e.touches.length === 1) {
-            handleDragging(
-              e.touches[0]!.clientX,
-              e.touches[0]!.clientY,
-              val => e.currentTarget.style.transform = val
-            );
-          } else if (e.touches.length === 2) {
-            const curDist = Math.pow(
-              e.touches[0]!.clientX - e.touches[1]!.clientX, 2
-            ) + Math.pow(
-              e.touches[0]!.clientY - e.touches[1]!.clientY, 2
-            );
+        // Use element addEventListener to bind touchmove listener
+        // because touchmove event is a passive event by default
+        // thus cannot be stopped (`e.preventDefault()`) by React.
+        ref={el => {
+          if (el) {
+            el.addEventListener(
+              'touchmove',
+              e => {
+                e.stopPropagation();
+                e.preventDefault();
+                if (e.touches.length === 1) {
+                  handleDragging(
+                    e.touches[0]!.clientX,
+                    e.touches[0]!.clientY,
+                    val => el.style.transform = val
+                  );
+                } else if (e.touches.length === 2) {
+                  const curDist = Math.pow(
+                    e.touches[0]!.clientX - e.touches[1]!.clientX, 2
+                  ) + Math.pow(
+                    e.touches[0]!.clientY - e.touches[1]!.clientY, 2
+                  );
 
-            if (!Number.isNaN(touchDistRef.current)) {
-              if (curDist > touchDistRef.current) {
-                // zoom-in
-                const nextSize = zoomIn(scale);
-                
-                if (nextSize) {
-                  setScale(nextSize);
-                }
-              } else if (curDist < touchDistRef.current) {
-                // zoom-out
-                const nextSize = zoomOut(scale);
+                  if (!Number.isNaN(touchDistRef.current)) {
+                    if (curDist > touchDistRef.current) {
+                      // zoom-in
+                      const nextSize = zoomIn(scale);
+                      
+                      if (nextSize) {
+                        setScale(nextSize);
+                      }
+                    } else if (curDist < touchDistRef.current) {
+                      // zoom-out
+                      const nextSize = zoomOut(scale);
 
-                if (nextSize) {
-                  setScale(nextSize);
+                      if (nextSize) {
+                        setScale(nextSize);
+                      }
+                    }
+
+                  }
+
+                  touchDistRef.current = curDist;
+
+                  e.stopPropagation();
+                  e.preventDefault();
                 }
+              }, {
+                passive: false
               }
-
-            }
-
-            touchDistRef.current = curDist;
+            );
           }
         }}
         onTouchEnd={endDragging}
@@ -299,7 +332,28 @@ const ResizableImg: React.FC<{
         />
       </figure>
       {scale !== 1 && (
-        <_resizeInfo>
+        <_resizeInfo
+          title="??"
+          onClick={
+            e => {
+              e.stopPropagation();
+              setScale(1);
+              translateRef.current = {
+                x: 0,
+                y: 0
+              };
+              cursorRef.current = {
+                x: NaN,
+                y: NaN
+              };
+              mouseDownPosRef.current = {
+                x: NaN,
+                y: NaN
+              };
+              touchDistRef.current = NaN;
+            }
+          }
+        >
           {scale}x
         </_resizeInfo>
       )}

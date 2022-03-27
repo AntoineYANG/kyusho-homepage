@@ -2,11 +2,13 @@
  * @Author: Kanata You 
  * @Date: 2022-03-27 18:12:25 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2022-03-27 21:11:05
+ * @Last Modified time: 2022-03-28 00:43:31
  */
 
 import axios from 'axios';
-
+// // @ts-ignore
+// import a from '@public/articles/aid1000.md';
+// console.log(a);
 
 export class FetchError extends Error {
   
@@ -33,7 +35,7 @@ const getArticle = async (aid: string): Promise<string | null> => {
     
     return res;
   } catch (error) {
-    console.error(new FetchError(
+    console.warn(new FetchError(
       `aid ${aid} not found`, {
         clause: error
       }

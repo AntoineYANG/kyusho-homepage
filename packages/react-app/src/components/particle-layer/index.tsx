@@ -2,11 +2,13 @@
  * @Author: Kanata You 
  * @Date: 2022-03-22 00:38:39 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2022-03-25 16:21:17
+ * @Last Modified time: 2022-03-28 00:45:53
  */
 
 import React from 'react';
 import styled from 'styled-components';
+
+import isMobile from '@utils/is-mobile';
 
 import './index.scss';
 
@@ -30,12 +32,12 @@ const ParticleAmbience = styled.div({
   top: 0,
   width: '100vw',
   height: '100vh',
-  background: 'linear-gradient(to top, #C879FF42, #C879FF10 8%, transparent 14%)'
+  background: 'linear-gradient(to top, #C879FF1e, #C879FF04 8%, transparent 14%)'
   // background: 'linear-gradient(to top, #ffd6df18, #f3e2e602 36%)'
 });
 
 export interface ParticleLayerProps {
-  /** 粒子数量，默认 200，最大支持 512 */
+  /** 粒子数量，默认 48(mobile)/80(PC)，最大支持 512 */
   amount?: number;
 }
 
@@ -43,7 +45,7 @@ export interface ParticleLayerProps {
  * 组件：粒子效果图层.
  */
 const ParticleLayer: React.FC<ParticleLayerProps> = ({
-  amount = 200
+  amount = isMobile() ? 48 : 80
 }) => {
   let realAmount = Math.floor(Math.max(Math.min(512, amount), 1));
 

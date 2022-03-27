@@ -1,6 +1,6 @@
 # react-app v1.x
 
-## 1.0.0 (2022/3/25 - 2022/3/27)
+## 1.0.0 (2022/3/25 - 2022/3/28)
 
 _\<version description\>_
 
@@ -19,6 +19,8 @@ _\<version description\>_
 
 
 ### article page
+
++ 🐞 **Prevent default passive page resize during resizing an image.** - AntoineYANG(814602569@qq.com) 2022/3/28, on _master_
 
 + 🌱 **+ Skeleton & resizable image.** - AntoineYANG(814602569@qq.com) 2022/3/27, on _master_
 
