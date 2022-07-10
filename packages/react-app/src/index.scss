@@ -1,20 +1,43 @@
 /** ESPOIR TEMPLATE */
 :root {
-  font-size: calc(0.65vmin + 12.5px);
+  font-size: calc(0.5vmin + 12px);
 }
       
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Trebuchet MS', 'Microsoft YaHei', Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background-color: rgb(249,246,251);
   background-attachment: fixed;
+  transition: background-color 200ms, color 200ms;
+  
+  @media (prefers-color-scheme: light) {
+    background-color: rgb(241,242,236);
+    color: rgb(31,29,24);
+  }
+
+  &.hibou-color-scheme-light {
+    background-color: rgb(241,242,236);
+    color: rgb(31,29,24);
+  }
+  
+  @media (prefers-color-scheme: dark) {
+    background-color: rgb(12,13,15);
+    color: rgb(211, 212, 206);
+  }
+
+  &.hibou-color-scheme-dark {
+    background-color: rgb(12,13,15);
+    color: rgb(211, 212, 206);
+  }
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
 code {

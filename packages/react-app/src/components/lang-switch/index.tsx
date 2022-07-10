@@ -70,13 +70,15 @@ const _Option = styled.div<{ active: boolean }>(({ active }) => ({
   transition: 'background 200ms'
 }));
 
-const Option: React.FC<{ onClick: () => void }> = ({ children, onClick }) => {
+const Option: React.FC<{ onClick: () => void; children: any }> = ({ children, onClick }) => {
   const [focused, setFocused] = React.useState(false);
 
   return (
+    // eslint-disable-next-line react/jsx-pascal-case
     <_OptionContainer
       active={focused}
     >
+      {/* eslint-disable-next-line react/jsx-pascal-case */}
       <_Option
         role="option"
         aria-selected="false"

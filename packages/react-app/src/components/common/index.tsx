@@ -2,7 +2,7 @@
  * @Author: Kanata You 
  * @Date: 2022-03-24 20:45:26 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2022-03-27 19:28:23
+ * @Last Modified time: 2022-07-10 23:22:20
  */
 
 import React from 'react';
@@ -14,6 +14,7 @@ import lottieFile from './a-after-lottie.json';
 import { Link } from 'react-router-dom';
 
 import './index.scss';
+import colors from '@components/hibou/colors';
 
 
 const ArticleContainer = styled.article`
@@ -47,7 +48,7 @@ export const ArticleHeader = styled.header({
   transform: 'translateY(-0.4rem)'
 });
 
-export const Article: React.FC = ({ children }) => (
+export const Article: React.FC<{ children: any }> = ({ children }) => (
   <ArticleContainer>
     <ArticleBefore
       alt=""
@@ -179,6 +180,7 @@ export const Anchor: React.FC<{
       }}
     >
       {text}
+      {/* eslint-disable-next-line react/jsx-pascal-case */}
       {focused && (<_AAfter />)}
     </Parent>
   );
@@ -222,3 +224,16 @@ export const HR = styled.hr`
   background-image: linear-gradient(270deg, #C879FF 0%, #BFE66C 100%);
   border: none;
 `;
+
+export const VR = styled.span({
+  flexGrow: 0,
+  flexShrink: 0,
+  width: '1px',
+  height: '50% !important',
+  marginBlock: '25%',
+  marginInline: '-0.5px',
+  padding: 0,
+  backgroundColor: `${colors.iconColor}80`,
+  userSelect: 'none',
+  pointerEvents: 'none',
+});

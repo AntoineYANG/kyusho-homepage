@@ -1,4 +1,26 @@
 {
+  "homepage": {
+    "intro": "Passionate web developer with around 3 years of front-end practice as an individual developer and half one year of hybrid app experience during the internship in ByteDance China. Big user of React.js. Involved with micro-frontend architecture, frontend development with accessibility."
+  },
+  "experience": "Experience",
+  "exp": {
+    "0": {
+      "name": "Frontend Developer Intern",
+      "com": "ByteDance",
+      "kqr": "Maintain pages of hybrid APP, troubleshooting, landing new features from PRDs and UI drafts.\nImproved performance of existed features.\nRefactored codes and repositories for better future maintenance of the team.\nDiscussed and implemented technical updates.\nProvided scripts and pipelines to assist development and deployment of team members.",
+      "ka": "Fixed existing defects about accessibility, and contributed documents to guide team members to develop product without accessibility defects.\nLeaded a task to support micro-frontend features, contributed the technical scheme and implemented the online module, provided supports to help the first application which depends on this feature get deployed."
+    }
+  },
+  "shanghai,china": "Shanghai, China",
+  "education": "Education",
+  "edu": {
+    "0": {
+      "name": "Bachelor of Engineering, Computer Software Engineering",
+      "com": "Zhejiang University of Finance & Economics",
+      "ka": "Majored in data visualization, participated in several research projects.\nImplemented and refactored several Data Visualization & Analysis System.\nAssisted to get the juniors gained the knowledge and technology to develop web applications and Python scripts."
+    }
+  },
+  "publication": "Publication",
   "welcome": {
     "prefix": "Hello, I am\n",
     "me": "宮商",

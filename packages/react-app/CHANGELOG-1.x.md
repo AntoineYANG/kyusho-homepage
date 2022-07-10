@@ -1,6 +1,6 @@
 # react-app v1.x
 
-## 1.0.0 (2022/3/25 - 2022/3/28)
+## 1.0.0 (2022/3/25 - 2022/7/11)
 
 _\<version description\>_
 
@@ -25,5 +25,10 @@ _\<version description\>_
 + 🌱 **+ Skeleton & resizable image.** - AntoineYANG(814602569@qq.com) 2022/3/27, on _master_
 
 + 🌱 **Markdown parsing ability.** - AntoineYANG(814602569@qq.com) 2022/3/27, on _master_
+
+
+### other
+
++ 🌱 **Rewrite theme.** - AntoineYANG(814602569@qq.com) 2022/7/11, on _master_
 
 

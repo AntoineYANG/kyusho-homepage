@@ -53,7 +53,7 @@ const PaperInfo: React.FC<PaperInfoProps> = ({
                 ) : (
                 typeof aut === 'string' || !aut.strong ? (
                   <React.Fragment key={i * 2}>
-                    {(aut as { name?: string }).name ?? aut}
+                    {(aut as { name?: string }).name ?? aut as string}
                   </React.Fragment>
                 ) : (
                   <Strong key={i * 2}>

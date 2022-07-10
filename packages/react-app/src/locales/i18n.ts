@@ -2,7 +2,7 @@
  * @Author: Kanata You 
  * @Date: 2022-03-25 18:45:53 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2022-03-25 19:11:45
+ * @Last Modified time: 2022-07-10 23:34:50
  */
 
 import LanguageDetector from 'i18next-browser-languagedetector';
@@ -15,22 +15,28 @@ import jaTrans from './ja.json';
 
 
 const resources = {
-  en: {
+  'en-US': {
+    name: 'English (United States)',
+    locale: 'English (US)',
     translation: enUsTrans
   },
-  zh: {
+  'zh-CN': {
+    name: 'Chinese (China Mainland)',
+    locale: '简体中文',
     translation: zhCnTrans
   },
-  ja: {
+  'ja-JP': {
+    name: 'Japanese (Japan)',
+    locale: '日本語',
     translation: jaTrans
-  }
+  },
 };
 
 i18n.use(LanguageDetector)
   .use(initReactI18next)
   .init({
     resources,
-    fallbackLng: 'zh',
+    fallbackLng: 'zh-CN',
     debug: false,
     interpolation: {
       escapeValue: false
@@ -38,3 +44,9 @@ i18n.use(LanguageDetector)
   });
 
 export default i18n;
+
+export const supportedLanguages = Object.entries(resources).map(([k, v]) => ({
+  value: k,
+  name: v.name,
+  locale: v.locale,
+}));
