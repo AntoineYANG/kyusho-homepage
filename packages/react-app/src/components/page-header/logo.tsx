@@ -2,13 +2,12 @@
  * @Author: Kanata You 
  * @Date: 2022-07-10 15:40:12 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2022-07-10 16:31:54
+ * @Last Modified time: 2022-07-11 23:24:21
  */
 
 import React from 'react';
 import {
-  HashRouter as Router,
-  Link
+  useNavigate,
 } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -66,33 +65,38 @@ const IconText = styled.label({
 });
 
 const Logo: React.FC = React.memo(function Logo () {
+  const navigate = useNavigate();
+
   return (
-    <Router>
-      <Link
-        to="/"
-        style={{
-          outline: 'none',
-        }}
+    <div
+      role="link"
+      onClick={e => {
+        e.preventDefault();
+
+        navigate('/');
+      }}
+      style={{
+        outline: 'none',
+      }}
+    >
+      <PageLogo
+        title="homepage"
       >
-        <PageLogo
-          title="homepage"
+        <Icon
+          src={icon}
+          alt="logo:kyusho"
+        />
+        <IconSplitter
+          role="presentation"
+          aria-hidden
         >
-          <Icon
-            src={icon}
-            alt="logo:kyusho"
-          />
-          <IconSplitter
-            role="presentation"
-            aria-hidden
-          >
-            {'\u2756'}
-          </IconSplitter>
-          <IconText>
-            宮商
-          </IconText>
-        </PageLogo>
-      </Link>
-    </Router>
+          {'\u2756'}
+        </IconSplitter>
+        <IconText>
+          宮商
+        </IconText>
+      </PageLogo>
+    </div>
   );
 });
 

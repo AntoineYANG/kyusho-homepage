@@ -2,19 +2,20 @@
  * @Author: Kanata You 
  * @Date: 2022-03-22 14:57:54 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2022-03-27 20:23:24
+ * @Last Modified time: 2022-07-11 16:19:08
  */
 
 import React from 'react';
 // import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
-import { Main, Page } from '@views';
+import { Page } from '@views';
 import ParticleLayer from '@components/particle-layer';
 import PageHeader from '@components/page-header';
 import MarkdownViewer from '@components/markdown-viewer';
 import getArticle from '@api/get-article';
 import useTitle from '@hooks/use-title';
+import { Layout } from '@components/hibou/layout';
 
 
 const ArticlePage: React.FC = () => {
@@ -47,7 +48,7 @@ const ArticlePage: React.FC = () => {
     <Page>
       <ParticleLayer />
       <PageHeader />
-      <Main>
+      <Layout.Main>
         {
           articleData && (
             <MarkdownViewer>
@@ -55,7 +56,7 @@ const ArticlePage: React.FC = () => {
             </MarkdownViewer>
           )
         }
-      </Main>
+      </Layout.Main>
     </Page>
   );
 };

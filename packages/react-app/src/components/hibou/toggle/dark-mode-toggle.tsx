@@ -2,7 +2,7 @@
  * @Author: Kanata You 
  * @Date: 2022-07-10 16:10:41 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2022-07-10 22:21:51
+ * @Last Modified time: 2022-07-11 17:39:25
  */
 
 import React from 'react';
@@ -83,7 +83,9 @@ export const usePreferColorScheme = () => {
   const [mode, setMode] = React.useState<PreferColorScheme>(state);
 
   React.useEffect(() => {
-    const cb = () => setMode(state);
+    const cb = () => requestAnimationFrame(() => {
+      setMode(state);
+    });
 
     listeners.push(cb);
 

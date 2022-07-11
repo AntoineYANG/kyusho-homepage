@@ -8,7 +8,7 @@
     ".modules"
   ],
   "compilerOptions": {
-    "target": "es5",
+    "target": "ES2015",
     "lib": [
       "dom",
       "dom.iterable",

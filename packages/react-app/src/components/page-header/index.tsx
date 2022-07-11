@@ -2,36 +2,38 @@
  * @Author: Kanata You 
  * @Date: 2022-03-22 19:58:50 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2022-07-10 23:06:35
+ * @Last Modified time: 2022-07-11 14:09:33
  */
 
 import React from 'react';
 import styled from 'styled-components';
-import { useTranslation } from 'react-i18next';
 
-import backgroundImg from '@public/images/aoibara.png';
 import { VR } from '@components/common';
+import { useWindowOrientation } from '@utils/is-mobile';
 
 import Logo from './logo';
 import Navigator from './navigator';
 import PreferenceOptions from './preference-options';
 
 
-const PageHeaderContainer = styled.header({
+const PageHeaderContainer = styled.header<{ orientation: 'h' | 'p' }>(({ orientation }) => ({
   flexGrow: 0,
   flexShrink: 0,
-  width: '100vw',
-  height: '57px',
+  width: orientation === 'h' ? '100vw' : '96vw',
+  height: orientation === 'h' ? '57px' : undefined,
+  paddingBlockStart: orientation === 'h' ? undefined : '4vh',
+  paddingBlockEnd: orientation === 'h' ? undefined : '10px',
+  paddingInline: orientation === 'h' ? undefined : '2vw',
   display: 'flex',
-  flexDirection: 'row',
-  alignItems: 'center',
+  flexDirection: orientation === 'h' ? 'row' : 'column',
+  alignItems: orientation === 'h' ? 'center' : 'stretch',
   justifyContent: 'flex-start',
   borderBlockEnd: '7px solid #2b2c26aa',
 
-  '> *': {
+  '> *': orientation === 'h' ? {
     height: '100%',
-  },
-});
+  } : {},
+}));
 
 const PageHeaderContent = styled.div({
   flexGrow: 1,
@@ -46,20 +48,26 @@ const PageHeaderContent = styled.div({
   },
 });
 
-const PageHeader: React.FC = () => {
-  const { t } = useTranslation();
+const PageHeader: React.FC = React.memo(function PageHeader () {
+  const orientation = useWindowOrientation();
 
   return (
-    <PageHeaderContainer>
+    <PageHeaderContainer
+      orientation={orientation === 'horizontal' ? 'h' : 'p'}
+    >
       <Logo />
-      <VR aria-hidden />
+      {
+        orientation === 'horizontal' && (
+          <VR aria-hidden />
+        )
+      }
       <PageHeaderContent>
         <Navigator />
         <PreferenceOptions />
       </PageHeaderContent>
     </PageHeaderContainer>
   );
-};
+});
 
 
 export default PageHeader;

@@ -2,7 +2,7 @@
  * @Author: Kanata You 
  * @Date: 2022-07-10 19:43:21 
  * @Last Modified by: Kanata You
- * @Last Modified time: 2022-07-10 23:12:05
+ * @Last Modified time: 2022-07-11 14:07:19
  */
 
 import React from 'react';
@@ -54,6 +54,11 @@ const Wrapper = styled.div<{
     lineHeight: '1.6em',
   },
 
+  '> label, > span': {
+    userSelect: 'none',
+    pointerEvents: 'none',
+  },
+
   '> label': {
     display: 'block',
     marginInline: '0.6em',
@@ -68,8 +73,6 @@ const Wrapper = styled.div<{
     textAlign: 'center',
     transform: `scaleY(0.5) translateY(${expanded ? 100 : 5}%)`,
     opacity: expanded ? 0 : 0.5,
-    userSelect: 'none',
-    pointerEvents: 'none',
     transition: 'transform 200ms, opacity 200ms',
   },
 
@@ -362,6 +365,8 @@ export const SingleSelect = <T extends any = string>({
   const [expanded, setExpanded] = React.useState(false);
   const ref = React.useRef<HTMLDivElement>();
 
+  const clickThisRef = React.useRef(false);
+
   React.useEffect(() => {
     if (expanded) {
       const blur = () => setExpanded(false);
@@ -370,6 +375,12 @@ export const SingleSelect = <T extends any = string>({
       removeFocus = blur;
 
       const handleClick = () => {
+        if (clickThisRef.current) {
+          clickThisRef.current = false;
+
+          return;
+        }
+
         setExpanded(false);
       };
 
@@ -425,12 +436,17 @@ export const SingleSelect = <T extends any = string>({
     setExpanded(false);
   }, [disabled, expanded]);
 
+  const handleClick = React.useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    clickThisRef.current = e.target === e.currentTarget;
+  }, []);
+
   return (
     <Wrapper
       role="radiogroup"
       tabIndex={0}
       onMouseEnter={handleMouseEnter}
       onFocus={handleMouseEnter}
+      onClick={handleClick}
       onMouseLeave={handleMouseLeave}
       dark={colorScheme === 'dark'}
       expanded={expanded}
